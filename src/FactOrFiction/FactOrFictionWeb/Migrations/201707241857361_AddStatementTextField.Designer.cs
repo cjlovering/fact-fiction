@@ -7,13 +7,13 @@ namespace FactOrFictionWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddTextString : IMigrationMetadata
+    public sealed partial class AddStatementTextField : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTextString));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddStatementTextField));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707241748276_AddTextString"; }
+            get { return "201707241857361_AddStatementTextField"; }
         }
         
         string IMigrationMetadata.Source

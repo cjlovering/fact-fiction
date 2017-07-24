@@ -203,13 +203,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707241740123_InitialCreate.cs" />
-    <Compile Include="Migrations\201707241740123_InitialCreate.Designer.cs">
-      <DependentUpon>201707241740123_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201707241825184_Initial.cs" />
+    <Compile Include="Migrations\201707241825184_Initial.Designer.cs">
+      <DependentUpon>201707241825184_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707241748276_AddTextString.cs" />
-    <Compile Include="Migrations\201707241748276_AddTextString.Designer.cs">
-      <DependentUpon>201707241748276_AddTextString.cs</DependentUpon>
+    <Compile Include="Migrations\201707241847031_AddRequiredFields.cs" />
+    <Compile Include="Migrations\201707241847031_AddRequiredFields.Designer.cs">
+      <DependentUpon>201707241847031_AddRequiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707241857361_AddStatementTextField.cs" />
+    <Compile Include="Migrations\201707241857361_AddStatementTextField.Designer.cs">
+      <DependentUpon>201707241857361_AddStatementTextField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -299,11 +303,14 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707241740123_InitialCreate.resx">
-      <DependentUpon>201707241740123_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707241825184_Initial.resx">
+      <DependentUpon>201707241825184_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707241748276_AddTextString.resx">
-      <DependentUpon>201707241748276_AddTextString.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707241847031_AddRequiredFields.resx">
+      <DependentUpon>201707241847031_AddRequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707241857361_AddStatementTextField.resx">
+      <DependentUpon>201707241857361_AddStatementTextField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

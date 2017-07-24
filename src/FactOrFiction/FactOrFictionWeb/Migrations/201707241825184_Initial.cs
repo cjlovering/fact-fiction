@@ -3,7 +3,7 @@ namespace FactOrFictionWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -12,6 +12,7 @@ namespace FactOrFictionWeb.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
+                        Text = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

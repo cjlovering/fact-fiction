@@ -7,13 +7,26 @@
 <h2>Details</h2>
 
 <div>
-    <h4>TextBlobModel</h4>
+    <h4>@Model.Text</h4>
+    @Model.Id
     <hr />
     <dl class="dl-horizontal">
-        
+        @foreach (var item in Model.Statements)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Classification)
+                </td>
+            </tr>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

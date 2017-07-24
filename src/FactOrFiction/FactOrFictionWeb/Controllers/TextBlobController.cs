@@ -10,6 +10,7 @@ using FactOrFictionWeb.Models;
 
 namespace FactOrFictionWeb.Controllers
 {
+    [Authorize]
     public class TextBlobController : Controller
     {
         private TextBlobContext db = new TextBlobContext();
@@ -46,11 +47,31 @@ namespace FactOrFictionWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id")] TextBlobModel textBlobModel)
+        public ActionResult Create([Bind(Include = "Text")] TextBlobModel textBlobModel)
         {
             if (ModelState.IsValid)
             {
                 textBlobModel.Id = Guid.NewGuid();
+
+                // TODO: Generate statements. For now, just hardcode some shit.
+                textBlobModel.Statements = new List<Statement>
+                {
+                    new Statement
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = textBlobModel.Text,
+                        Classification = StatementClassification.Other,
+                        References = new List<Reference>()
+                    }
+                };
+
+                // Add Statements
+                textBlobModel.Statements?.ForEach(s => db.StatementModels.Add(s));
+
+                // Add References
+                textBlobModel.Statements?.ForEach(s => s.References?.ForEach(r => db.ReferenceModels.Add(r)));
+
+                // Add TextBlob
                 db.TextBlobModels.Add(textBlobModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");

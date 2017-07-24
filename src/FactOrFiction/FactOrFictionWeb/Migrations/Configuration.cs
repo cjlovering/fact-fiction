@@ -10,6 +10,7 @@ namespace FactOrFictionWeb.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationDataLossAllowed = true;
             ContextKey = "FactOrFictionWeb.Models.TextBlobContext";
         }
 
