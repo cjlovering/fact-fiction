@@ -7,6 +7,33 @@ namespace FactOrFictionWeb.Parser
 {
     public class Parser
     {
+        private static string[] getWords(string input)
+        {
+            var start = 0;
+            var index = 0;
+            var tupleList = new List<Tuple<int, int>>();
+
+            while (index < input.Length)
+            {
+                char curr = input[index];
+                char prev = input[Math.Max(0, index - 1)];
+                char next = input[Math.Min(input.Length - 1, index + 1)];
+
+                if (!Char.IsLetter(curr) || !Char.IsNumber(curr))
+                {
+                    tupleList.Add(new Tuple<int, int>(start, index));
+                    start = index + 1;
+
+                    if (curr == ',' && Char.IsNumber(prev) && Char.IsNumber(next)) // if curr is a comma separating number
+                    {
+                        continue;
+                    }
+                }
+                index++;
+            }
+
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1)).ToArray();
+        }
         public static string[] puctuationParse(string input, char delimiter)
         {
             var start = 0;
