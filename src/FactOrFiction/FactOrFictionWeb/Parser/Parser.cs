@@ -7,7 +7,26 @@ namespace FactOrFictionWeb.Parser
 {
     public class Parser
     {
-        public static string[] Parse(string input, char delimiter)
+        public static string[] puctuationParse(string input, char delimiter)
+        {
+            var start = 0;
+            var index = 0;
+            var tupleList = new List<Tuple<int, int>>();
+
+            while (index < input.Length)
+            {
+                char ch = input[index];
+                if (ch == '.' || ch == '-')
+                {
+                    tupleList.Add(new Tuple<int, int>(start, index));
+                    start = index + 1;
+                }
+                index++;
+            }
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1)).ToArray();
+        }
+
+        public static string[] quoteParse(string input, char delimiter)
         {
             var quoteTokens = new HashSet<char> { '\"' };
             var quoteStack = new Stack<char>();
