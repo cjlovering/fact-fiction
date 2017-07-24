@@ -1,7 +1,0 @@
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\bin\Debug\FactOrFictionTest.dll
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\bin\Debug\FactOrFictionTest.pdb
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\obj\Debug\FactOrFictionTest.csprojResolveAssemblyReference.cache
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\obj\Debug\FactOrFictionTest.dll
-C:\Enlistments\FactOrFiction\src\FactOrFiction\FactOrFictionTest\obj\Debug\FactOrFictionTest.pdb
