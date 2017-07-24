@@ -20,7 +20,7 @@ namespace FactOrFictionWeb.Models
         }
 
         public System.Data.Entity.DbSet<FactOrFictionWeb.Models.TextBlobModel> TextBlobModels { get; set; }
-        //public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Statement> StatementModels { get; set; }
-        //public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Reference> ReferenceModels { get; set; }
+        public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Statement> Statements { get; set; }
+        public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Reference> References { get; set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿@model FactOrFictionWeb.Models.TextBlobModel
+﻿@model FactOrFictionWeb.Models.Statement
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Text Blob Details</h2>
+<h2>Statement Details</h2>
 
 <div>
     <h4>@Model.Text</h4>
     @Model.Id
-    <hr />
-    @Html.Partial("../Statement/ListDetails", Model.Statements)
+    <hr/>
+    @Html.Partial("../Reference/ListDetails", Model.References)
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index", "TextBlob")

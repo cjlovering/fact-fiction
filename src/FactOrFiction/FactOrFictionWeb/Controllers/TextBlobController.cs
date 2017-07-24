@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using FactOrFictionWeb.Models;
@@ -16,25 +17,25 @@ namespace FactOrFictionWeb.Controllers
         private TextBlobContext db = new TextBlobContext();
 
         // GET: TextBlob
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.TextBlobModels.ToList());
+            return View(await db.TextBlobModels.ToListAsync());
         }
 
         // GET: TextBlob/Details/5
-        public ActionResult Details(Guid? id)
+        public async Task<ActionResult> Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TextBlobModel textBlobModel = db.TextBlobModels.Find(id);
-            db.Entry(textBlobModel).Collection(p => p.Statements).Load();
-
+            TextBlobModel textBlobModel = await db.TextBlobModels.FindAsync(id);
             if (textBlobModel == null)
             {
                 return HttpNotFound();
             }
+
+            await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
             return View(textBlobModel);
         }
 
@@ -49,13 +50,13 @@ namespace FactOrFictionWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Text")] TextBlobModel textBlobModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Text")] TextBlobModel textBlobModel)
         {
             if (ModelState.IsValid)
             {
                 textBlobModel.Id = Guid.NewGuid();
 
-                // TODO: Generate statements. For now, just hardcode some shit.
+                // TODO: Generate statements & references. For now, just hardcode some shit.
                 textBlobModel.Statements = new List<Statement>
                 {
                     new Statement
@@ -69,19 +70,46 @@ namespace FactOrFictionWeb.Controllers
 
                 textBlobModel.Statements = textBlobModel.Statements ?? new List<Statement>();
 
-                //// Add Statements
-                //textBlobModel.Statements?.ForEach(s => db.StatementModels.Add(s));
-
-                //// Add References
-                //textBlobModel.Statements?.ForEach(s => s.References?.ForEach(r => db.ReferenceModels.Add(r)));
-
                 // Add TextBlob
                 db.TextBlobModels.Add(textBlobModel);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             return View(textBlobModel);
+        }
+
+        // GET: TextBlobModelsController2/Delete/5
+        public async Task<ActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TextBlobModel textBlobModel = await db.TextBlobModels.FindAsync(id);
+            if (textBlobModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(textBlobModel);
+        }
+
+        // POST: TextBlobModelsController2/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        {
+            TextBlobModel textBlobModel = await db.TextBlobModels.FindAsync(id);
+            if (textBlobModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
+
+            db.TextBlobModels.Remove(textBlobModel);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

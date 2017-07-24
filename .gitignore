@@ -231,6 +231,7 @@ _Pvt_Extensions
 .gitignore
 
 src/FactOrFiction/.vs
+src/FactOrFiction/packages
 src/FactOrFiction/FactOrFictionWeb/bin
 src/FactOrFiction/FactOrFictionWeb/obj
 src/FactOrFiction/FactOrFictionWeb/App_Data
