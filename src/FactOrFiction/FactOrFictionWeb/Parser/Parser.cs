@@ -51,8 +51,8 @@ namespace FactOrFictionWeb.Parser
 
                 if (ch == '.' || ch == 8212 || ch == 63 || ch == 33 || ch == 8211) // . 
                 {
-                    if (ch == '.' 
-                        && ((Char.IsNumber(prev) && Char.IsNumber(next)) 
+                    if (ch == '.'
+                        && ((Char.IsNumber(prev) && Char.IsNumber(next))
                                 || (Char.IsUpper(prev) && (Char.IsUpper(next) || next == ',' || Char.IsLower(nextnext))))) // if curr is a period separating number
                     {
                         index++;
