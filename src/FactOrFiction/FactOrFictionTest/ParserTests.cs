@@ -11,6 +11,7 @@ namespace FactOrFictionTest
     public class Parser
     {
         [TestMethod]
+        [Owner("daverhur")]
         public void ShittyParserTest()
         {
             var input = "fuck this fucking shit";
