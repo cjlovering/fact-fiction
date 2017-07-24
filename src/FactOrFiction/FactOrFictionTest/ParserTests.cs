@@ -18,5 +18,15 @@ namespace FactOrFictionTest
             var result = ShittyParser.Parse(input, '.');
             result.Should().Equal(input);
         }
+
+        [TestMethod]
+        [Owner("daverhur")]
+        public void ShittyParserTestwithPeriod()
+        {
+            var input = "fuck this.fucking shit. and a third";
+            var result = ShittyParser.Parse(input, '.');
+            result.Length.Should().Equals(3);
+            result.GetValue(2).Should().Equals("and a third");
+        }
     }
 }
