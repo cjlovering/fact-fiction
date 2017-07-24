@@ -234,6 +234,9 @@ src/FactOrFiction/.vs
 src/FactOrFiction/FactOrFictionWeb/bin
 src/FactOrFiction/FactOrFictionWeb/obj
 src/FactOrFiction/FactOrFictionWeb/App_Data
+src/FactOrFiction/FactOrFictionTest/bin
+src/FactOrFiction/FactOrFictionTest/obj
+src/FactOrFiction/FactOrFictionTest/App_Data
 
 # ignore IntelliJ project and ouput files
 target/
