@@ -59,12 +59,12 @@ namespace FactOrFictionWeb.Parser
                         continue;
                     }
 
-                    tupleList.Add(new Tuple<int, int>(start, index));
+                    tupleList.Add(new Tuple<int, int>(start, index + 1));
                     start = index + 1;
                 }
                 index++;
             }
-            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1))
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1 + 1))
                 .Select(x => x.Trim())
                 .ToArray();
         }
