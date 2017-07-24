@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionWeb", "FactOrFictionWeb\FactOrFictionWeb.csproj", "{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionTest", "FactOrFictionTest\FactOrFictionTest.csproj", "{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
