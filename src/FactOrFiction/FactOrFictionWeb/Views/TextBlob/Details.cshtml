@@ -1,0 +1,45 @@
+﻿@model FactOrFictionWeb.Models.TextBlobModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>@Model.Text</h4>
+    @Model.Id
+    <hr />
+    <dl class="dl-horizontal">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Classification)
+                </th>
+            </tr>
+            @foreach (var item in Model.Statements)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Classification)
+                    </td>
+                </tr>
+            }
+        </table>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
