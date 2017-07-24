@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FactOrFictionWeb.Parser
 {
-    public class Parser
+    public class ShittyParser
     {
         private static string[] getWords(string input)
         {
