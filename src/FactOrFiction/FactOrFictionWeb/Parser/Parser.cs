@@ -35,13 +35,12 @@ namespace FactOrFictionWeb.Parser
 
             return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1)).ToArray();
         }
-        
-
         public static string[] puctuationParse(string input, char delimiter)
         {
             var start = 0;
             var index = 0;
             var tupleList = new List<Tuple<int, int>>();
+            Debug.Write(input.Length);
 
             while (index < input.Length)
             {
@@ -59,14 +58,15 @@ namespace FactOrFictionWeb.Parser
                         index++;
                         continue;
                     }
+
+                    tupleList.Add(new Tuple<int, int>(start, index));
                     start = index + 1;
                 }
                 index++;
             }
-            string[] tokens = tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1))
-                .Select(x => x)
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1))
+                .Select(x => x.Trim())
                 .ToArray();
-            return tokens;
         }
 
         public static string[] quoteParse(string input, char delimiter)
