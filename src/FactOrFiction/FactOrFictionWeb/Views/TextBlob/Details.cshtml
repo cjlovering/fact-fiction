@@ -11,20 +11,33 @@
     @Model.Id
     <hr />
     <dl class="dl-horizontal">
-        @foreach (var item in Model.Statements)
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Classification)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Statements[0].Classification)
+                </th>
             </tr>
-        }
+            @foreach (var item in Model.Statements)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Classification)
+                    </td>
+                </tr>
+            }
+        </table>
     </dl>
 </div>
 <p>

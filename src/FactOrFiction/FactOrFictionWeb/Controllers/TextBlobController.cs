@@ -29,6 +29,8 @@ namespace FactOrFictionWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TextBlobModel textBlobModel = db.TextBlobModels.Find(id);
+            db.Entry(textBlobModel).Collection(p => p.Statements).Load();
+
             if (textBlobModel == null)
             {
                 return HttpNotFound();
@@ -65,11 +67,13 @@ namespace FactOrFictionWeb.Controllers
                     }
                 };
 
-                // Add Statements
-                textBlobModel.Statements?.ForEach(s => db.StatementModels.Add(s));
+                textBlobModel.Statements = textBlobModel.Statements ?? new List<Statement>();
 
-                // Add References
-                textBlobModel.Statements?.ForEach(s => s.References?.ForEach(r => db.ReferenceModels.Add(r)));
+                //// Add Statements
+                //textBlobModel.Statements?.ForEach(s => db.StatementModels.Add(s));
+
+                //// Add References
+                //textBlobModel.Statements?.ForEach(s => s.References?.ForEach(r => db.ReferenceModels.Add(r)));
 
                 // Add TextBlob
                 db.TextBlobModels.Add(textBlobModel);
