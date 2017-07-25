@@ -90,6 +90,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll</HintPath>
     </Reference>
@@ -155,9 +159,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -209,17 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707241825184_Initial.cs" />
-    <Compile Include="Migrations\201707241825184_Initial.Designer.cs">
-      <DependentUpon>201707241825184_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707241847031_AddRequiredFields.cs" />
-    <Compile Include="Migrations\201707241847031_AddRequiredFields.Designer.cs">
-      <DependentUpon>201707241847031_AddRequiredFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707241857361_AddStatementTextField.cs" />
-    <Compile Include="Migrations\201707241857361_AddStatementTextField.Designer.cs">
-      <DependentUpon>201707241857361_AddStatementTextField.cs</DependentUpon>
+    <Compile Include="Migrations\201707251713150_Initial.cs" />
+    <Compile Include="Migrations\201707251713150_Initial.Designer.cs">
+      <DependentUpon>201707251713150_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -313,15 +306,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707241825184_Initial.resx">
-      <DependentUpon>201707241825184_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707251713150_Initial.resx">
+      <DependentUpon>201707251713150_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707241847031_AddRequiredFields.resx">
-      <DependentUpon>201707241847031_AddRequiredFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707241857361_AddStatementTextField.resx">
-      <DependentUpon>201707241857361_AddStatementTextField.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FactOrFictionTextHandling\FactOrFictionTextHandling.csproj">
+      <Project>{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}</Project>
+      <Name>FactOrFictionTextHandling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FactOrFictionUrlSuggestions\FactOrFictionUrlSuggestions.csproj">
+      <Project>{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}</Project>
+      <Name>FactOrFictionUrlSuggestions</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

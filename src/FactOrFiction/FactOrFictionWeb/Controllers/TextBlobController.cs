@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using FactOrFictionTextHandling.Parser;
+using FactOrFictionUrlSuggestions;
 using FactOrFictionWeb.Models;
 
 namespace FactOrFictionWeb.Controllers
@@ -54,21 +57,25 @@ namespace FactOrFictionWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                textBlobModel.Id = Guid.NewGuid();
+                var finder = FinderFactory.CreateFinder();
 
-                // TODO: Generate statements & references. For now, just hardcode some shit.
-                textBlobModel.Statements = new List<Statement>
+                textBlobModel.Id = Guid.NewGuid();
+                var statementTasks = ShittyParser.PuctuationParse(textBlobModel.Text).Select(async text => new Statement
                 {
-                    new Statement
+                    Id = Guid.NewGuid(),
+                    Text = text,
+                    Classification = StatementClassification.Other,
+                    References = (await finder.FindSuggestions(text)).Select(uri => new Reference
                     {
                         Id = Guid.NewGuid(),
-                        Text = textBlobModel.Text,
-                        Classification = StatementClassification.Other,
-                        References = new List<Reference>()
-                    }
-                };
+                        CreatedBy = "System",
+                        Link = uri,
+                        Tags = new List<string>()
+                    }).ToList()
+                });
+                var statements = await Task.WhenAll(statementTasks);
 
-                textBlobModel.Statements = textBlobModel.Statements ?? new List<Statement>();
+                textBlobModel.Statements = statements.ToList();
 
                 // Add TextBlob
                 db.TextBlobModels.Add(textBlobModel);
@@ -110,6 +117,15 @@ namespace FactOrFictionWeb.Controllers
             db.TextBlobModels.Remove(textBlobModel);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+#if (!DEBUG)
+            filterContext.ExceptionHandled = true;
+#endif
+
+            filterContext.Result = View("Error");
         }
 
         protected override void Dispose(bool disposing)

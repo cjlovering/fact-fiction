@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="BingFinder.cs" />
     <Compile Include="DemoRunner.cs" />
+    <Compile Include="FinderFactory.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="BingRunner.cs" />
     <Compile Include="Program.cs" />
