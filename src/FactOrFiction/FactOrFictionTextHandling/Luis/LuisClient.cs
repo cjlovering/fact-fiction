@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace FactOrFictionTextHandling.Luis
 {
@@ -18,7 +19,7 @@ namespace FactOrFictionTextHandling.Luis
             BaseUri = baseUri;
         }
 
-        public async Task<string> Query(string sentenceFragment)
+        public async Task<LuisResult> Query(string sentenceFragment)
         {
             var uri = new Uri(this.BaseUri + HttpUtility.UrlEncode(sentenceFragment));
             var request = WebRequest.Create(uri);
@@ -26,11 +27,11 @@ namespace FactOrFictionTextHandling.Luis
             return await ReadAllAsync(response.GetResponseStream());
         }
 
-        internal static async Task<string> ReadAllAsync(Stream stream)
+        internal static async Task<LuisResult> ReadAllAsync(Stream stream)
         {
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
-                return await reader.ReadToEndAsync();
+                return JsonConvert.DeserializeObject<LuisResult>(await reader.ReadToEndAsync());
             }
         }
     }

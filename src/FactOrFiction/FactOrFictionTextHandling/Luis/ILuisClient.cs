@@ -9,6 +9,6 @@
 
     public interface ILuisClient
     {
-        Task<string> Query(string sentenceFragment);
+        Task<LuisResult> Query(string sentenceFragment);
     }
 }
