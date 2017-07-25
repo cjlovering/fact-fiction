@@ -1,4 +1,4 @@
-namespace FactOrFictionTest
+﻿namespace FactOrFictionTest
 {
 
     using System;
