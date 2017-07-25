@@ -56,6 +56,15 @@
                         continue;
                     }
 
+                    if (ch == '.' && next == 34) // next is end quote
+                    {
+                        tupleList.Add(new Tuple<int, int>(start, index + 2));
+                        start = index + 2;
+
+                        index += 2;
+                        continue;
+                    }
+
                     tupleList.Add(new Tuple<int, int>(start, index + 1));
                     start = index + 1;
                 }
