@@ -310,9 +310,9 @@
       <Project>{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}</Project>
       <Name>FactOrFictionCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FactOrFictionTextHandling\FactOrFictionTextHandling.csproj2.csproj">
+    <ProjectReference Include="..\FactOrFictionTextHandling\FactOrFictionTextHandling.csproj">
       <Project>{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}</Project>
-      <Name>FactOrFictionTextHandling.csproj2</Name>
+      <Name>FactOrFictionTextHandling.csproj</Name>
     </ProjectReference>
     <ProjectReference Include="..\FactOrFictionUrlSuggestions\FactOrFictionUrlSuggestions.csproj">
       <Project>{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}</Project>
