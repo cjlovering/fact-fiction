@@ -14,7 +14,7 @@
         public void ShittyParserTest()
         {
             var input = "fuck this fucking shit";
-            var result = ShittyParser.quoteParse(input, '.');
+            var result = ShittyParser.QuoteParse(input, '.');
             result.Should().Equal(input);
         }
 
@@ -23,7 +23,7 @@
         public void ShittyParserTestwithPeriod()
         {
             var input = "fuck this.fucking shit. and a third";
-            var result = ShittyParser.quoteParse(input, '.');
+            var result = ShittyParser.QuoteParse(input, '.');
             result.Length.Should().Equals(3);
             result.GetValue(2).Should().Equals("and a third");
         }
@@ -42,9 +42,23 @@
                     At the start of the year, political risks were considered the major hurdle facing the eurozone. There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.
                     ";
 
-            var result = ShittyParser.puctuationParse(textinput, '.');
+            var result = ShittyParser.PuctuationParse(textinput);
             result.Length.Should().Be(13);
             result.GetValue(12).Should().Equals("There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.");
+        }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void ParserTestOutOfBounds()
+        {
+            var textinput =
+                @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small 
+                    and large have already created more than 800,000 new jobs since January. Company after company is responding to the 
+                    president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
+
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(4);
+            result.GetValue(3).Should().Equals("Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.");
         }
     }
 }

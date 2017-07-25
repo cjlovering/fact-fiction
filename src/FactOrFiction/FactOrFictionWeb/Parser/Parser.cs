@@ -61,7 +61,7 @@ namespace FactOrFictionWeb.Parser
                 }
                 index++;
             }
-            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1 + 1))
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1))
                 .Select(x => x.Trim())
                 .ToArray();
         }
