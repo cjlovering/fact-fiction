@@ -6,7 +6,7 @@ namespace FactOrFictionWeb.Parser
 {
     public class ShittyParser
     {
-        private static string[] getWords(string input)
+        private static string[] GetWords(string input)
         {
             var start = 0;
             var index = 0;
@@ -33,7 +33,7 @@ namespace FactOrFictionWeb.Parser
 
             return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1)).ToArray();
         }
-        public static string[] puctuationParse(string input, char delimiter)
+        public static string[] PuctuationParse(string input)
         {
             var start = 0;
             var index = 0;
@@ -66,7 +66,7 @@ namespace FactOrFictionWeb.Parser
                 .ToArray();
         }
 
-        public static string[] quoteParse(string input, char delimiter)
+        public static string[] QuoteParse(string input, char delimiter)
         {
             var quoteTokens = new HashSet<char> { '\"' };
             var quoteStack = new Stack<char>();
