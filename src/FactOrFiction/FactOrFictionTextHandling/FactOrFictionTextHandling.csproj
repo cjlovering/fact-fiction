@@ -45,9 +45,6 @@
     <Compile Include="Luis\ILuisClientFactory.cs" />
     <Compile Include="Luis\LuisClient.cs" />
     <Compile Include="Luis\LuisClientFactory.cs" />
-    <Compile Include="Luis\LuisWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

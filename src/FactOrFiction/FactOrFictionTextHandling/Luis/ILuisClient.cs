@@ -9,6 +9,6 @@
 
     public interface ILuisClient
     {
-        string Query(string sentenceFragment);
+        Task<string> Query(string sentenceFragment);
     }
 }

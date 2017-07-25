@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -10,19 +11,27 @@ namespace FactOrFictionTextHandling.Luis
 {
     public class LuisClient : ILuisClient
     {
-        public WebClient Client { get; private set; }
         public string BaseUri { get; set; }
 
-        public LuisClient(LuisWebClient client, string baseUri)
+        public LuisClient(string baseUri)
         {
-            Client = client;
             BaseUri = baseUri;
         }
 
-        public string Query(string sentenceFragment)
+        public async Task<string> Query(string sentenceFragment)
         {
             var uri = new Uri(this.BaseUri + HttpUtility.UrlEncode(sentenceFragment));
-            return Client.DownloadString(uri);
+            var request = WebRequest.Create(uri);
+            var response = await request.GetResponseAsync();
+            return await ReadAllAsync(response.GetResponseStream());
+        }
+
+        internal static async Task<string> ReadAllAsync(Stream stream)
+        {
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                return await reader.ReadToEndAsync();
+            }
         }
     }
 }
