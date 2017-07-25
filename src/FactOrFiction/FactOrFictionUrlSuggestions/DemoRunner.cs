@@ -29,10 +29,11 @@ namespace FactOrFictionUrlSuggestions
                 var urls = await finder.FindSuggestions(query);
                 var entityFinder = new EntityFinder();
                 Console.WriteLine("============ Web searches");
-                var classificationTasks = urls
-                    .Select(url => classifier.ClassifyOutletDescription(ExtractDomain(url)))
-                    .ToArray();
-                var classifications = await Task.WhenAll(classificationTasks);
+                //var classificationTasks = urls
+                //    .Select(url => classifier.ClassifyOutletDescription(ExtractDomain(url)))
+                //    .ToArray();
+                //var classifications = await Task.WhenAll(classificationTasks);
+                var classifications = urls.Select(u => "").ToList();
                 for (int i = 0; i < urls.Count; i++)
                 {
                     Console.WriteLine($"  [{classifications[i]}] ({ExtractDomain(urls[i])}) {urls[i]}");
@@ -55,6 +56,15 @@ namespace FactOrFictionUrlSuggestions
                     Console.WriteLine($"  '{entityName}' {party}");
                     Console.WriteLine($"    - wiki: {wikiUrl}");
                     Console.WriteLine($"    - politifact: {politifactStr}");
+                    if (politifactPersona != null)
+                    {
+                        Console.WriteLine($"    - recent statements:");
+                        var statements = await politifactPersona.GetRecentStatements();
+                        foreach (var grp in statements.GroupBy(s => s.Ruling).OrderByDescending(grp => grp.Count()))
+                        {
+                            Console.WriteLine($"      - {grp.Key}: {grp.Count()}");
+                        }
+                    }
                 }
             }
             catch (WebException e)

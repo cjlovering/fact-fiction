@@ -1,27 +1,48 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+
+using static FactOrFictionUrlSuggestions.CognitiveServicesFinder;
 
 namespace FactOrFictionUrlSuggestions
 {
     public sealed class Persona
     {
-        private const string Separator = "\t";
+        private const string PolitifactPeopleEndpoint = "http://www.politifact.com/api/statements/truth-o-meter/people/";
 
         public readonly string Href;
         public readonly string Name;
         public readonly string Party;
+        public readonly string NameSlug;
 
         public Persona(string name, string href, string party)
         {
             Requires(name != null);
             Requires(href != null);
-            Requires(!name.Contains(Separator));
-            Requires(!href.Contains(Separator));
-            Requires(party == null || !party.Contains(Separator));
 
             Name = name;
+            NameSlug = href.Replace("personalities/", "").Replace("/", "");
             Href = href;
             Party = party;
+        }
+
+        public async Task<StatementByPersona[]> GetRecentStatements()
+        {
+            var webRequest = WebRequest.Create(PolitifactPeopleEndpoint + NameSlug + "/json/?n=20");
+            webRequest.Method = "GET";
+            var webResponse = await webRequest.GetResponseAsync();
+            var response = await ReadAllAsync(webResponse.GetResponseStream());
+            var arr = JArray.Parse(response);
+            return arr
+                .Select(a => new StatementByPersona
+                {
+                    Ruling = a["ruling"]["ruling"].ToString(),
+                    StatementHtml = a["statement"].ToString()
+                })
+                .ToArray();
         }
 
         private void Requires(bool v)
@@ -44,5 +65,11 @@ namespace FactOrFictionUrlSuggestions
         {
             return "http://www.politifact.com" + Href;
         }
+    }
+
+    public class StatementByPersona
+    {
+        public string Ruling { get; set; }
+        public string StatementHtml { get; set; }
     }
 }
