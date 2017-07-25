@@ -29,11 +29,10 @@ namespace FactOrFictionUrlSuggestions
                 var urls = await finder.FindSuggestions(query);
                 var entityFinder = new EntityFinder();
                 Console.WriteLine("============ Web searches");
-                //var classificationTasks = urls
-                //    .Select(url => classifier.ClassifyOutletDescription(ExtractDomain(url)))
-                //    .ToArray();
-                //var classifications = await Task.WhenAll(classificationTasks);
-                var classifications = urls.Select(u => "").ToList();
+                var classificationTasks = urls
+                    .Select(url => classifier.ClassifyOutletDescription(ExtractDomain(url)))
+                    .ToArray();
+                var classifications = await Task.WhenAll(classificationTasks);
                 for (int i = 0; i < urls.Count; i++)
                 {
                     Console.WriteLine($"  [{classifications[i]}] ({ExtractDomain(urls[i])}) {urls[i]}");
@@ -78,10 +77,7 @@ namespace FactOrFictionUrlSuggestions
 
         private static string ExtractDomain(Uri uri)
         {
-            var splits = uri.Authority.Split('.');
-            return splits.Length >= 2
-                ? splits.Reverse().Skip(1).Take(1).First()
-                : uri.Authority;
+            return uri.Host;
         }
 
         private static string ReadLine()
