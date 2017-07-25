@@ -48,6 +48,7 @@
     <Compile Include="Luis\LuisWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Parser\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

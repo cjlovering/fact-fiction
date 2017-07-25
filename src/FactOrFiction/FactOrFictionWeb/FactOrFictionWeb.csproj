@@ -227,7 +227,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\TextBlobContext.cs" />
     <Compile Include="Models\TextBlobModel.cs" />
-    <Compile Include="Parser\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

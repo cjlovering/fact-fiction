@@ -1,9 +1,9 @@
-﻿namespace FactOrFictionTest
+﻿
+namespace FactOrFictionTest
 {
-
+    using FactOrFictionWeb.Parser;
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using FactOrFictionWeb.Parser;
     using FluentAssertions;
 
     [TestClass]
