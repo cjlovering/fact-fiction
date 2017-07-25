@@ -1,11 +1,10 @@
-﻿using FluentAssertions;
-
-namespace FactOrFictionTest
+﻿namespace FactOrFictionTest
 {
 
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using FactOrFictionWeb.Parser;
+    using FluentAssertions;
 
     [TestClass]
     public class Parser
@@ -44,8 +43,8 @@ namespace FactOrFictionTest
                     ";
 
             var result = ShittyParser.puctuationParse(textinput, '.');
-            result.Length.Should().Be(3);
-            result.GetValue(2).Should().Equals("and a third");
+            result.Length.Should().Be(13);
+            result.GetValue(12).Should().Equals("There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.");
         }
     }
 }

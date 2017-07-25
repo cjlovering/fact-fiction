@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionWeb", "FactOrFictionWeb\FactOrFictionWeb.csproj", "{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionTest", "FactOrFictionTest\FactOrFictionTest.csproj", "{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionUrlSuggestions", "FactOrFictionUrlSuggestions\FactOrFictionUrlSuggestions.csproj", "{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}"
 EndProject
 Global

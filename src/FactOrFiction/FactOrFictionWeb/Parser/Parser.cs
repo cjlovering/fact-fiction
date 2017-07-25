@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace FactOrFictionWeb.Parser
 {
@@ -21,13 +20,13 @@ namespace FactOrFictionWeb.Parser
 
                 if (!Char.IsLetter(curr) || !Char.IsNumber(curr))
                 {
-                    tupleList.Add(new Tuple<int, int>(start, index));
-                    start = index + 1;
-
-                    if (curr == ',' && Char.IsNumber(prev) && Char.IsNumber(next)) // if curr is a comma separating number
+                    if ((curr == ',' || curr == '.') && Char.IsNumber(prev) && Char.IsNumber(next)) // if curr is a comma separating number
                     {
                         continue;
                     }
+
+                    tupleList.Add(new Tuple<int, int>(start, index));
+                    start = index + 1;
                 }
                 index++;
             }
@@ -43,14 +42,28 @@ namespace FactOrFictionWeb.Parser
             while (index < input.Length)
             {
                 char ch = input[index];
-                if (ch == '.' || ch == '-')
+                char prev = input[Math.Max(0, index - 1)];
+                char next = input[Math.Min(input.Length - 1, index + 1)];
+                char nextnext = input[Math.Min(input.Length - 1, index + 2)];
+
+                if (ch == '.' || ch == 8212 || ch == 63 || ch == 33 || ch == 8211) // . 
                 {
-                    tupleList.Add(new Tuple<int, int>(start, index));
+                    if (ch == '.'
+                        && ((Char.IsNumber(prev) && Char.IsNumber(next))
+                                || (Char.IsUpper(prev) && (Char.IsUpper(next) || next == ',' || Char.IsLower(nextnext))))) // if curr is a period separating number
+                    {
+                        index++;
+                        continue;
+                    }
+
+                    tupleList.Add(new Tuple<int, int>(start, index + 1));
                     start = index + 1;
                 }
                 index++;
             }
-            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1)).ToArray();
+            return tupleList.Select(x => input.Substring(x.Item1, x.Item2 - x.Item1 + 1))
+                .Select(x => x.Trim())
+                .ToArray();
         }
 
         public static string[] quoteParse(string input, char delimiter)

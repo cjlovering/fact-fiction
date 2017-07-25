@@ -235,9 +235,11 @@ src/FactOrFiction/packages
 src/FactOrFiction/FactOrFictionWeb/bin
 src/FactOrFiction/FactOrFictionWeb/obj
 src/FactOrFiction/FactOrFictionWeb/App_Data
+src/FactOrFiction/FactOrFictionTest/bin
+src/FactOrFiction/FactOrFictionTest/obj
+src/FactOrFiction/FactOrFictionTest/App_Data
 src/FactOrFiction/FactOrFictionUrlSuggestions/bin
 src/FactOrFiction/FactOrFictionUrlSuggestions/obj
-src/FactOrFiction/packages
 
 # ignore IntelliJ project and ouput files
 target/
