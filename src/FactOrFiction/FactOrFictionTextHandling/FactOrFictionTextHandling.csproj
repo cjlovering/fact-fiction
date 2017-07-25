@@ -52,6 +52,14 @@
     <Compile Include="Luis\LuisResult.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementProducer\IStatementProducer.cs" />
+    <Compile Include="StatementProducer\StatementProducer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FactOrFictionCommon\FactOrFictionCommon.csproj">
+      <Project>{d6e26a77-7d67-4f6b-b2f9-fe2fc521c19a}</Project>
+      <Name>FactOrFictionCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
