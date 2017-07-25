@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FactOrFictionWeb.Models.TextBlobModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Text Blobs</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "TextBlob")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            Details
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "TextBlob", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "TextBlob", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Web;
 
 namespace FactOrFictionWeb.Parser
 {
@@ -40,7 +38,6 @@ namespace FactOrFictionWeb.Parser
             var start = 0;
             var index = 0;
             var tupleList = new List<Tuple<int, int>>();
-            Debug.Write(input.Length);
 
             while (index < input.Length)
             {

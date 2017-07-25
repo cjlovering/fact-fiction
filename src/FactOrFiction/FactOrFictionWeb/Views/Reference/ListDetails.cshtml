@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FactOrFictionWeb.Models.Reference>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Reference Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <h5>References</h5>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Link)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        <a href="http://@item.Link">Link</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                </tr>
+            }
+        </table>
+    </dl>
+</div>

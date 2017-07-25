@@ -1,0 +1,22 @@
+﻿@model FactOrFictionWeb.Models.TextBlobModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete Text Blob</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>@Model.Text</h4>
+    <hr />
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", "TextBlob")
+        </div>
+    }
+</div>
