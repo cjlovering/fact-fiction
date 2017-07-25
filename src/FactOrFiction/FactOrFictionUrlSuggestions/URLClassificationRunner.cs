@@ -30,7 +30,7 @@ namespace FactOrFictionUrlSuggestions
             }
             catch (WebException e)
             {
-                Console.WriteLine(BingFinder.ReadAllAsync(e.Response.GetResponseStream()).GetAwaiter().GetResult());
+                Console.WriteLine(CognitiveServicesFinder.ReadAllAsync(e.Response.GetResponseStream()).GetAwaiter().GetResult());
             }
         }
 
