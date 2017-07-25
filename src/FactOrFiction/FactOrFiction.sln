@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionUrlSuggestions
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionTextHandling", "FactOrFictionTextHandling\FactOrFictionTextHandling.csproj", "{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionCommon", "FactOrFictionCommon\FactOrFictionCommon.csproj", "{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
