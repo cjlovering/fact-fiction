@@ -59,5 +59,27 @@
             result.Length.Should().Be(4);
             result.GetValue(3).Should().Equals("Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.");
         }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void QuoteParseIntegrate()
+        {
+            var textinput =
+                @" ""It just depends on the case, and what had transpired, and what information was provided,"" he said.";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(1);
+            result.GetValue(0).Should().Equals("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
+        }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void QuoteParseIntegrateMultipleSentence()
+        {
+            var textinput =
+                @" ""It just depends on the case, and what had transpired, and what information was provided,/"" he said. ""In some cases, people could get sent back, and in some cases, people do stay.""";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(2);
+            result.GetValue(0).Should().Equals("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
+        }
     }
 }
