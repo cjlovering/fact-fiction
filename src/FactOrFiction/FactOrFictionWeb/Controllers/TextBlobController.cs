@@ -60,6 +60,7 @@ namespace FactOrFictionWeb.Controllers
                 var finder = FinderFactory.CreateFinder();
 
                 textBlobModel.Id = Guid.NewGuid();
+
                 var statementTasks = ShittyParser.PuctuationParse(textBlobModel.Text).Select(async text => new Statement
                 {
                     Id = Guid.NewGuid(),
