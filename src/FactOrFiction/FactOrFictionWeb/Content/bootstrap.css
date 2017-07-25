@@ -185,6 +185,8 @@ input[type="submit"] {
   -webkit-appearance: button;
 }
 
+
+
 button[disabled],
 html input[disabled] {
   cursor: default;

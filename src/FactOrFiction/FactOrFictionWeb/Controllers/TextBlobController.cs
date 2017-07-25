@@ -45,7 +45,11 @@ namespace FactOrFictionWeb.Controllers
         // GET: TextBlob/Create
         public ActionResult Create()
         {
-            return View();
+            var textBlobModel = new TextBlobModel
+            {
+                Statements = new List<Statement>()
+            };
+            return View(textBlobModel);
         }
 
         // POST: TextBlob/Create
@@ -81,7 +85,8 @@ namespace FactOrFictionWeb.Controllers
                 // Add TextBlob
                 db.TextBlobModels.Add(textBlobModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return View(textBlobModel);
             }
 
             return View(textBlobModel);

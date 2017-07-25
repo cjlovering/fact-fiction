@@ -1,37 +1,32 @@
-﻿@model FactOrFictionWeb.Models.TextBlobModel
-
+@model FactOrFictionWeb.Models.TextBlobModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Separating Fact from Fiction";
 }
-
-<h2>Create Text Blob</h2>
-
+<h2>Separating Fact from Fiction</h2>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr/>
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { style = "width: 100%; max-width: 100%;", @class = "form-control" } })
-            </div>
+    <div class="container">
+        <hr />
+        <div class="form-group col-md-6">
+            <label class="control-label" for="TextBlob">Enter some text!</label>
+            @Html.TextAreaFor(model => model.Text, 10, 10, new { htmlAttributes = new { @class = "form-control" } } )
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <vr />
+        <div class="form-group col-md-6">
+            @Html.Partial("Details", Model)
         </div>
     </div>
 }
+    
 
 <div>
-    @Html.ActionLink("Back to List", "Index", "TextBlob")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
