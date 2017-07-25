@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionWeb", "FactOrFictionWeb\FactOrFictionWeb.csproj", "{E1EC912F-D6A7-4EA7-8ABA-8E84CC2F71FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionTest", "FactOrFictionTest\FactOrFictionTest.csproj", "{0BEFFC11-F80D-48DB-B4DB-8C17B2E7BBD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionUrlSuggestions", "FactOrFictionUrlSuggestions\FactOrFictionUrlSuggestions.csproj", "{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactOrFictionTextHandling", "FactOrFictionTextHandling\FactOrFictionTextHandling.csproj", "{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A794E4F-D3E0-4403-ABEE-B3B1E4730C71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B1EE3E-6876-42F3-A926-CFEE6B6A8258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
