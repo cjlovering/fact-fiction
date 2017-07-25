@@ -13,6 +13,7 @@ namespace FactOrFictionUrlSuggestions
         {
             var finder = new EntityFinder();
                 //new BingV7Finder();
+
             var query = ReadLine();
             while (!string.IsNullOrEmpty(query))
             {
