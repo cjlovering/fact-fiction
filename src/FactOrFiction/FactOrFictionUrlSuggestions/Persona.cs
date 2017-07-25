@@ -31,7 +31,7 @@ namespace FactOrFictionUrlSuggestions
 
         public async Task<StatementByPersona[]> GetRecentStatements()
         {
-            var webRequest = WebRequest.Create(PolitifactPeopleEndpoint + NameSlug + "/json/?n=20");
+            var webRequest = WebRequest.Create(PolitifactPeopleEndpoint + NameSlug + "/json/?n=15");
             webRequest.Method = "GET";
             var webResponse = await webRequest.GetResponseAsync();
             var response = await ReadAllAsync(webResponse.GetResponseStream());
