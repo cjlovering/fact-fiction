@@ -1,7 +1,6 @@
-﻿
-namespace FactOrFictionTest
+﻿namespace FactOrFictionTest
 {
-    using FactOrFictionWeb.Parser;
+    using FactOrFictionTextHandling.Parser;
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using FluentAssertions;
