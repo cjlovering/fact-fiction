@@ -43,14 +43,15 @@
             {
                 char ch = input[index];
                 char prev = input[Math.Max(0, index - 1)];
+                char prevprev = input[Math.Max(0, index - 2)];
                 char next = input[Math.Min(input.Length - 1, index + 1)];
                 char nextnext = input[Math.Min(input.Length - 1, index + 2)];
 
                 if (ch == '.' || ch == 8212 || ch == 63 || ch == 33 || ch == 8211) // . 
                 {
                     if (ch == '.'
-                        && ((Char.IsNumber(prev) && Char.IsNumber(next))
-                                || (Char.IsUpper(prev) && (Char.IsUpper(next) || next == ',' || Char.IsLower(nextnext))))) // if curr is a period separating number
+                        && ((Char.IsNumber(prev) && Char.IsNumber(next)) // if curr is a period or comma separated number, U.S. in the middle or sentence
+                                || (Char.IsUpper(prev) && (Char.IsUpper(next) || next == ',' || Char.IsLower(nextnext))))) 
                     {
                         index++;
                         continue;
@@ -64,6 +65,18 @@
                         index += 2;
                         continue;
                     }
+
+                    // honorifics or titles or whatever
+                    if (ch == '.' 
+                        && ((prevprev == 'M' && prev == 'r') // please just dont demo articles that have "Mrs." in them
+                          ||(prevprev == 'M' && prev == 's')
+                          ||(prevprev == 'J' && prev == 'r')
+                          ||(prevprev == 'S' && prev == 'r')
+                          ||(prevprev == 'D' && prev == 'r')))
+                    {
+                        index++;
+                        continue;
+                    } 
 
                     tupleList.Add(new Tuple<int, int>(start, index + 1));
                     start = index + 1;
