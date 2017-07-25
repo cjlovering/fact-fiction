@@ -18,7 +18,7 @@
                     @Html.DisplayNameFor(model => model.Link)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Rating)
+                    @Html.DisplayNameFor(model => model.Tags)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CreatedBy)
@@ -31,10 +31,10 @@
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
-                        <a href="http://@item.Link">Link</a>
+                        <a href="@item.Link">@item.Link</a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Rating)
+                        @Html.DisplayFor(modelItem => item.Tags)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedBy)
