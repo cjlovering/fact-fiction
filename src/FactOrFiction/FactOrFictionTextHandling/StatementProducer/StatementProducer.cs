@@ -13,7 +13,7 @@ namespace FactOrFictionTextHandling.StatementProducer
     public class StatementProducer
     {
         public ILuisClient LuisClient { get; set; }
-        StatementProducer(ILuisClient luisClient)
+        public StatementProducer(ILuisClient luisClient)
         {
             LuisClient = luisClient;
         }

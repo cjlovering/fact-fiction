@@ -4,16 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Statement Details</h2>
+<h2>Statements</h2>
 
 <div>
     <dl class="dl-horizontal">
-        <h5>Statements</h5>
         <table class="table">
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Text)
                 </th>
@@ -27,9 +23,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Text)
                     </td>

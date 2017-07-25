@@ -101,6 +101,7 @@
     <Compile Include="Models\TextBlobContext.cs" />
     <Compile Include="Models\TextBlobModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\UriValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

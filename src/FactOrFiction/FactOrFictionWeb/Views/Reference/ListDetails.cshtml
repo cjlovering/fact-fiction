@@ -4,16 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Reference Details</h2>
+<h2>References</h2>
 
 <div>
     <dl class="dl-horizontal">
-        <h5>References</h5>
         <table class="table">
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Link)
                 </th>
@@ -27,9 +23,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
                     <td>
                         <a href="@item.Link">@item.Link</a>
                     </td>

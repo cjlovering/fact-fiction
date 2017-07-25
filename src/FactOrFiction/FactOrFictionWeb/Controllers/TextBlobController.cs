@@ -8,7 +8,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using FactOrFictionTextHandling.Luis;
 using FactOrFictionTextHandling.Parser;
+using FactOrFictionTextHandling.StatementProducer;
 using FactOrFictionUrlSuggestions;
 using FactOrFictionWeb.Models;
 
@@ -61,31 +63,44 @@ namespace FactOrFictionWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                var statementProducer = new StatementProducer(new LuisClientFactory("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=3a134d05a51641a18fecd02f9cf4bfd7&timezoneOffset=0&verbose=true&q=").Create());
                 var finder = FinderFactory.CreateFinder();
+                var urlClassifier = new URLClassification();
 
                 textBlobModel.Id = Guid.NewGuid();
 
-                var statementTasks = ShittyParser.PuctuationParse(textBlobModel.Text).Select(async text => new Statement
-                {
-                    Id = Guid.NewGuid(),
-                    Text = text,
-                    Classification = StatementClassification.Other,
-                    References = (await finder.FindSuggestions(text)).Select(uri => new Reference
+                var statementTasks = Task.WhenAll(statementProducer.GetStatements(textBlobModel));
+                var statements = await statementTasks;
+
+                // Generate references for each statement
+                var statementTasks2 = statements
+                    .Select(async statement =>
                     {
-                        Id = Guid.NewGuid(),
-                        CreatedBy = "System",
-                        Link = uri,
-                        Tags = new List<string>()
-                    }).ToList()
-                });
-                var statements = await Task.WhenAll(statementTasks);
+                        if (statement.Classification == StatementClassification.Other) return statement;
 
-                textBlobModel.Statements = statements.ToList();
+                        var referenceTasks = (await finder.FindSuggestions(statement.Text)).Select(async uri =>
+                        {
+                            var tag = await urlClassifier.ClassifyOutletDescription(uri.Host);
 
-                // Add TextBlob
+                            return new Reference
+                            {
+                                Id = Guid.NewGuid(),
+                                CreatedBy = "System",
+                                Link = uri,
+                                Tags = new List<string> { tag }
+                            };
+                        });
+
+                        var references = await Task.WhenAll(referenceTasks);
+                        return new Statement(statement, references.ToList());
+                    });
+
+                var statementsWithReferences = await Task.WhenAll(statementTasks2);
+                textBlobModel.Statements = statementsWithReferences.ToList();
+
+                // Save TextBlob
                 db.TextBlobModels.Add(textBlobModel);
                 await db.SaveChangesAsync();
-                //return RedirectToAction("Index");
                 return View(textBlobModel);
             }
 
