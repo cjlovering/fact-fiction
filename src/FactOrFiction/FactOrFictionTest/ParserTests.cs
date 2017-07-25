@@ -51,9 +51,7 @@
         public void ParserTestOutOfBounds()
         {
             var textinput =
-                @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small 
-                    and large have already created more than 800,000 new jobs since January. Company after company is responding to the 
-                    president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
+                @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small and large have already created more than 800,000 new jobs since January. Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
 
             var result = ShittyParser.PuctuationParse(textinput);
             result.Length.Should().Be(4);
@@ -81,5 +79,31 @@
             result.Length.Should().Be(2);
             result.GetValue(0).Should().Equals("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
         }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void ParseNewlineMultipleSentence()
+        {
+            var textinput =
+                @"Line1
+                  Line2
+                  Line3";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(3);
+            result.GetValue(2).Should().Equals("Line 3");
+        }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void ParseNewlineHeader()
+        {
+            var textinput =
+                @"'Irreversible brain damage'
+                   The tip-off to authorities started when a man from the trailer asked a Walmart employee for water, the police chief said. The employee was concerned and called police for a welfare check.";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(3);
+            result.GetValue(0).Should().Equals("'Irreversible brain damage'");
+        }
+
     }
 }
