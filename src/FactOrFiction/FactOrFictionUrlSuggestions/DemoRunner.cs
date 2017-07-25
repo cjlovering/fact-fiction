@@ -27,18 +27,41 @@ namespace FactOrFictionUrlSuggestions
             try
             {
                 var urls = await finder.FindSuggestions(query);
+                var entityFinder = new EntityFinder();
+                Console.WriteLine("============ Web searches");
                 var classificationTasks = urls
                     .Select(url => classifier.ClassifyOutletDescription(ExtractDomain(url)))
                     .ToArray();
                 var classifications = await Task.WhenAll(classificationTasks);
                 for (int i = 0; i < urls.Count; i++)
                 {
-                    Console.WriteLine($"[{classifications[i]}] ({ExtractDomain(urls[i])}) {urls[i]}");
+                    Console.WriteLine($"  [{classifications[i]}] ({ExtractDomain(urls[i])}) {urls[i]}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("=========== Entities");
+                var entities = await entityFinder.GetEntities(query);
+                foreach (var entity in entities)
+                {
+                    var entityName = entityFinder.ExtractEntityName(entity);
+                    var wikiUrl = entityFinder.ExtractEntityWikiUrl(entity);
+                    var politifactPersona = entityFinder.GetPolitifactPersona(entity);
+                    var politifactStr = politifactPersona != null
+                        ? politifactPersona.GetFullUrl()
+                        : "none found";
+                    var party = politifactPersona != null
+                        ? "(" + politifactPersona.Party + ")"
+                        : "";
+                    Console.WriteLine($"  '{entityName}' {party}");
+                    Console.WriteLine($"    - wiki: {wikiUrl}");
+                    Console.WriteLine($"    - politifact: {politifactStr}");
                 }
             }
             catch (WebException e)
             {
-                var errorMessage = await BingFinder.ReadAllAsync(e.Response.GetResponseStream());
+                var errorMessage = e.Response != null
+                    ? await CognitiveServicesFinder.ReadAllAsync(e.Response.GetResponseStream())
+                    : e.Message;
                 Console.WriteLine(errorMessage);
             }
         }

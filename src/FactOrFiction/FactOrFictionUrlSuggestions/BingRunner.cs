@@ -11,7 +11,8 @@ namespace FactOrFictionUrlSuggestions
     {
         public static void Run(string[] args)
         {
-            var finder = new BingV7Finder();
+            var finder = new EntityFinder();
+                //new BingV7Finder();
             var query = ReadLine();
             while (!string.IsNullOrEmpty(query))
             {

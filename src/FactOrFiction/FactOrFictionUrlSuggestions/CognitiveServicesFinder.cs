@@ -10,33 +10,42 @@ using System.Web;
 
 namespace FactOrFictionUrlSuggestions
 {
-    public abstract class BingFinder : IFinder
+    public abstract class CognitiveServicesFinder : IFinder
     {
-        protected abstract string BingUrl { get; }
-        protected abstract string CognitiveServicesSubscriptionKey { get; }
+        protected abstract string Endpoint { get; }
+        protected abstract string SubscriptionKey { get; }
 
         public async Task<IReadOnlyList<Uri>> FindSuggestions(string query)
         {
-            var response = await QueryBing(query);
+            var response = await QueryCognitiveServices(query);
             var json = JObject.Parse(response);
             return ParseJson(json);
         }
 
         protected abstract IReadOnlyList<Uri> ParseJson(JObject json);
 
-        protected virtual async Task<string> QueryBing(string query)
+        protected virtual async Task<string> QueryCognitiveServices(string query)
         {
-            var httpParams = new Dictionary<string, string>
-            {
-                //["mkt"] = "en-US",
-                //["responseFilter"] = "Webpages,News",
-                ["q"] = query
-            };
-            var webRequest = WebRequest.Create(BingUrl + "?" + UrlEncode(httpParams));
-            webRequest.Method = "GET";
-            webRequest.Headers["Ocp-Apim-Subscription-Key"] = CognitiveServicesSubscriptionKey;
+            var webRequest = GetWebRequest(query);
             var webResponse = await webRequest.GetResponseAsync();
             return await ReadAllAsync(webResponse.GetResponseStream());
+        }
+
+        protected virtual WebRequest GetWebRequest(string query)
+        {
+            var httpParams = GetParams(query);
+            var webRequest = WebRequest.Create(Endpoint + "?" + UrlEncode(httpParams));
+            webRequest.Method = "GET";
+            webRequest.Headers["Ocp-Apim-Subscription-Key"] = SubscriptionKey;
+            return webRequest;
+        }
+
+        protected virtual Dictionary<string, string> GetParams(string query)
+        {
+            return new Dictionary<string, string>
+            {
+                ["q"] = query
+            };
         }
 
         internal static async Task<string> ReadAllAsync(Stream stream)
