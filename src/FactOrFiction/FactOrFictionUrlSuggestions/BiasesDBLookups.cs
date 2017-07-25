@@ -18,7 +18,7 @@ namespace FactOrFictionUrlSuggestions
             {
                 return new Uri(b.Source).Host;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return "";
             }

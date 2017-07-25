@@ -43,7 +43,7 @@ namespace FactOrFictionTextHandling.StatementProducer
                     (StatementClassification)
                         Enum.Parse(typeof (StatementClassification), response.TopScoringIntent.Intent, ignoreCase: true);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 classification = StatementClassification.Other;
             }
