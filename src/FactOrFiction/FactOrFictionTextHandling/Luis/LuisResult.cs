@@ -20,8 +20,6 @@ namespace FactOrFictionTextHandling.Luis
         public int EndIndex { get; set; }
     }
 
-
-
     public class LuisResult
     {
         public string Query { get; set; }

@@ -23,6 +23,7 @@ namespace FactOrFictionWeb.Models
         Other,
         SuggestedFact,
         SuggestedQuantitativeFact,
+        SuggestedOpinion
     }
 
     public class Statement
