@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Submitted Statements</h2>
+<h2>Submitted Narratives</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", "TextBlob")
@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Text)
+            Narrative
         </th>
         <th>
-            Details
+            @Html.DisplayNameFor(model => model.CreatedBy)
         </th>
     </tr>
 
@@ -24,6 +24,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", "TextBlob", new { id = item.Id }, null) |

@@ -41,7 +41,7 @@ namespace FactOrFictionWeb.Controllers
             }
 
             await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
-            return View(textBlobModel);
+            return View(new TextBlobModel(textBlobModel));
         }
 
         // GET: TextBlob/Create
@@ -68,6 +68,7 @@ namespace FactOrFictionWeb.Controllers
                 var urlClassifier = new URLClassification();
 
                 textBlobModel.Id = Guid.NewGuid();
+                textBlobModel.CreatedBy = User.Identity.Name;
 
                 var statementTasks = Task.WhenAll(statementProducer.GetStatements(textBlobModel));
                 var statements = await statementTasks;
@@ -142,9 +143,9 @@ namespace FactOrFictionWeb.Controllers
 
         protected override void OnException(ExceptionContext filterContext)
         {
-#if (!DEBUG)
-            filterContext.ExceptionHandled = true;
-#endif
+//#if (!DEBUG)
+//            filterContext.ExceptionHandled = true;
+//#endif
 
             filterContext.Result = View("Error");
         }

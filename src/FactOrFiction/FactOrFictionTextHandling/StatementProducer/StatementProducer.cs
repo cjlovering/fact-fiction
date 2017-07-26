@@ -20,12 +20,13 @@ namespace FactOrFictionTextHandling.StatementProducer
 
         public List<Task<Statement>> GetStatements(TextBlobModel textBlob)
         {
-            var statementTasks = WorkingParser.PuctuationParse(textBlob.Text).Select
+            var statementTasks = WorkingParser.PunctuationParse(textBlob.Text).Select
                 (async text => new Statement
                     {
                         Id = Guid.NewGuid(),
-                        Text = text,
-                        Classification = await GetStatementClassification(text),
+                        Text = text.Value,
+                        Classification = await GetStatementClassification(text.Value),
+                        IndexInParent = text.Key,
                         References = null
                     }
                 );

@@ -15,7 +15,17 @@ namespace FactOrFictionWeb.Models
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Text is required.")]
         public string Text { get; set; }
+        public string CreatedBy { get; set; }
         public List<Statement> Statements { get; set; }
+
+        public TextBlobModel() { }
+
+        public TextBlobModel(TextBlobModel textBlob)
+        {
+            this.Id = textBlob.Id;
+            this.Text = textBlob.Text;
+            this.Statements = textBlob.Statements.OrderBy(x => x.IndexInParent).ToList();
+        }
     }
 
     public enum StatementClassification
@@ -34,6 +44,7 @@ namespace FactOrFictionWeb.Models
         public string Text { get; set; }
         [Required(ErrorMessage = "Classification is required.")]
         public StatementClassification Classification { get; set; }
+        public int IndexInParent { get; set; }
         public List<Reference> References { get; set; }
         public Guid? TextBlobModelId { get; set; }
 
@@ -44,6 +55,7 @@ namespace FactOrFictionWeb.Models
             this.Id = statement.Id;
             this.Text = statement.Text;
             this.Classification = statement.Classification;
+            this.IndexInParent = statement.IndexInParent;
             this.References = references;
             this.TextBlobModelId = statement.TextBlobModelId;
         }

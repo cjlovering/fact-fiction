@@ -1,4 +1,6 @@
-﻿namespace FactOrFictionTest
+﻿using System.Linq;
+
+namespace FactOrFictionTest
 {
     using FactOrFictionTextHandling.Parser;
     using System;
@@ -8,25 +10,6 @@
     [TestClass]
     public class Parser
     {
-        [TestMethod]
-        [Owner("daverhur")]
-        public void ShittyParserTest()
-        {
-            var input = "fuck this fucking shit";
-            var result = WorkingParser.QuoteParse(input, '.');
-            result.Should().Equal(input);
-        }
-
-        [TestMethod]
-        [Owner("daverhur")]
-        public void ShittyParserTestwithPeriod()
-        {
-            var input = "fuck this.fucking shit. and a third";
-            var result = WorkingParser.QuoteParse(input, '.');
-            result.Length.Should().Equals(3);
-            result.GetValue(2).Should().Equals("and a third");
-        }
-
         [TestMethod]
         [Owner("daverhur")]
         public void ShittyParserTestwithBigText()
@@ -41,9 +24,10 @@
                     At the start of the year, political risks were considered the major hurdle facing the eurozone. There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.
                     ";
 
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(13);
-            result.GetValue(12).Should().Equals("There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.Count.Should().Be(13);
+            result.Keys.ToArray().GetValue(12).Should().Be(1814);
+            result.Values.ToArray().GetValue(12).Should().Be("There had been fears that radical changes in government could have seen more insular economic policies and further questions over the future of the euro itself.");
         }
 
         [TestMethod]
@@ -53,9 +37,10 @@
             var textinput =
                 @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small and large have already created more than 800,000 new jobs since January. Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
 
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(4);
-            result.GetValue(3).Should().Equals("Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.Count.Should().Be(4);
+            result.Keys.ToArray().GetValue(3).Should().Be(260);
+            result.Values.ToArray().GetValue(3).Should().Be("investing billions of dollars in American jobs, American workers and America’s future.");
         }
 
         [TestMethod]
@@ -64,9 +49,10 @@
         {
             var textinput =
                 @" ""It just depends on the case, and what had transpired, and what information was provided,"" he said.";
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(1);
-            result.GetValue(0).Should().Equals("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.Count.Should().Be(1);
+            result.Keys.ToArray().GetValue(0).Should().Be(0);
+            result.Values.ToArray().GetValue(0).Should().Be("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
         }
 
         [TestMethod]
@@ -74,10 +60,11 @@
         public void QuoteParseIntegrateMultipleSentence()
         {
             var textinput =
-                @" ""It just depends on the case, and what had transpired, and what information was provided,/"" he said. ""In some cases, people could get sent back, and in some cases, people do stay.""";
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(2);
-            result.GetValue(0).Should().Equals("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
+                @" ""It just depends on the case, and what had transpired, and what information was provided,"" he said. ""In some cases, people could get sent back, and in some cases, people do stay.""";
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.Count.Should().Be(2);
+            result.Keys.ToArray().GetValue(0).Should().Be(0);
+            result.Values.ToArray().GetValue(0).Should().Be("\"It just depends on the case, and what had transpired, and what information was provided,\" he said.");
         }
 
         [TestMethod]
@@ -88,9 +75,10 @@
                 @"Line1
                   Line2
                   Line3";
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(3);
-            result.GetValue(2).Should().Equals("Line 3");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.ToArray().Length.Should().Be(3);
+            result.Keys.ToArray().GetValue(2).Should().Be(29);
+            result.Values.ToArray().GetValue(2).Should().Be("Line3");
         }
 
         [TestMethod]
@@ -100,9 +88,10 @@
             var textinput =
                 @"'Irreversible brain damage'
                    The tip-off to authorities started when a man from the trailer asked a Walmart employee for water, the police chief said. The employee was concerned and called police for a welfare check.";
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(3);
-            result.GetValue(0).Should().Equals("'Irreversible brain damage'");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.ToArray().Length.Should().Be(3);
+            result.Keys.ToArray().GetValue(0).Should().Be(0);
+            result.Values.ToArray().GetValue(0).Should().Be("'Irreversible brain damage'");
         }
         
         [TestMethod]
@@ -147,9 +136,10 @@ Estimates suggest that the Clean Power Plan would have reduced emissions by 32 p
 Bad deals like the Paris Agreement would cost the U.S. billions of dollars, a loss of hundreds of thousands of jobs, and have no discernible impact on global temperatures.
 The Paris Agreement would have cost the U.S. billions of dollars. In January, President Obama paid $500 million into the UN Green Climate fund, and the U.S. would have continued to contribute to the fund had it stayed in the Paris deal.
 But it wouldn’t have hurt job growth; CEOs of 30 of the biggest companies in the U.S. urged President Trump not to withdraw from Paris. The study Trump used to justify pulling out of the agreement was misleading. Leaving the deal is more likely to hurt job growth.";
-            var result = WorkingParser.PuctuationParse(textinput);
-            result.Length.Should().Be(69);
-            result.GetValue(0).Should().Equals("The Republican chairman of the House Committee on Science, Space and Technology thinks you’re all worrying too much about climate change.");
+            var result = WorkingParser.PunctuationParse(textinput);
+            result.Keys.ToArray().Length.Should().Be(69);
+            result.Keys.ToArray().GetValue(0).Should().Be(0);
+            result.Values.ToArray().GetValue(0).Should().Be("The Republican chairman of the House Committee on Science, Space and Technology thinks you’re all worrying too much about climate change.");
         }
     }
 }
