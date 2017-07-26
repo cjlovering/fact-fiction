@@ -42,6 +42,12 @@ namespace FactOrFictionWeb.Controllers
 
             await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
             await db.Entry(textBlobModel).Collection(p => p.Entities).LoadAsync();
+            await FetchPersonas(textBlobModel);
+            return View(new TextBlobModel(textBlobModel));
+        }
+
+        private async Task FetchPersonas(TextBlobModel textBlobModel)
+        {
             foreach (var e in textBlobModel.Entities)
             {
                 e.Persona = PersonasDBLookups.ByName[e.Name].FirstOrDefault();
@@ -50,7 +56,6 @@ namespace FactOrFictionWeb.Controllers
                     await e.Persona.FetchRecentStatements();
                 }
             }
-            return View(new TextBlobModel(textBlobModel));
         }
 
         // GET: TextBlob/Create
@@ -132,6 +137,7 @@ namespace FactOrFictionWeb.Controllers
                 // Save TextBlob
                 db.TextBlobModels.Add(textBlobModel);
                 await db.SaveChangesAsync();
+                await FetchPersonas(textBlobModel);
                 return View(textBlobModel);
             }
 

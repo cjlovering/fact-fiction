@@ -21,6 +21,8 @@
             <div class="form-group col-md-6">
                 <label class="control-label" for="table">Here are your statements:</label>
                 @Html.Partial("../Statement/ListDetails", Model.Statements)
+                <label class="control-label" for="table">Here are extracted entities:</label>
+                @Html.Partial("../Entity/ListDetails", Model.Entities)
             </div>
         }
     </div>
