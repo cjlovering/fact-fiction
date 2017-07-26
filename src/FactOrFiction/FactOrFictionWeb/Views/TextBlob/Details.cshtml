@@ -6,11 +6,14 @@
 
 <h2>Narrative</h2>
 
-
 <div>
     <h4>@Model.Text</h4>
     <hr />
     @Html.Partial("../Statement/ListDetails", Model.Statements)
+</div>
+
+<div>
+    @Html.Partial("../Entity/ListDetails", Model.Entities)
 </div>
 
 <p>

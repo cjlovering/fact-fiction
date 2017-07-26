@@ -58,7 +58,7 @@ namespace FactOrFictionUrlSuggestions
                     if (politifactPersona != null)
                     {
                         Console.WriteLine($"    - recent statements:");
-                        var statements = await politifactPersona.GetRecentStatements();
+                        var statements = await politifactPersona.FetchRecentStatements();
                         foreach (var grp in statements.GroupBy(s => s.Ruling).OrderByDescending(grp => grp.Count()))
                         {
                             Console.WriteLine($"      - {grp.Key}: {grp.Count()}");

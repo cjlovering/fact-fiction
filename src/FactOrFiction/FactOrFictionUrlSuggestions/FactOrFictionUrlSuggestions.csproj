@@ -60,7 +60,6 @@
     <Compile Include="Interfaces.cs" />
     <Compile Include="BingRunner.cs" />
     <Compile Include="ParsePolitifactPersonas.cs" />
-    <Compile Include="Persona.cs" />
     <Compile Include="PersonasDB.cs" />
     <Compile Include="PersonasDBLookups.cs" />
     <Compile Include="Program.cs" />

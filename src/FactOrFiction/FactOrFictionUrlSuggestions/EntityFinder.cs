@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Web;
+using FactOrFictionCommon.Models;
 
 namespace FactOrFictionUrlSuggestions
 {
@@ -34,10 +35,15 @@ namespace FactOrFictionUrlSuggestions
             return token["name"].ToString();
         }
 
-        public Uri ExtractEntityWikiUrl(JToken token)
+        public string ExtractEntityWikiUrlString(JToken token)
         {
             var wikiId = token["wikipediaId"].ToString();
-            return new Uri("https://en.wikipedia.org/wiki/" + HttpUtility.UrlPathEncode(wikiId));
+            return "https://en.wikipedia.org/wiki/" + HttpUtility.UrlPathEncode(wikiId);
+        }
+
+        public Uri ExtractEntityWikiUrl(JToken token)
+        {
+            return new Uri(ExtractEntityWikiUrlString(token));
         }
 
         private JToken GetEntitiesFromJson(JObject json)
@@ -73,6 +79,14 @@ namespace FactOrFictionUrlSuggestions
         {
             var name = ExtractEntityName(entity);
             return PersonasDBLookups.ByName[name].FirstOrDefault();
+        }
+
+        public List<Tuple<string, int>> ExtractMatches(JToken token)
+        {
+            return token["matches"]
+                .SelectMany(m =>
+                    m["entries"].Select(e => Tuple.Create(m["text"].ToString(), int.Parse(e["offset"].ToString()))))
+                .ToList();
         }
     }
 }

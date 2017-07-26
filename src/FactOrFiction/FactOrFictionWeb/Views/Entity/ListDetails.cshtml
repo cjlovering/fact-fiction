@@ -1,0 +1,26 @@
+﻿@model IEnumerable<FactOrFictionCommon.Models.Entity>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Entities</h3>
+
+<div>
+    <dl class="entities dl-horizontal">
+        @foreach (var item in Model)
+        {
+            <dt>
+                <a target="_blank" href="@Html.DisplayFor(x => item.WikiUrl)">@Html.DisplayFor(x => item.Name)</a>
+            </dt>
+            <dd>
+                @if (item.HasPersona)
+                {
+                    <span>politifact record: </span>
+                    @Html.Raw(item.PolitifactScoreAsHtml)
+                    <a target="_blank" href="@Html.DisplayFor(x => item.PolitifactUrl)">(link)</a>
+                }
+            </dd>
+        }
+    </dl>
+</div>
