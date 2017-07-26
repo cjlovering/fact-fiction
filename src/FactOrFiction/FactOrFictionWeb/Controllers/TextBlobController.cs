@@ -12,7 +12,7 @@ using FactOrFictionTextHandling.Luis;
 using FactOrFictionTextHandling.Parser;
 using FactOrFictionTextHandling.StatementProducer;
 using FactOrFictionUrlSuggestions;
-using FactOrFictionWeb.Models;
+using FactOrFictionCommon.Models;
 
 namespace FactOrFictionWeb.Controllers
 {
@@ -81,14 +81,15 @@ namespace FactOrFictionWeb.Controllers
 
                         var referenceTasks = (await finder.FindSuggestions(statement.Text)).Select(async uri =>
                         {
-                            var tag = await urlClassifier.ClassifyOutletDescription(uri.Host);
+                            var bias = (await urlClassifier.ClassifyOutletDescription(uri.Host));
 
                             return new Reference
                             {
                                 Id = Guid.NewGuid(),
                                 CreatedBy = "System",
                                 Link = uri,
-                                Tags = new List<string> { tag }
+                                Tags = new List<string>(),
+                                Bias = bias == null ? null : new Bias(bias, Guid.NewGuid())
                             };
                         });
 

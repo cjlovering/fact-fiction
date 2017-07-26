@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bias.cs" />
     <Compile Include="BiasDB.cs" />
     <Compile Include="BiasesDBLookups.cs" />
     <Compile Include="CognitiveServicesFinder.cs" />
@@ -74,6 +73,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FactOrFictionCommon\FactOrFictionCommon.csproj">
+      <Project>{D6E26A77-7D67-4F6B-B2F9-FE2FC521C19A}</Project>
+      <Name>FactOrFictionCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using FactOrFictionCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using FactOrFictionWeb.Models;
 
 namespace FactOrFictionWeb.Controllers
 {
@@ -29,6 +29,7 @@ namespace FactOrFictionWeb.Controllers
             }
 
             await db.Entry(statementModel).Collection(p => p.References).LoadAsync();
+            statementModel.References.ForEach(x => db.Entry(x).Reference(y => y.Bias).Load());
             return View(statementModel);
         }
 

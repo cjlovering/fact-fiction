@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FactOrFictionWeb.Models
+namespace FactOrFictionCommon.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

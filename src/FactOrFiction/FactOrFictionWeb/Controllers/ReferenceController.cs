@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using FactOrFictionTextHandling.Parser;
 using FactOrFictionUrlSuggestions;
-using FactOrFictionWeb.Models;
+using FactOrFictionCommon.Models;
 
 namespace FactOrFictionWeb.Controllers
 {
@@ -39,11 +39,8 @@ namespace FactOrFictionWeb.Controllers
 
                 referenceModel.Id = Guid.NewGuid();
                 referenceModel.CreatedBy = User.Identity.Name;
-                referenceModel.Tags = new List<string>
-                {
-                    await urlClassifier.ClassifyOutletDescription(referenceModel.Link.Host)
-                };
-
+                referenceModel.Tags = new List<string>();
+                referenceModel.Bias = await urlClassifier.ClassifyOutletDescription(referenceModel.Link.Host);
                 // Add Reference
                 db.References.Add(referenceModel);
                 await db.SaveChangesAsync();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using FactOrFictionTextHandling.Luis;
 using FactOrFictionTextHandling.Parser;
-using FactOrFictionWeb.Models;
+using FactOrFictionCommon.Models;
 
 namespace FactOrFictionTextHandling.StatementProducer
 {

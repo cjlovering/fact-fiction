@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FactOrFictionWeb.Models.Reference>
+﻿@model IEnumerable<FactOrFictionCommon.Models.Reference>
 
 @{
     ViewBag.Title = "Details";
@@ -14,7 +14,7 @@
                     @Html.DisplayNameFor(model => model.Link)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Tags)
+                    @Html.DisplayNameFor(model => model.Bias)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CreatedBy)
@@ -27,7 +27,7 @@
                         <a href="@item.Link">@item.Link</a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Tags)
+                        @Html.DisplayFor(modelItem => item.Bias)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedBy)

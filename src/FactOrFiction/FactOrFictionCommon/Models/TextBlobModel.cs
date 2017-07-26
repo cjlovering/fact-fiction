@@ -7,7 +7,7 @@ using System.Web;
 using FactOrFictionCommon.Validators;
 using Newtonsoft.Json;
 
-namespace FactOrFictionWeb.Models
+namespace FactOrFictionCommon.Models
 {
     public class TextBlobModel
     {
@@ -86,7 +86,8 @@ namespace FactOrFictionWeb.Models
             get { return new Uri(this.LinkString); }
             set { this.LinkString = value.AbsoluteUri; }
         }
-
+        public Bias Bias { get; set; }
         public Guid? StatementId { get; set; }
+        public Guid? BiasId { get; set; }
     }
 }

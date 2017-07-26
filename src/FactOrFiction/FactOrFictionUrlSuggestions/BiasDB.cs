@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FactOrFictionCommon.Models;
+using System.Collections.Generic;
 
 namespace FactOrFictionUrlSuggestions
 {

@@ -1,20 +1,21 @@
 namespace FactOrFictionWeb.Migrations
 {
+    using FactOrFictionCommon.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FactOrFictionWeb.Models.TextBlobContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<TextBlobContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
             //AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "FactOrFictionWeb.Models.TextBlobContext";
+            ContextKey = "FactOrFictionCommon.Models.TextBlobContext";
         }
 
-        protected override void Seed(FactOrFictionWeb.Models.TextBlobContext context)
+        protected override void Seed(TextBlobContext context)
         {
             //  This method will be called after migrating to the latest version.
 

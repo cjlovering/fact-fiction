@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace FactOrFictionWeb.Models
+namespace FactOrFictionCommon.Models
 {
     public class TextBlobContext : DbContext
     {
@@ -19,8 +19,8 @@ namespace FactOrFictionWeb.Models
         {
         }
 
-        public System.Data.Entity.DbSet<FactOrFictionWeb.Models.TextBlobModel> TextBlobModels { get; set; }
-        public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Statement> Statements { get; set; }
-        public System.Data.Entity.DbSet<FactOrFictionWeb.Models.Reference> References { get; set; }
+        public System.Data.Entity.DbSet<FactOrFictionCommon.Models.TextBlobModel> TextBlobModels { get; set; }
+        public System.Data.Entity.DbSet<FactOrFictionCommon.Models.Statement> Statements { get; set; }
+        public System.Data.Entity.DbSet<FactOrFictionCommon.Models.Reference> References { get; set; }
     }
 }

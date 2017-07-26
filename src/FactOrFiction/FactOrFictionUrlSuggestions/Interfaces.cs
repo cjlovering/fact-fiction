@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FactOrFictionCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,6 @@ namespace FactOrFictionUrlSuggestions
         /// For a given string query, representing a news outlet (eg. nytimes), returns a classification
         /// </summary>
         /// Note: description should actually be uri.host
-        Task<String> ClassifyOutletDescription(string description);
+        Task<Bias> ClassifyOutletDescription(string description);
     }
 }
