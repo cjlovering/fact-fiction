@@ -235,6 +235,7 @@ src/FactOrFiction/packages
 src/FactOrFiction/FactOrFictionWeb/bin
 src/FactOrFiction/FactOrFictionWeb/obj
 src/FactOrFiction/FactOrFictionWeb/App_Data
+src/FactOrFiction/FactOrFictionWeb/Properties/PublishProfiles/FactOrFictionWeb.pubxml.user
 src/FactOrFiction/FactOrFictionTest/bin
 src/FactOrFiction/FactOrFictionTest/obj
 src/FactOrFiction/FactOrFictionTest/App_Data

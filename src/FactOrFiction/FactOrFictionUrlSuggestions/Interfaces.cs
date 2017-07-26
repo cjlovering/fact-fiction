@@ -22,6 +22,7 @@ namespace FactOrFictionUrlSuggestions
         /// <summary>
         /// For a given string query, representing a news outlet (eg. nytimes), returns a classification
         /// </summary>
+        /// Note: description should actually be uri.host
         Task<String> ClassifyOutletDescription(string description);
     }
 }

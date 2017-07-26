@@ -51,9 +51,7 @@
         public void ParserTestOutOfBounds()
         {
             var textinput =
-                @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small 
-                    and large have already created more than 800,000 new jobs since January. Company after company is responding to the 
-                    president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
+                @"President Trump inherited an economy that would barely budge – but under his watch, American businesses small and large have already created more than 800,000 new jobs since January. Company after company is responding to the president’s agenda with optimism – investing billions of dollars in American jobs, American workers and America’s future.";
 
             var result = ShittyParser.PuctuationParse(textinput);
             result.Length.Should().Be(4);
@@ -84,6 +82,31 @@
 
         [TestMethod]
         [Owner("tabald")]
+        public void ParseNewlineMultipleSentence()
+        {
+            var textinput =
+                @"Line1
+                  Line2
+                  Line3";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(3);
+            result.GetValue(2).Should().Equals("Line 3");
+        }
+
+        [TestMethod]
+        [Owner("tabald")]
+        public void ParseNewlineHeader()
+        {
+            var textinput =
+                @"'Irreversible brain damage'
+                   The tip-off to authorities started when a man from the trailer asked a Walmart employee for water, the police chief said. The employee was concerned and called police for a welfare check.";
+            var result = ShittyParser.PuctuationParse(textinput);
+            result.Length.Should().Be(3);
+            result.GetValue(0).Should().Equals("'Irreversible brain damage'");
+        }
+        
+        [TestMethod]
+        [Owner("davehur")]
         public void QuoteParseIntegrateMultipleSentences()
         {
             var textinput =
@@ -107,6 +130,7 @@ And most vegetation is close to being saturated with CO2 — they won’t absor
 When plant diversity increases, these vegetated areas can better eliminate carbon from the atmosphere.
 The implication here is that getting carbon out of the atmosphere is a desirable outcome of more carbon in the atmosphere, which Smith says is a good thing. But regardless, plant diversity isn’t proven to increase carbon absorption.
 \""There has been a lot of research on diversity effects on ecosystem functioning, and the results are rather mixed,\"" Epstein says. \""Often the right monoculture can be more productive than a diverse plant community.\""
+
 Also, as the Earth warms, we are seeing beneficial changes to the earth’s geography. For instance, Arctic sea ice is decreasing. This development will create new commercial shipping lanes that provide faster, more convenient, and less costly routes between ports in Asia, Europe, and eastern North America.
 The melting of arctic sea ice will likely create more icebergs, which may interfere with shipping lanes. This is already happening. In April off the coast of Newfoundland, cargo ships had to find new routes because their old ones were blocked off by icebergs.
 And ice melting in polar regions isn’t something we should celebrate, anyway.
@@ -124,7 +148,7 @@ Bad deals like the Paris Agreement would cost the U.S. billions of dollars, a lo
 The Paris Agreement would have cost the U.S. billions of dollars. In January, President Obama paid $500 million into the UN Green Climate fund, and the U.S. would have continued to contribute to the fund had it stayed in the Paris deal.
 But it wouldn’t have hurt job growth; CEOs of 30 of the biggest companies in the U.S. urged President Trump not to withdraw from Paris. The study Trump used to justify pulling out of the agreement was misleading. Leaving the deal is more likely to hurt job growth.";
             var result = ShittyParser.PuctuationParse(textinput);
-            result.Length.Should().Be(65);
+            result.Length.Should().Be(69);
             result.GetValue(0).Should().Equals("The Republican chairman of the House Committee on Science, Space and Technology thinks you’re all worrying too much about climate change.");
         }
     }

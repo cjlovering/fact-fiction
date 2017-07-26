@@ -205,6 +205,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\StatementController.cs" />
     <Compile Include="Controllers\TextBlobController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +214,14 @@
     <Compile Include="Migrations\201707251713150_Initial.cs" />
     <Compile Include="Migrations\201707251713150_Initial.Designer.cs">
       <DependentUpon>201707251713150_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707251902409_AddParentReferenceIds.cs" />
+    <Compile Include="Migrations\201707251902409_AddParentReferenceIds.Designer.cs">
+      <DependentUpon>201707251902409_AddParentReferenceIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707251925454_MakeTagsAndCreatedByNotRequired.cs" />
+    <Compile Include="Migrations\201707251925454_MakeTagsAndCreatedByNotRequired.Designer.cs">
+      <DependentUpon>201707251925454_MakeTagsAndCreatedByNotRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,6 +239,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FactOrFictionWeb - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\FactOrFictionWeb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FactOrFictionWeb.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -285,6 +296,7 @@
     <Content Include="Views\Reference\ListDetails.cshtml" />
     <Content Include="Views\Statement\Details.cshtml" />
     <Content Include="Views\TextBlob\Delete.cshtml" />
+    <Content Include="Views\Reference\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -303,6 +315,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707251713150_Initial.resx">
       <DependentUpon>201707251713150_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707251902409_AddParentReferenceIds.resx">
+      <DependentUpon>201707251902409_AddParentReferenceIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707251925454_MakeTagsAndCreatedByNotRequired.resx">
+      <DependentUpon>201707251925454_MakeTagsAndCreatedByNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

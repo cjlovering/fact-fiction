@@ -31,5 +31,14 @@ namespace FactOrFictionWeb.Controllers
             await db.Entry(statementModel).Collection(p => p.References).LoadAsync();
             return View(statementModel);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

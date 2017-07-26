@@ -13,7 +13,7 @@ namespace FactOrFictionTextHandling.StatementProducer
     public class StatementProducer
     {
         public ILuisClient LuisClient { get; set; }
-        StatementProducer(ILuisClient luisClient)
+        public StatementProducer(ILuisClient luisClient)
         {
             LuisClient = luisClient;
         }
@@ -43,7 +43,7 @@ namespace FactOrFictionTextHandling.StatementProducer
                     (StatementClassification)
                         Enum.Parse(typeof (StatementClassification), response.TopScoringIntent.Intent, ignoreCase: true);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 classification = StatementClassification.Other;
             }

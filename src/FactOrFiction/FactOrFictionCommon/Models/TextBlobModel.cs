@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using FactOrFictionCommon.Validators;
 using Newtonsoft.Json;
 
 namespace FactOrFictionWeb.Models
@@ -22,6 +23,7 @@ namespace FactOrFictionWeb.Models
         Other,
         SuggestedFact,
         SuggestedQuantitativeFact,
+        SuggestedOpinion
     }
 
     public class Statement
@@ -33,17 +35,27 @@ namespace FactOrFictionWeb.Models
         [Required(ErrorMessage = "Classification is required.")]
         public StatementClassification Classification { get; set; }
         public List<Reference> References { get; set; }
+        public Guid? TextBlobModelId { get; set; }
+
+        public Statement() { }
+
+        public Statement(Statement statement, List<Reference> references)
+        {
+            this.Id = statement.Id;
+            this.Text = statement.Text;
+            this.Classification = statement.Classification;
+            this.References = references;
+            this.TextBlobModelId = statement.TextBlobModelId;
+        }
     }
 
     public class Reference
     {
         [Required(ErrorMessage = "Id is required.")]
         public Guid Id { get; set; }
-        [Required(ErrorMessage = "CreatedBy is required.")]
         public string CreatedBy { get; set; }
 
         [Column("Tags")]
-        [Required(ErrorMessage = "Tags is required.")]
         public string TagsString { get; set; }
 
         [NotMapped]
@@ -53,6 +65,7 @@ namespace FactOrFictionWeb.Models
 
         [Column("Link")]
         [Required(ErrorMessage = "Link is required.")]
+        [UriValidator]
         public string LinkString { get; set; }
 
         [NotMapped]
@@ -61,5 +74,7 @@ namespace FactOrFictionWeb.Models
             get { return new Uri(this.LinkString); }
             set { this.LinkString = value.AbsoluteUri; }
         }
+
+        public Guid? StatementId { get; set; }
     }
 }

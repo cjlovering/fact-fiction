@@ -4,12 +4,8 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Text Blob Details</h2>
 
 <div>
-    <h4>@Model.Text</h4>
-    @Model.Id
-    <hr />
     @Html.Partial("../Statement/ListDetails", Model.Statements)
 </div>
 <p>

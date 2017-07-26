@@ -7,11 +7,14 @@
 <h2>Statement Details</h2>
 
 <div>
-    <h4>@Model.Text</h4>
     @Model.Id
+    <h4>@Model.Text</h4>
     <hr/>
+    <p>
+        @Html.ActionLink("Add reference", "Create", "Reference", new {parentId = @Model.Id}, null)
+    </p>
     @Html.Partial("../Reference/ListDetails", Model.References)
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index", "TextBlob")
+    @Html.ActionLink("Back to List", "Details", "TextBlob", new { id = Model.TextBlobModelId }, null)
 </p>

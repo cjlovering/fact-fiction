@@ -13,7 +13,8 @@ def writeLine(url, bias):
     page = urllib2.urlopen(url)
     soup = BeautifulSoup(page, 'html.parser')
     paragraphs = soup.find('div', attrs={'class':'entry clearfix'}).findAll('p')
-    factual = getTextWithLeading(paragraphs, 'Factual Reporting:').encode('utf-8').strip()
+    #factual = getTextWithLeading(paragraphs, 'Factual Reporting:').encode('utf-8').strip()
+    factual = "N/A"
     notes = stripWeirdChars(getTextWithLeading(paragraphs, 'Notes:').encode('utf-8').strip().replace(',', ';'))
     source = getTextWithLeading(paragraphs, 'Source:').encode('utf-8').strip()
     if (factual == ignore or notes == ignore or source == ignore):
@@ -41,6 +42,6 @@ def getAllUrls(url, bias):
         writeLine(link['href'], bias)
     
 
-url = 'https://mediabiasfactcheck.com/leftcenter/'
-getAllUrls(url, 'Left-Center Bias')
+url = 'https://mediabiasfactcheck.com/fake-news/'
+getAllUrls(url, 'Questionable Sources')
 #writeLine('https://mediabiasfactcheck.com/all-thats-fab/', 'Left Bias')
