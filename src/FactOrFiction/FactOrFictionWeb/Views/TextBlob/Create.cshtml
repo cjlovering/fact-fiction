@@ -13,13 +13,16 @@
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.TextAreaFor(model => model.Text, 10, 10, new { htmlAttributes = new { @class = "form-control" } } )
             <div style="padding-top:10px">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" id="CreateBtn" class="btn btn-default" />
             </div>
         </div>
         <vr />
-        <div class="form-group col-md-6">
-            @Html.Partial("Details", Model)
-        </div>
+        @if (Model.Statements.Count != 0) {
+            <div class="form-group col-md-6">
+                <label class="control-label" for="table">Here are your statements:</label>
+                @Html.Partial("../Statement/ListDetails", Model.Statements)
+            </div>
+        }
     </div>
 }
 <p>
