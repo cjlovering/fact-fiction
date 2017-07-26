@@ -19,6 +19,11 @@ namespace FactOrFictionCommon.Models
         {
         }
 
+        static TextBlobContext()
+        {
+            Database.SetInitializer<TextBlobContext>(new NullDatabaseInitializer<TextBlobContext>());
+        }
+
         public System.Data.Entity.DbSet<FactOrFictionCommon.Models.TextBlobModel> TextBlobModels { get; set; }
         public System.Data.Entity.DbSet<FactOrFictionCommon.Models.Statement> Statements { get; set; }
         public System.Data.Entity.DbSet<FactOrFictionCommon.Models.Reference> References { get; set; }

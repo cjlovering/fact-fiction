@@ -41,6 +41,15 @@ namespace FactOrFictionWeb.Controllers
             }
 
             await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
+            await db.Entry(textBlobModel).Collection(p => p.Entities).LoadAsync();
+            foreach (var e in textBlobModel.Entities)
+            {
+                e.Persona = PersonasDBLookups.ByName[e.Name].FirstOrDefault();
+                if (e.Persona != null)
+                {
+                    await e.Persona.FetchRecentStatements();
+                }
+            }
             return View(new TextBlobModel(textBlobModel));
         }
 
@@ -100,6 +109,26 @@ namespace FactOrFictionWeb.Controllers
                 var statementsWithReferences = await Task.WhenAll(statementTasks2);
                 textBlobModel.Statements = statementsWithReferences.ToList();
 
+                var entityFinder = new EntityFinder();
+                var entities = await entityFinder.GetEntities(textBlobModel.Text);
+                textBlobModel.Entities = entities
+                    .Select(e => new Entity
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedBy = "Microsoft Entity Linking",
+                        Name = entityFinder.ExtractEntityName(e),
+                        WikiUrl = entityFinder.ExtractEntityWikiUrlString(e),
+                        Matches = entityFinder.ExtractMatches(e)
+                            .Select(tuple => new Match
+                            {
+                                Id = Guid.NewGuid(),
+                                Text = tuple.Item1,
+                                Offset = tuple.Item2
+                            })
+                            .ToList()
+                    })
+                    .ToList();
+
                 // Save TextBlob
                 db.TextBlobModels.Add(textBlobModel);
                 await db.SaveChangesAsync();
@@ -136,7 +165,7 @@ namespace FactOrFictionWeb.Controllers
             }
 
             await db.Entry(textBlobModel).Collection(p => p.Statements).LoadAsync();
-
+            await db.Entry(textBlobModel).Collection(p => p.Entities).LoadAsync();
             db.TextBlobModels.Remove(textBlobModel);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

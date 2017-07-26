@@ -16,6 +16,31 @@
     white-space: normal;
 }
 
+dl.entities {
+}
+
+.MostlyFalse, .MostlyFalse_count {
+    color: indianred;
+}
+
+.Half-True, .Half-True_count {
+    color: forestgreen;
+}
+
+.True, .True_count {
+    color: lightgreen;
+    font-weight: bold;
+}
+
+.False, .False_count, .PantsonFire, .PantsonFire_count {
+    color: red;
+    font-weight: bold;
+}
+
+.MostlyTrue, .MostlyTrue_count {
+    color: darkseagreen;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select {
