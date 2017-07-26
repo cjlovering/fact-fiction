@@ -20,7 +20,7 @@ namespace FactOrFictionTextHandling.StatementProducer
 
         public List<Task<Statement>> GetStatements(TextBlobModel textBlob)
         {
-            var statementTasks = ShittyParser.PuctuationParse(textBlob.Text).Select
+            var statementTasks = WorkingParser.PuctuationParse(textBlob.Text).Select
                 (async text => new Statement
                     {
                         Id = Guid.NewGuid(),
