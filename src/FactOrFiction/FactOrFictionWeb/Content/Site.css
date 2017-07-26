@@ -32,7 +32,7 @@ dl.entities {
     font-weight: bold;
 }
 
-.False, .False_count {
+.False, .False_count, .PantsonFire, .PantsonFire_count {
     color: red;
     font-weight: bold;
 }

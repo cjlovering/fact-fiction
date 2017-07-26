@@ -218,7 +218,7 @@ namespace FactOrFictionCommon.Models
 
         private static string ToSlug(string key)
         {
-            return key.Replace(" ", "");
+            return key.Replace(" ", "").Replace("!", "");
         }
 
         public string GetFullUrl()
