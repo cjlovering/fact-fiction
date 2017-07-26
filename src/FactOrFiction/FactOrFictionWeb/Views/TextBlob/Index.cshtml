@@ -3,12 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
+<div style="padding-top:15px">
+    <p><a href="/TextBlob/Create" class="btn btn-default btn-lg">Create New</a></p>
+</div>
+
+                      @*<p>
+                          @Html.ActionLink("Create New", "Create", "TextBlob")
+                      </p>*@
 
 <h2>Submitted Narratives</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create", "TextBlob")
-</p>
 <table class="table">
     <tr>
         <th>
