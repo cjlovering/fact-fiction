@@ -27,7 +27,7 @@
                         <a href="@item.Link">@item.Link</a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Bias)
+                        @Html.Raw(@item.Bias?.DisplayString)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedBy)

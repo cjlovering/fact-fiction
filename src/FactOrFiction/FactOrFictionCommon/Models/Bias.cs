@@ -48,9 +48,14 @@ namespace FactOrFictionCommon.Models
             }
         }
         //Instead, use this: awk -F "\"*,\"*" '{print "new Bias(source: \""$1"\", factuality: \""$2"\", biasType: \""$3"\", notes: \"" $4 "\"),"}' index.csv
-        public string ToEvalString()
+        public string DisplayString
         {
-            return $"new Bias(source: {Source}, factuality: {Factuality}, biasType: {BiasType}), notes: {Notes})";
+            get
+            {
+                return $"Bias Type: {BiasType}<BR/>\n" +
+                    $"Factuality: {Factuality}<BR/>\n" +
+                    $"Notes: {Notes}<BR/>";
+            }
         }
     }
 }
