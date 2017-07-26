@@ -27,5 +27,4 @@ namespace FactOrFictionTextHandling.Luis
         public List<IntentObj> Intents { get; set; }
         public List<EntityObj> Entities { get; set; }
     }
-
 }

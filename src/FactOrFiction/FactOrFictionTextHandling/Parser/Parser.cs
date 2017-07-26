@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class ShittyParser
+    public class WorkingParser
     {
         private static string[] GetWords(string input)
         {
