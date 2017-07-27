@@ -177,14 +177,14 @@ namespace FactOrFictionWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-//#if (!DEBUG)
-//            filterContext.ExceptionHandled = true;
-//#endif
+//        protected override void OnException(ExceptionContext filterContext)
+//        {
+////#if (!DEBUG)
+////            filterContext.ExceptionHandled = true;
+////#endif
 
-            filterContext.Result = View("Error");
-        }
+//            filterContext.Result = View("Error");
+//        }
 
         protected override void Dispose(bool disposing)
         {
