@@ -12,7 +12,7 @@ namespace FactOrFictionUrlSuggestions
         public static void Run(string[] args)
         {
             var classifier = new URLClassification();
-            var finder = new BingV7Finder();
+            var finder = new BingV5Finder();
             var query = ReadLine();
             while (!string.IsNullOrEmpty(query))
             {
@@ -35,7 +35,7 @@ namespace FactOrFictionUrlSuggestions
                 var classifications = await Task.WhenAll(classificationTasks);
                 for (int i = 0; i < urls.Count; i++)
                 {
-                    Console.WriteLine($"  [{classifications[i]}] ({ExtractDomain(urls[i])}) {urls[i]}");
+                    Console.WriteLine($"  [{classifications[i].BiasType}] ({ExtractDomain(urls[i])}) {urls[i]}");
                 }
 
                 Console.WriteLine();

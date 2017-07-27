@@ -10,7 +10,7 @@ namespace FactOrFictionUrlSuggestions
     {
         public static IFinder CreateFinder()
         {
-            return new BingV7Finder();
+            return new BingV5Finder();
         }
     }
 }
