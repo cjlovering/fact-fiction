@@ -8,7 +8,7 @@ namespace FactOrFictionUrlSuggestions
     public sealed class BingV7Finder : CognitiveServicesFinder
     {
         protected override string Endpoint { get; } = "https://api.cognitive.microsoft.com/bing/v7.0/search";
-        protected override string SubscriptionKey { get; } = "d0ae93fad8c249fda81005fb56d79b3d";
+        protected override string SubscriptionKey { get; } = "9c9545393ee745a39e1ac6f6e0f7e9b6";
 
         protected override IReadOnlyList<Uri> ParseJson(JObject json)
         {

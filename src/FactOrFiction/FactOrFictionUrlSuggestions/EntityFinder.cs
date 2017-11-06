@@ -14,7 +14,7 @@ namespace FactOrFictionUrlSuggestions
     {
         protected override string Endpoint { get; } = "https://westus.api.cognitive.microsoft.com/entitylinking/v1.0/link";
 
-        protected override string SubscriptionKey { get; } = "51f25ff6c93a4b60bc6061f3bb463586";
+        protected override string SubscriptionKey { get; } = "a2d4e8071a1f48dd93ea5986ed265a88";
 
         public async Task<JToken> GetEntities(string query)
         {

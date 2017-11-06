@@ -77,7 +77,7 @@ namespace FactOrFictionWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var statementProducer = new StatementProducer(new LuisClientFactory("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=3a134d05a51641a18fecd02f9cf4bfd7&timezoneOffset=0&verbose=true&q=").Create());
+                var statementProducer = new StatementProducer(new LuisClientFactory("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=784cc32302a84581ab894febc8775393&timezoneOffset=0&verbose=true&q=").Create());
                 var finder = FinderFactory.CreateFinder();
                 var urlClassifier = new URLClassification();
 
