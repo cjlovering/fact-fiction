@@ -243,6 +243,8 @@ src/FactOrFiction/FactOrFictionUrlSuggestions/bin
 src/FactOrFiction/FactOrFictionUrlSuggestions/obj
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 
+package-lock.json
+
 # ignore IntelliJ project and ouput files
 target/
 .idea/
