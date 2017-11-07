@@ -241,6 +241,7 @@ src/FactOrFiction/FactOrFictionTest/obj
 src/FactOrFiction/FactOrFictionTest/App_Data
 src/FactOrFiction/FactOrFictionUrlSuggestions/bin
 src/FactOrFiction/FactOrFictionUrlSuggestions/obj
+src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 
 # ignore IntelliJ project and ouput files
 target/
