@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FactOrFictionFrontend.Models;
+using FactOrFictionFrontend.Models.RelationshipModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using FactOrFictionFrontend.Models;
 
 namespace FactOrFictionFrontend.Data
 {
@@ -12,8 +9,11 @@ namespace FactOrFictionFrontend.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-        }
+        {}
+
+        public DbSet<TextEntry> TextEntries { get; set; }
+        public DbSet<Sentence> Sentences { get; set; }
+        public DbSet<Vote> Votes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,6 +21,7 @@ namespace FactOrFictionFrontend.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<Vote>().HasKey(table => new { table.UserId, table.SentenceId });
         }
     }
 }
