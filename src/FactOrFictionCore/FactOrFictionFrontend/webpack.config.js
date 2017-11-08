@@ -1,7 +1,8 @@
-﻿var path = require('path');
+/// <binding ProjectOpened='Watch - Development' />
+var path = require('path');
 
 module.exports = {
-    entry: path.join(__dirname, 'wwwroot/components/index.jsx'),
+    entry: path.join(__dirname, 'App/index.jsx'),
     output: {
         path: path.join(__dirname, 'wwwroot/js'),
         filename: 'bundle.js'
@@ -11,20 +12,12 @@ module.exports = {
             // Transform JSX in .jsx files
             {
                 test: /\.jsx$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react-es2015']
-                }
+                loader: 'babel-loader'
             }
-        ],
+        ]
     },
     resolve: {
         // Allow require('./blah') to require blah.jsx
         extensions: ['.js', '.jsx']
-    },
-    externals: {
-        // Use external version of React (from CDN for client-side, or
-        // bundled with ReactJS.NET for server-side)
-        react: 'React'
     }
 };

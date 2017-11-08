@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-FactOrFictionFrontend-5F03D0E4-56BC-4DB2-A026-7F1B31D6ECAC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="App\components\MainPane.jsx" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
