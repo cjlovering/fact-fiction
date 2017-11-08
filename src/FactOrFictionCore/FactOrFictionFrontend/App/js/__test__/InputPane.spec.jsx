@@ -21,6 +21,10 @@ describe('InputPane', () => {
 		expect(inputPane.find('textarea').text()).toEqual('Enter some text (news article...)!');
 	});
 
+    it('InputPane requires addFact prop', () => {
+        expect(inputPane.props().addFact).toBeDefined();
+    });
+
     it('Button click calls addText', () => {
         const button = inputPane.find('button').first();
         const input  = inputPane.find('textarea').first();

@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="App\components\MainPane.jsx" />
+    <Compile Remove="App\components\**" />
+    <Content Remove="App\components\**" />
+    <EmbeddedResource Remove="App\components\**" />
+    <None Remove="App\components\**" />
   </ItemGroup>
 
 

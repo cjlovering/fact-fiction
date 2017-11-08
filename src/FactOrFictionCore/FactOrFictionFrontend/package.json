@@ -35,8 +35,8 @@
   },
   "jest": {
     "setupFiles": [
-      "./App/__test__/__setup__/polyfill-shim.js",
-      "./App/__test__/__setup__/enzyme-adapter.js"
+      "./App/js/__test__/__setup__/polyfill-shim.js",
+      "./App/js/__test__/__setup__/enzyme-adapter.js"
     ]
   }
 }

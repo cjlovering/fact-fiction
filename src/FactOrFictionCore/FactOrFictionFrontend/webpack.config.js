@@ -2,7 +2,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: path.join(__dirname, 'App/index.jsx'),
+    entry: path.join(__dirname, 'App/js/index.jsx'),
     output: {
         path: path.join(__dirname, 'wwwroot/js'),
         filename: 'bundle.js'
