@@ -1,4 +1,4 @@
-﻿import { ADD_FACT } from './actionTypes';
+﻿import { ADD_FACT, CHANGE_VIEW } from '../constants/actionTypes';
 
 /* action creators */
 const addFact = text => {
@@ -8,4 +8,11 @@ const addFact = text => {
     };
 };
 
-export { addFact };
+const changeView = view => {
+    return {
+        type: CHANGE_VIEW,
+        view
+    };
+};
+
+export { addFact, changeView };

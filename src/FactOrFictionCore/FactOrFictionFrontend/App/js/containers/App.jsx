@@ -5,22 +5,26 @@ import { connect } from 'react-redux'
 import MainPane from '../components/MainPane'
 import * as Actions from '../actions'
 
-const App = ({ facts, actions }) => (
+const App = ({ view, facts, actions }) => (
     <div>
         <MainPane 
-			facts={facts} 
-			addFact={actions.addFact}
+			view={view}
+            facts={facts} 
+            addFact={actions.addFact}
+            changeView={actions.changeView}
 		/>
     </div>
 );
 
 App.propTypes = {
-    facts: PropTypes.array.isRequired,
+    view: PropTypes.string.isRequired,
+    facts: PropTypes.array.isRequired,    
     actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    facts: state
+    view: state.view,
+    facts: state.facts
 });
 
 const mapDispatchToProps = dispatch => ({
