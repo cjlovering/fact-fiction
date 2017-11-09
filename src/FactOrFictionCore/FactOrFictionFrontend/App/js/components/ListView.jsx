@@ -2,11 +2,12 @@
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import FactCard from './FactCard';
+import _ from '../../stylesheets/components/_ListView.scss';
 
 export default class ListView extends React.Component {
     render() {
         return (
-            <div>
+            <div className='list-view'>
                 {this.props.facts.map(fact => <FactCard fact={fact} key={shortid.generate()} />)}
             </div>
         );

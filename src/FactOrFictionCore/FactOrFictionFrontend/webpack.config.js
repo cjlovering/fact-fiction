@@ -1,23 +1,47 @@
-/// <binding ProjectOpened='Watch - Development' />
-var path = require('path');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: path.join(__dirname, 'App/js/index.jsx'),
     output: {
-        path: path.join(__dirname, 'wwwroot/js'),
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'wwwroot/'),
+        filename: 'js/bundle.js'
     },
     module: {
-        loaders: [
-            // Transform JSX in .jsx files
+        rules: [
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            query: {
+                                modules: true,
+                                sourceMap: true,
+                                importLoaders: 2,
+                                localIdentName: '[local]'
+                            }
+                        },
+                        'sass-loader'
+                    ]
+                }),
+            },
             {
                 test: /\.jsx$/,
-                loader: 'babel-loader'
-            }
+                use: [
+                    { loader: 'babel-loader' }
+                ]
+            }  
         ]
     },
+    plugins: [
+        new ExtractTextPlugin({
+            filename: 'css/style.css',
+            allChunks: true
+        })
+    ],
     resolve: {
-        // Allow require('./blah') to require blah.jsx
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.scss' ]
     }
 };

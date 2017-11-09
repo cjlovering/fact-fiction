@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
+import _ from '../../stylesheets/components/_FactCard.scss'
 
 export default class FactCard extends React.Component {
     render() {

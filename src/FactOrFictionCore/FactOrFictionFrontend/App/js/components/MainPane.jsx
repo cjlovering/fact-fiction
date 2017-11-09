@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import InputPane from './InputPane';
 import ListView from './ListView';
 import { VIEW_INPUT, VIEW_RESULT } from '../constants/viewTypes';
+import _ from '../../stylesheets/components/_MainPane.scss';
 
 export default class MainPane extends React.Component {
     render() {
