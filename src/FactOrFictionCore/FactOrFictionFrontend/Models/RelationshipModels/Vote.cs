@@ -10,10 +10,10 @@ namespace FactOrFictionFrontend.Models.RelationshipModels
         public VoteType Type { get; set; }
 
         public string UserId { get; set; }
-        public int SentenceId { get; set; }
+        public Guid SentenceId { get; set; }
+
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-
         public virtual Sentence Sentence { get; set; }
     }
 

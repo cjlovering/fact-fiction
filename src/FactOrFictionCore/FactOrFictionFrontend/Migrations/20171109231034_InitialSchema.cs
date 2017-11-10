@@ -158,8 +158,7 @@ namespace FactOrFictionFrontend.Migrations
                 name: "TextEntries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -179,11 +178,10 @@ namespace FactOrFictionFrontend.Migrations
                 name: "Sentences",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Confidence = table.Column<float>(type: "real", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TextEntryId = table.Column<int>(type: "int", nullable: false),
+                    TextEntryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     VoteFalse = table.Column<int>(type: "int", nullable: false),
                     VoteTrue = table.Column<int>(type: "int", nullable: false)
@@ -195,6 +193,32 @@ namespace FactOrFictionFrontend.Migrations
                         name: "FK_Sentences_TextEntries_TextEntryId",
                         column: x => x.TextEntryId,
                         principalTable: "TextEntries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SentenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => new { x.UserId, x.SentenceId });
+                    table.ForeignKey(
+                        name: "FK_Votes_Sentences_SentenceId",
+                        column: x => x.SentenceId,
+                        principalTable: "Sentences",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Votes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -247,6 +271,11 @@ namespace FactOrFictionFrontend.Migrations
                 name: "IX_TextEntries_UserId",
                 table: "TextEntries",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_SentenceId",
+                table: "Votes",
+                column: "SentenceId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -267,10 +296,13 @@ namespace FactOrFictionFrontend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Sentences");
+                name: "Votes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Sentences");
 
             migrationBuilder.DropTable(
                 name: "TextEntries");

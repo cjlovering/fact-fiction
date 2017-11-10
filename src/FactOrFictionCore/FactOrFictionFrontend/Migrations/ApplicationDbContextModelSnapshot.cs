@@ -77,7 +77,7 @@ namespace FactOrFictionFrontend.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<int>("SentenceId");
+                    b.Property<Guid>("SentenceId");
 
                     b.Property<DateTime>("Timestamp");
 
@@ -92,14 +92,14 @@ namespace FactOrFictionFrontend.Migrations
 
             modelBuilder.Entity("FactOrFictionFrontend.Models.Sentence", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Confidence");
 
                     b.Property<string>("Content");
 
-                    b.Property<int>("TextEntryId");
+                    b.Property<Guid>("TextEntryId");
 
                     b.Property<int>("Type");
 
@@ -116,7 +116,7 @@ namespace FactOrFictionFrontend.Migrations
 
             modelBuilder.Entity("FactOrFictionFrontend.Models.TextEntry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Content");
