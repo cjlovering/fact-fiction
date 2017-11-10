@@ -1,5 +1,5 @@
-﻿using FactOrFictionFrontend.Models;
-using FactOrFictionFrontend.Models.RelationshipModels;
+﻿using FactOrFictionCommon.Models;
+using FactOrFictionCommon.Models.RelationshipModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

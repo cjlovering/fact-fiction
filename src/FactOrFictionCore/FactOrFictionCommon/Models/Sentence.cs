@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FactOrFictionFrontend.Models
+namespace FactOrFictionCommon.Models
 {
     public class Sentence
     {

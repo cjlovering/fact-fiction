@@ -1,5 +1,5 @@
 ﻿using FactOrFictionFrontend.Data;
-using FactOrFictionFrontend.Models;
+using FactOrFictionCommon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

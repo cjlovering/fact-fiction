@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FactOrFictionFrontend.Models
+namespace FactOrFictionCommon.Models
 {
     public class TextEntry
     {

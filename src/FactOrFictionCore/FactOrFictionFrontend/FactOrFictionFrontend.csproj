@@ -7,9 +7,23 @@
 
   <ItemGroup>
     <Compile Remove="App\components\**" />
+    <Compile Remove="Migrations\**" />
+    <Compile Remove="Models\**" />
     <Content Remove="App\components\**" />
+    <Content Remove="Migrations\**" />
+    <Content Remove="Models\**" />
     <EmbeddedResource Remove="App\components\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="Models\**" />
     <None Remove="App\components\**" />
+    <None Remove="Migrations\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20171110180540_InitialSchema.cs" />
+    <Compile Include="Migrations\20171110180540_InitialSchema.Designer.cs" />
+    <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
 
 
@@ -25,6 +39,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FactOrFictionCommon\FactOrFictionCommon.csproj" />
   </ItemGroup>
 
 </Project>

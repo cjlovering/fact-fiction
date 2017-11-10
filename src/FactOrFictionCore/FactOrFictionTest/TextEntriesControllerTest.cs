@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using FactOrFictionFrontend.Controllers;
 using Moq;
 using Microsoft.AspNetCore.Identity;
-using FactOrFictionFrontend.Models;
+using FactOrFictionCommon.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 

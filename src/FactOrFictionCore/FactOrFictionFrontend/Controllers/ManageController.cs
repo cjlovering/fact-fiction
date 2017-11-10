@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FactOrFictionFrontend.Models;
-using FactOrFictionFrontend.Models.ManageViewModels;
+using FactOrFictionCommon.Models;
+using FactOrFictionCommon.Models.ManageViewModels;
 using FactOrFictionFrontend.Services;
 
 namespace FactOrFictionFrontend.Controllers

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FactOrFictionFrontend.Models.RelationshipModels
+namespace FactOrFictionCommon.Models.RelationshipModels
 {
     public class Vote
     {

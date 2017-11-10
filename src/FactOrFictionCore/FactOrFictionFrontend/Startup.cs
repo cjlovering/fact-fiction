@@ -1,5 +1,5 @@
 ﻿using FactOrFictionFrontend.Data;
-using FactOrFictionFrontend.Models;
+using FactOrFictionCommon.Models;
 using FactOrFictionFrontend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

@@ -1,6 +1,6 @@
 using System;
 
-namespace FactOrFictionFrontend.Models
+namespace FactOrFictionCommon.Models
 {
     public class ErrorViewModel
     {
