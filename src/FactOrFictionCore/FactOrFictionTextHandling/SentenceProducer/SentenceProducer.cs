@@ -23,6 +23,7 @@ namespace FactOrFictionTextHandling.SentenceProducer
                     {
                         Id = Guid.NewGuid(),
                         Content = text.Value,
+                        Position = text.Key,
                         Type = await GetStatementClassification(text.Value),
                         TextEntryId = textEntry.Id,
                         VoteFalse = 0,
@@ -40,9 +41,19 @@ namespace FactOrFictionTextHandling.SentenceProducer
             SentenceType classification = SentenceType.OTHER;
             try
             {
-                classification =
-                    (SentenceType)
-                        Enum.Parse(typeof (SentenceType), response.TopScoringIntent.Intent, ignoreCase: true);
+                switch (response.TopScoringIntent.Intent)
+                {
+                    case "SuggestedFact":
+                    case "SuggestedQuantitativeFact":
+                        classification = SentenceType.OBJECTIVE;
+                        break;
+                    case "SuggestedOpinion":
+                        classification = SentenceType.SUBJECTIVE;
+                        break;
+                    default:
+                        classification = SentenceType.OTHER;
+                        break;
+                }
             }
             catch (ArgumentException)
             {

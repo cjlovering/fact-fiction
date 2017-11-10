@@ -10,7 +10,10 @@ export default class ListView extends React.Component {
         return (
             <div className='list-view'>
                 {entries.map(
-                    entry => <FactCard fact={entry} key={shortid.generate()} />)}
+                    entry => {
+                        console.log(entry.id);
+                        return <FactCard fact={entry.sentence + " (" + entry.type + ")"} key={shortid.generate()} />
+                    })}
             </div>
         );
     }

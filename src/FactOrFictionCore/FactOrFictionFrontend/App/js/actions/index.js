@@ -34,7 +34,7 @@ const recieveTextEntryTokens = (text, json) => {
     return {
         type: RECIEVE_TEXT_ENTRY,
         text,
-        textEntryTokens: [ json.content ],
+        textEntryTokens: json.sentences,
         receivedAt: Date.now()
     };
 };

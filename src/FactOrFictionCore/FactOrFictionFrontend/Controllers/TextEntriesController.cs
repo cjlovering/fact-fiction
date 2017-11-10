@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using FactOrFictionTextHandling.Luis;
+using FactOrFictionTextHandling.SentenceProducer;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -15,6 +17,7 @@ namespace FactOrFictionFrontend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private const string LUIS_URL = "https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=784cc32302a84581ab894febc8775393&timezoneOffset=0&verbose=true&q=";
 
         public TextEntriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -32,6 +35,7 @@ namespace FactOrFictionFrontend.Controllers
             }
 
             var textEntries = from entry in _context.TextEntries
+                              orderby entry.CreatedAt descending
                               select entry;
 
             return View(await textEntries.ToListAsync());
@@ -66,22 +70,31 @@ namespace FactOrFictionFrontend.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[AllowAnonymous]
         public async Task<IActionResult> Create([Bind("Content")] TextEntry textEntry)
         {
             if (ModelState.IsValid)
             {
+                var sentenceProducer = new SentenceProducer(new LuisClientFactory(LUIS_URL).Create());
                 textEntry.Id = Guid.NewGuid();
                 textEntry.UserId = _userManager.GetUserId(User);
                 textEntry.CreatedAt = DateTime.Now;
 
+                // Break text entry to sentences then send them to LUIS in parallel
+                var sentenceTasks = Task.WhenAll(sentenceProducer.GetStatements(textEntry));
+                var sentences = await sentenceTasks;
+
+                Array.Sort(sentences);
+
                 _context.Add(textEntry);
+                _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
-                return Json(new
-                {
-                    textEntry.Content,
-                    textEntry.CreatedAt,
+                return Json(new {
+                    Sentences = sentences.Select(sent => new
+                    {
+                        Id = sent.Id,
+                        Sentence = sent.Content,
+                        Type = sent.Type.ToString()
+                    })
                 });
             }
             return View(textEntry);
