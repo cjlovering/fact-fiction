@@ -1,10 +1,10 @@
 ﻿import { combineReducers } from 'redux'
-import facts from './facts'
 import view from './view'
+import textEntry from './textEntry'
 
 const root = combineReducers({
-  view,
-  facts
+    view,
+    textEntry
 })
 
 export default root;

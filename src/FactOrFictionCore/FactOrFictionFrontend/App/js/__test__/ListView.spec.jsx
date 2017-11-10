@@ -10,11 +10,11 @@ describe('ListView', () => {
     
     beforeEach(() => {
         state = ["hi"]
-        listView = mount(<ListView facts={state} />);
+        listView = mount(<ListView entries={state} />);
     });
 
-    it('ListView requires facts prop', () => {
-        expect(listView.props().facts).toBeDefined();
+    it('ListView requires entries prop', () => {
+        expect(listView.props().entries).toBeDefined();
     });
 
     it('ListView renders nested components == 1', () => {
@@ -23,13 +23,13 @@ describe('ListView', () => {
 
     it('ListView renders nested components == number of facts', () => {
         state = []
-        listView = mount(<ListView facts={state} />);
+        listView = mount(<ListView entries={state} />);
         expect(listView.find('FactCard').length).toEqual(0);
     });
 
     it('ListView renders nested components == number of facts', () => {
         state = ["hi", "hello"]
-        listView = mount(<ListView facts={state} />);
+        listView = mount(<ListView entries={state} />);
         expect(listView.find('FactCard').length).toEqual(2);
     });
 });

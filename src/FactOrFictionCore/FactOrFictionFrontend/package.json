@@ -25,6 +25,7 @@
     "jest": "^21.2.1",
     "jsx-loader": "^0.13.2",
     "react-test-renderer": "^16.0.0",
+    "redux-logger": "^3.0.6",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.19.0"
   },
@@ -38,6 +39,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "segoe-fonts": "^1.0.1",
+    "redux-thunk": "^2.2.0",
     "shortid": "^2.2.8",
     "webpack": "^3.8.1"
   },

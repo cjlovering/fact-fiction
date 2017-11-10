@@ -6,11 +6,14 @@ import InputPane from '../components/InputPane.jsx';
 describe('InputPane', () => {
 
     let inputPane;
-    let addFact;
+    let fetchTextEntry;
+    let changeView;    
 
     beforeEach(() => {
-        addFact = jest.fn();
-        inputPane = mount(<InputPane addFact={addFact} />);
+        fetchTextEntry = jest.fn();
+        changeView = jest.fn();
+        inputPane = mount(
+            <InputPane fetchTextEntry={fetchTextEntry} changeView={changeView} />);
     });
     
     it('InputPane has a button', () => {
@@ -21,8 +24,12 @@ describe('InputPane', () => {
 		expect(inputPane.find('textarea').text()).toEqual('Enter some text (news article...)!');
 	});
 
-    it('InputPane requires addFact prop', () => {
-        expect(inputPane.props().addFact).toBeDefined();
+    it('InputPane requires changeView prop', () => {
+        expect(inputPane.props().changeView).toBeDefined();
+    });
+
+    it('InputPane requires fetchTextEntry prop', () => {
+        expect(inputPane.props().fetchTextEntry).toBeDefined();
     });
 
     it('Button click calls addText', () => {
@@ -30,6 +37,7 @@ describe('InputPane', () => {
         const input  = inputPane.find('textarea').first();
         input.simulate('change', { target: { value: 'Texting is easy as 1-2-3!' } });
         button.simulate('click');
-        expect(addFact).toBeCalledWith('Texting is easy as 1-2-3!');
+        expect(fetchTextEntry).toBeCalledWith('Texting is easy as 1-2-3!');
+        expect(changeView).toBeCalled();        
     });
 });

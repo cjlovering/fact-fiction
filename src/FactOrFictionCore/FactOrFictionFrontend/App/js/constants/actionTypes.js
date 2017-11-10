@@ -1,2 +1,5 @@
 ﻿export const ADD_FACT = 'ADD_FACT';
 export const CHANGE_VIEW = 'CHANGE_VIEW';
+export const POST_TEXT_ENTRY = 'POST_TEXT_ENTRY';
+export const RECIEVE_TEXT_ENTRY = 'RECIEVE_TEXT_ENTRY';
+export const INVALIDATE_TEXT_ENTRY = 'INVALIDATE_TEXT_ENTRY';

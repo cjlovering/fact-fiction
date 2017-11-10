@@ -8,4 +8,3 @@ export default (state = VIEW_INPUT, view) => {
             return state;
     }
 }
-

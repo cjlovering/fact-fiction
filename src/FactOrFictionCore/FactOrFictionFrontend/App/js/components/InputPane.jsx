@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import _ from '../../stylesheets/components/_InputPane.scss';
+import { VIEW_RESULT } from '../constants/viewTypes';
 
 export default class InputPane extends React.Component {
 	constructor(props) {
@@ -11,28 +12,35 @@ export default class InputPane extends React.Component {
 	}
 
     render() {
+		const { changeView, fetchTextEntry } = this.props;
+		const { textEntry } = this.state;
         return (
             <div>
 				<div>
                     <textarea 
                         className="input-box"
 						rows="10" 
-						value={this.state.textEntry}
+						value={textEntry}
 						onChange={e => this.setState({ textEntry: e.target.value })}
 					/>
 				</div>
-                <button
-                    className="start-button ms-Button"
+
+                <button 
+					onClick={() => {
+						fetchTextEntry(textEntry);
+						changeView(VIEW_RESULT);
+					}}
+					className="start-button ms-Button"
                     id="get-data-from-selection"
-                    onClick={() => this.props.addFact(this.state.textEntry)}
-                >
+				>
                     <span className="ms-Button-label">Start</span>
-                </button>
+				</button>
 			</div>
         );
     }
 }
 
 InputPane.propTypes = {
-    addFact: PropTypes.func.isRequired
+	changeView: PropTypes.func.isRequired,
+	fetchTextEntry: PropTypes.func.isRequired	
 }

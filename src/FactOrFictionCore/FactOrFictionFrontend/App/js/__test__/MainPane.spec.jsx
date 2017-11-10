@@ -7,28 +7,35 @@ import { VIEW_INPUT, VIEW_RESULT } from '../constants/viewTypes';
 describe('MainPane', () => {
 
     let mainPane;
-    let addFact;
+    let mainPaneResult;
     let changeView;
-    let view;
-    let facts;
+    let textEntryTokens;
+    let fetchTextEntry;
     
     beforeEach(() => {
-        addFact = jest.fn();
+        fetchTextEntry = jest.fn();
         changeView = jest.fn();
-        view = VIEW_INPUT;
-        facts = ["hi"];
+        textEntryTokens = ["hi"];
         mainPane = mount(
             <MainPane 
-                addFact={addFact} 
+                fetchTextEntry={fetchTextEntry} 
                 changeView={changeView} 
-                facts={facts} 
-                view={view} 
+                textEntryTokens={textEntryTokens} 
+                view={VIEW_INPUT} 
+            />
+        );
+        mainPaneResult = mount(
+            <MainPane 
+                fetchTextEntry={fetchTextEntry} 
+                changeView={changeView} 
+                textEntryTokens={textEntryTokens} 
+                view={VIEW_RESULT} 
             />
         );
     });
-    
-    it('MainPane requires addFact prop', () => {
-        expect(mainPane.props().addFact).toBeDefined();
+
+    it('MainPane requires fetchTextEntry prop', () => {
+        expect(mainPane.props().fetchTextEntry).toBeDefined();
     });
 
     it('MainPane requires changeView prop', () => {
@@ -39,18 +46,21 @@ describe('MainPane', () => {
         expect(mainPane.props().view).toBeDefined();
     });
 
-    it('MainPane requires facts prop', () => {
-        expect(mainPane.props().facts).toBeDefined();
+    it('MainPane requires textEntryTokens prop', () => {
+        expect(mainPane.props().textEntryTokens).toBeDefined();
     });
 
-    it('App renders nested components', () => {
-        expect(mainPane.find('ListView').length).toEqual(1);
+    it('App renders nested components (input)', () => {
         expect(mainPane.find('InputPane').length).toEqual(1);
     });
 
+    it('App renders nested components (result)', () => {
+        expect(mainPaneResult.find('ListView').length).toEqual(1);
+    });
+
     it('Button click calls changeView', () => {
-        let button = mainPane.find('.change-view-button').first();
+        let button = mainPaneResult.find('.change-view-button').first();
         button.simulate('click');
-        expect(changeView).toBeCalledWith(VIEW_RESULT);
+        expect(changeView).toBeCalledWith(VIEW_INPUT);
     });
 });

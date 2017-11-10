@@ -6,14 +6,16 @@ import _ from '../../stylesheets/components/_ListView.scss';
 
 export default class ListView extends React.Component {
     render() {
+        const { entries } = this.props;
         return (
             <div className='list-view'>
-                {this.props.facts.map(fact => <FactCard fact={fact} key={shortid.generate()} />)}
+                {entries.map(
+                    entry => <FactCard fact={entry} key={shortid.generate()} />)}
             </div>
         );
     }
 }
 
 ListView.propTypes = {
-    facts: PropTypes.array.isRequired
+    entries: PropTypes.array.isRequired
 }

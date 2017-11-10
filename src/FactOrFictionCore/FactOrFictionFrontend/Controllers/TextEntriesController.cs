@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -31,7 +32,6 @@ namespace FactOrFictionFrontend.Controllers
             }
 
             var textEntries = from entry in _context.TextEntries
-                              where entry.UserId == user.Id
                               select entry;
 
             return View(await textEntries.ToListAsync());
@@ -66,7 +66,8 @@ namespace FactOrFictionFrontend.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        //[AllowAnonymous]
         public async Task<IActionResult> Create([Bind("Content")] TextEntry textEntry)
         {
             if (ModelState.IsValid)
@@ -79,8 +80,8 @@ namespace FactOrFictionFrontend.Controllers
                 await _context.SaveChangesAsync();
                 return Json(new
                 {
-                    content = textEntry.Content,
-                    createdAt = textEntry.CreatedAt,
+                    textEntry.Content,
+                    textEntry.CreatedAt,
                 });
             }
             return View(textEntry);
