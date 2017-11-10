@@ -9,22 +9,31 @@ export default class MainPane extends React.Component {
     render() {
         const currentPane = this.props.view === VIEW_INPUT ? (
             // Input View
-            <div>
-                <InputPane addFact={this.props.addFact} />
-                <ListView facts={this.props.facts} />
-                <button 
-                    className={"change-view-button"}
-                    onClick={() => this.props.changeView(VIEW_RESULT)}
-                >
-                    View Results
-                </button>
-            </div>
+            <div className="container">
+                <div className="row">
+                    <div className="input-pane col-sm-6 col-md-6 col-lg-6">
+                        <InputPane addFact={this.props.addFact} />
+                    </div>
+                    <div className="col-sm-6 col-md-6 col-lg-6">
+                        <ListView facts={this.props.facts} />
+                        <button 
+                            className={"change-view-button ms-Button"}
+                            onClick={() => this.props.changeView(VIEW_RESULT)}
+                        >
+                            <span className="ms-Button-icon">
+                                <i className="ms-Icon ms-Icon--plus" />
+                            </span>
+                            <span className="ms-Button-label">View Result</span>
+                        </button>
+                    </div>
+                </div>
+           </div>
         ) : (
             // Result View
-            <div>
+            <div className="result-view">
                 <p> Results </p>
                 <button 
-                    className={"change-view-button"}
+                    className={"change-view-button ms-Button"}
                     onClick={() => this.props.changeView(VIEW_INPUT)}>
                     View Input
                 </button>
@@ -32,7 +41,7 @@ export default class MainPane extends React.Component {
         );
         return (
             <div>
-                <h2> Placeholder!! </h2>
+                <span className="ms-font-su ms-fontColor-themePrimary">Input Some Text</span>
                 {currentPane}
             </div>
         )

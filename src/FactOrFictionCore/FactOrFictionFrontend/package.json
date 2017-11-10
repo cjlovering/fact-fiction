@@ -37,6 +37,7 @@
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "segoe-fonts": "^1.0.1",
     "shortid": "^2.2.8",
     "webpack": "^3.8.1"
   },

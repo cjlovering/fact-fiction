@@ -12,17 +12,22 @@ export default class InputPane extends React.Component {
 
     render() {
         return (
-			<div>
-				<div className="input-box">
-					<textarea 
+            <div>
+				<div>
+                    <textarea 
+                        className="input-box"
 						rows="10" 
 						value={this.state.textEntry}
 						onChange={e => this.setState({ textEntry: e.target.value })}
 					/>
 				</div>
-                <button onClick={() => this.props.addFact(this.state.textEntry)}>
-                    Go
-				</button>
+                <button
+                    className="start-button ms-Button"
+                    id="get-data-from-selection"
+                    onClick={() => this.props.addFact(this.state.textEntry)}
+                >
+                    <span className="ms-Button-label">Start</span>
+                </button>
 			</div>
         );
     }

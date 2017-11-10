@@ -14,7 +14,7 @@ describe('InputPane', () => {
     });
     
     it('InputPane has a button', () => {
-        expect(inputPane.find('button').text()).toEqual('Go');
+        expect(inputPane.find('button').text()).toEqual('Start');
     });
 
 	it('InputPane has a textarea', () => {
