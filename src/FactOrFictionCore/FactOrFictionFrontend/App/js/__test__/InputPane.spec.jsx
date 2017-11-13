@@ -21,7 +21,7 @@ describe('InputPane', () => {
     });
 
 	it('InputPane has a textarea', () => {
-		expect(inputPane.find('textarea').text()).toEqual('Enter some text (news article...)!');
+		expect(inputPane.find('textarea').text()).toEqual("");
 	});
 
     it('InputPane requires changeView prop', () => {

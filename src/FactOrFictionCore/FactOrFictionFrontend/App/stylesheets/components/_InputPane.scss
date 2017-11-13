@@ -1,10 +1,16 @@
-﻿.input-box {
+﻿.input-pane {
+    border: solid;
+    border-left-width: 1px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: black;
+    padding-left: 5px;
+}
+
+.input-box {
     margin-top: 10px;
     border: hidden;
-    
     width: 100%;
 }
 
-.start-button {
-    margin: 10px;
-}

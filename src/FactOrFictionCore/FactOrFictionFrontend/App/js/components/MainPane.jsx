@@ -1,44 +1,52 @@
 ﻿import React from 'react'
 import PropTypes from 'prop-types';
+
 import InputPane from './InputPane';
 import ListView from './ListView';
+import Button from './Button';
+
 import { VIEW_INPUT } from '../constants/viewTypes';
 import _ from '../../stylesheets/components/_MainPane.scss';
 
 export default class MainPane extends React.Component {
     render() {
-        const { view, fetchTextEntry, changeView, textEntryTokens } = this.props;
-        const currentPane = this.props.view === VIEW_INPUT ? (
+        const { view, fetchTextEntry, changeView, textEntryTokens } = this.props;        
+        const isInput = view === VIEW_INPUT;
+        const title = isInput ? "Start" : "Results";
+        const leftPane = isInput ? (
             // Input View
-            <div className="container">
-                <div className="row">
-                    <div className="input-pane col-sm-6 col-md-6 col-lg-6">
-                        <InputPane fetchTextEntry={fetchTextEntry} changeView={changeView} />
-                    </div>
-                </div>
-           </div>
+            <InputPane fetchTextEntry={fetchTextEntry} changeView={changeView} />
+        ) : (
+            // TODO: render highlighted sentences
+            <div>
+                <Button 
+                    handleClick={() => changeView(VIEW_INPUT)} 
+                    text="View Input"
+                />
+            </div>
+        );
+        const rightPane = isInput ? (
+            // TODO: render feed
+            <div />
         ) : (
             // Result View
-            <div className="container">
-                <div className="row">
-                    <div className="input-pane col-sm-6 col-md-6 col-lg-6"> 
-                        <div className="result-view">
-                            <p> Results </p>
-                            <ListView entries={textEntryTokens} />
-                            <button 
-                                className={"change-view-button ms-Button"}
-                                onClick={() => changeView(VIEW_INPUT)}>
-                                View Input
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <ListView entries={textEntryTokens} />
             </div>
         );
         return (
             <div>
-                <span className="ms-font-su ms-fontColor-themePrimary">Input Some Text</span>
-                {currentPane}
+                <span className="ms-font-su ms-fontColor-themePrimary">{title}</span>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-6 col-md-6 col-lg-6">
+                            {leftPane}
+                        </div>
+                        <div className="col-sm-6 col-md-6 col-lg-6">
+                            {rightPane}
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

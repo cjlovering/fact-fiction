@@ -4,19 +4,18 @@ import _ from '../../stylesheets/components/_FactCard.scss'
 
 export default class FactCard extends React.Component {
     render() {
-        const { fact } = this.props;
+        const { sentence } = this.props;
         return (
             <div className="fact-card">
                 <div>
-                    {fact}
+                    {sentence}
                 </div>
-                <div className="vote-buttons">
-                </div>
+                <div className="vote-buttons" />
             </div>
         );
     }
 }
 
 FactCard.propTypes = {
-    fact: PropTypes.string.isRequired
+    sentence: PropTypes.string.isRequired
 }

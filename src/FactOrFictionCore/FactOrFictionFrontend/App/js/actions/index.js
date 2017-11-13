@@ -1,5 +1,4 @@
 ﻿import { 
-    ADD_FACT, 
     CHANGE_VIEW, 
     POST_TEXT_ENTRY,
     RECIEVE_TEXT_ENTRY,
@@ -9,13 +8,6 @@
 import fetch from 'isomorphic-fetch';
 
 /* action creators */
-const addFact = text => {
-    return {
-        type: ADD_FACT,
-        text
-    };
-};
-
 const changeView = view => {
     return {
         type: CHANGE_VIEW,
@@ -65,4 +57,4 @@ const fetchTextEntry = textEntry => {
     }
 }
 
-export { addFact, changeView, postTextEntry, recieveTextEntryTokens, fetchTextEntry };
+export { changeView, postTextEntry, recieveTextEntryTokens, fetchTextEntry };

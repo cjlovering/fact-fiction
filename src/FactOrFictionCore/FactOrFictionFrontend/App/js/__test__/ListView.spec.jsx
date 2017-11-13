@@ -9,7 +9,7 @@ describe('ListView', () => {
     let listView;
     
     beforeEach(() => {
-        state = ["hi"]
+        state = [{"sentence": "hi", "type":"OBJECTIVE"}]
         listView = mount(<ListView entries={state} />);
     });
 
@@ -28,7 +28,12 @@ describe('ListView', () => {
     });
 
     it('ListView renders nested components == number of facts', () => {
-        state = ["hi", "hello"]
+        state = [
+            {"sentence": "hi", "type":"OBJECTIVE"},
+            {"sentence": "hi", "type":"OBJECTIVE"},
+            {"sentence": "hi", "type":"OTHER"},
+            {"sentence": "hi", "type":"SUBJECTIVE"}
+        ]
         listView = mount(<ListView entries={state} />);
         expect(listView.find('FactCard').length).toEqual(2);
     });
