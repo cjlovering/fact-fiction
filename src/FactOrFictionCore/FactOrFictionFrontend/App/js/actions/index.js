@@ -1,5 +1,6 @@
 ﻿import { 
     CHANGE_VIEW, 
+    SELECT_ENTRY,
     POST_TEXT_ENTRY,
     RECIEVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY
@@ -13,6 +14,13 @@ const changeView = view => {
         type: CHANGE_VIEW,
         view
     };
+};
+
+const selectEntry = id => {
+    return {
+        type: SELECT_ENTRY,
+        id
+    }
 };
 
 const postTextEntry = text => {
@@ -50,11 +58,12 @@ const fetchTextEntry = textEntry => {
             response => response.json(),
             error => console.log('An error occured.', error)
         )
-        .then(json =>
+        .then(json => {
             // dispatch action when the response is recieved.
-            dispatch(recieveTextEntryTokens(textEntry, json))
-        )
+            dispatch(recieveTextEntryTokens(textEntry, json));
+            dispatch(selectEntry());
+        })
     }
 }
 
-export { changeView, postTextEntry, recieveTextEntryTokens, fetchTextEntry };
+export { changeView, selectEntry, postTextEntry, recieveTextEntryTokens, fetchTextEntry };

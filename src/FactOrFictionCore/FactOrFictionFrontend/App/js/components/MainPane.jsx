@@ -10,7 +10,7 @@ import _ from '../../stylesheets/components/_MainPane.scss';
 
 export default class MainPane extends React.Component {
     render() {
-        const { view, fetchTextEntry, changeView, textEntryTokens } = this.props;        
+        const { view, fetchTextEntry, selectedEntryId, changeView, textEntryTokens, selectEntry } = this.props;
         const isInput = view === VIEW_INPUT;
         const title = isInput ? "Start" : "Results";
         const leftPane = isInput ? (
@@ -31,13 +31,13 @@ export default class MainPane extends React.Component {
         ) : (
             // Result View
             <div>
-                <ListView entries={textEntryTokens} />
+                <ListView entries={textEntryTokens} selectedEntryId={selectedEntryId} selectEntry={selectEntry} />
             </div>
         );
         return (
             <div>
                 <span className="ms-font-su ms-fontColor-themePrimary">{title}</span>
-                <div className="container">
+                <div className="container left-bar">
                     <div className="row">
                         <div className="col-sm-6 col-md-6 col-lg-6">
                             {leftPane}
@@ -55,6 +55,8 @@ export default class MainPane extends React.Component {
 MainPane.propTypes = {
     view: PropTypes.string.isRequired,
     changeView: PropTypes.func.isRequired,
+    selectedEntryId: PropTypes.string.isRequired,
     fetchTextEntry: PropTypes.func.isRequired,
-    textEntryTokens: PropTypes.array.isRequired
+    textEntryTokens: PropTypes.array.isRequired,
+    selectEntry: PropTypes.func.isRequired
 }

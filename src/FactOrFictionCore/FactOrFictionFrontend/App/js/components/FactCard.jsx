@@ -4,9 +4,13 @@ import _ from '../../stylesheets/components/_FactCard.scss'
 
 export default class FactCard extends React.Component {
     render() {
-        const { sentence } = this.props;
+        const { sentence, selectedEntryId, id, selectEntry } = this.props;
+        const isSelected = id === selectedEntryId ? "selected" : "";
         return (
-            <div className="fact-card">
+            <div
+                className={`fact-card ${isSelected}`}
+                onClick={() => selectEntry(id)}
+            >
                 <div>
                     {sentence}
                 </div>
@@ -17,5 +21,7 @@ export default class FactCard extends React.Component {
 }
 
 FactCard.propTypes = {
-    sentence: PropTypes.string.isRequired
+    sentence: PropTypes.string.isRequired,
+    selectedEntryId: PropTypes.string.isRequired,
+    selectEntry: PropTypes.func.isRequired
 }

@@ -18,26 +18,25 @@ export default class InputPane extends React.Component {
 		const { changeView, fetchTextEntry } = this.props;
 		const { textEntry } = this.state;
         return (
-			<div> 
-				<div className="input-pane">
-					<div>
-						<textarea 
-							className="input-box"
-							rows="10" 
-							placeholder="Enter some text..."
-							value={textEntry}
-							onChange={e => this.setState({ textEntry: e.target.value })}
-						/>
-					</div>
-					<Button
-						handleClick={() => {
-							fetchTextEntry(textEntry);
-							changeView(VIEW_RESULT);
-						}}
-						text="Start"
+			<div>
+				<div>
+					<textarea 
+						className="input-box"
+						rows="10" 
+						placeholder="Enter some text..."
+						value={textEntry}
+						onChange={e => this.setState({ textEntry: e.target.value })}
 					/>
 				</div>
+				<Button
+					handleClick={() => {
+						fetchTextEntry(textEntry);
+						changeView(VIEW_RESULT);
+					}}
+					text="Start"
+				/>
 			</div>
+
         );
     }
 }

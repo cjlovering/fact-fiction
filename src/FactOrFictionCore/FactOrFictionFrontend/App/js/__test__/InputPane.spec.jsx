@@ -7,7 +7,7 @@ describe('InputPane', () => {
 
     let inputPane;
     let fetchTextEntry;
-    let changeView;    
+    let changeView;   
 
     beforeEach(() => {
         fetchTextEntry = jest.fn();

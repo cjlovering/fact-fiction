@@ -11,15 +11,21 @@ describe('MainPane', () => {
     let changeView;
     let textEntryTokens;
     let fetchTextEntry;
+    let selectEntry;
+    let selectedEntryId;
     
     beforeEach(() => {
         fetchTextEntry = jest.fn();
         changeView = jest.fn();
+        selectEntry = jest.fn();
+        selectedEntryId = "abc"; 
         textEntryTokens = ["hi"];
         mainPane = mount(
             <MainPane 
                 fetchTextEntry={fetchTextEntry} 
-                changeView={changeView} 
+                changeView={changeView}
+                selectedEntryId={selectedEntryId}
+                selectEntry={selectEntry}
                 textEntryTokens={textEntryTokens} 
                 view={VIEW_INPUT} 
             />
@@ -28,6 +34,8 @@ describe('MainPane', () => {
             <MainPane 
                 fetchTextEntry={fetchTextEntry} 
                 changeView={changeView} 
+                selectedEntryId={selectedEntryId}
+                selectEntry={selectEntry}
                 textEntryTokens={textEntryTokens} 
                 view={VIEW_RESULT} 
             />
@@ -48,6 +56,14 @@ describe('MainPane', () => {
 
     it('MainPane requires textEntryTokens prop', () => {
         expect(mainPane.props().textEntryTokens).toBeDefined();
+    });
+
+    it('MainPane requires selectEntry prop', () => {
+        expect(mainPane.props().selectEntry).toBeDefined();
+    });
+
+    it('MainPane requires selectedEntryId prop', () => {
+        expect(mainPane.props().selectedEntryId).toBeDefined();
     });
 
     it('App renders nested components (input)', () => {
