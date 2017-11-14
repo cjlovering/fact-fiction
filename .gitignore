@@ -243,7 +243,8 @@ src/FactOrFiction/FactOrFictionUrlSuggestions/bin
 src/FactOrFiction/FactOrFictionUrlSuggestions/obj
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/css/style.css
-
+data/*
+!data/README.md
 package-lock.json
 
 # ignore IntelliJ project and ouput files
