@@ -19,7 +19,11 @@ describe('MainPane', () => {
         changeView = jest.fn();
         selectEntry = jest.fn();
         selectedEntryId = "abc"; 
-        textEntryTokens = ["hi"];
+        textEntryTokens = [{
+            "type": "OBJECTIVE",
+            "id": "123",
+            "sentence": "Hello"
+        }];
         mainPane = mount(
             <MainPane 
                 fetchTextEntry={fetchTextEntry} 

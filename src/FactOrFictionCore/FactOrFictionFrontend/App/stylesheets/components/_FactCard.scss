@@ -1,10 +1,15 @@
-﻿.fact-card {
+﻿@import "./../themes/all";
+
+.fact-card {
     border-style: solid;
     border-color: black;
     border-width: 0.3px;
     padding: 10px;
     margin: 10px;
+
+
 }
-.selected {
-    background-color: #c7e0f4;
+
+.card-selected {
+    background-color: $selected;
 }

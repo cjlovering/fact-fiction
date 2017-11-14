@@ -5,7 +5,7 @@ import _ from '../../stylesheets/components/_FactCard.scss'
 export default class FactCard extends React.Component {
     render() {
         const { sentence, selectedEntryId, id, selectEntry } = this.props;
-        const isSelected = id === selectedEntryId ? "selected" : "";
+        const isSelected = id === selectedEntryId ? "card-selected" : "";
         return (
             <div
                 className={`fact-card ${isSelected}`}

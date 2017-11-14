@@ -59,9 +59,9 @@ const fetchTextEntry = textEntry => {
             error => console.log('An error occured.', error)
         )
         .then(json => {
-            // dispatch action when the response is recieved.
+            const clearSelection = "";
+            dispatch(selectEntry(clearSelection));
             dispatch(recieveTextEntryTokens(textEntry, json));
-            dispatch(selectEntry());
         })
     }
 }

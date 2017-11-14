@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import InputPane from './InputPane';
 import ListView from './ListView';
 import Button from './Button';
+import Sentence from './Sentence';
+import ResultPane from './ResultPane';
 
 import { VIEW_INPUT } from '../constants/viewTypes';
 import _ from '../../stylesheets/components/_MainPane.scss';
@@ -17,13 +19,12 @@ export default class MainPane extends React.Component {
             // Input View
             <InputPane fetchTextEntry={fetchTextEntry} changeView={changeView} />
         ) : (
-            // TODO: render highlighted sentences
-            <div>
-                <Button 
-                    handleClick={() => changeView(VIEW_INPUT)} 
-                    text="View Input"
-                />
-            </div>
+           <ResultPane 
+                selectedEntryId={selectedEntryId} 
+                selectEntry={selectEntry} 
+                textEntryTokens={textEntryTokens} 
+                changeView={changeView} 
+            />
         );
         const rightPane = isInput ? (
             // TODO: render feed
