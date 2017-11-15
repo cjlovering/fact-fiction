@@ -1,5 +1,5 @@
 import { 
-    POST_TEXT_ENTRY,
+    FETCHING_TOKENS,
     RECEIVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY,
     RECEIVE_TOKENS,
@@ -22,7 +22,7 @@ export default (
             return Object.assign({}, state, {
                 didInvalidate: true
             });
-        case POST_TEXT_ENTRY:
+        case FETCHING_TOKENS:
             return Object.assign({}, state, {
                 isFetching: true,
                 didInvalidate: false

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-
 import Button from './Button';
 import Sentence from './Sentence';
 import { VIEW_INPUT } from '../constants/viewTypes';
+import _ from '../../stylesheets/components/_ResultPane.scss';
 
 export default class ResultPane extends React.Component {
     render() {
@@ -19,8 +19,7 @@ export default class ResultPane extends React.Component {
                                 {...entry}
                                 selectedEntryId={selectedEntryId}
                                 selectEntry={selectEntry}
-                                key={shortid.generate()}
-                                
+                                key={shortid.generate()}                       
                             />
                             )
                         )

@@ -1,5 +1,9 @@
 ﻿import React from 'react'
 import PropTypes from 'prop-types';
+import {
+    Spinner,
+    SpinnerSize
+} from 'office-ui-fabric-react/lib/Spinner';
 
 import InputPane from './InputPane';
 import ListView from './ListView';
@@ -44,6 +48,7 @@ export default class MainPane extends React.Component {
                             {leftPane}
                         </div>
                         <div className="col-sm-6 col-md-6 col-lg-6">
+                            {isFetching ? <div className="spinner"><Spinner size={SpinnerSize.large} /></div> : null}
                             <ListView
                                 entries={entries}
                                 selectedEntryId={selectedEntryId}

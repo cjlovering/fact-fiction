@@ -1,5 +1,5 @@
 import { 
-    POST_TEXT_ENTRY,
+    FETCHING_TOKENS,
     RECEIVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY,
     RECEIVE_TOKENS,
@@ -9,9 +9,9 @@ import {
 import 'whatwg-fetch';
 import { selectEntry } from './selectEntry';
 
-const postTextEntry = text => {
+const fetchingTokens = text => {
     return {
-        type: POST_TEXT_ENTRY,
+        type: FETCHING_TOKENS,
         text
     };
 };
@@ -42,7 +42,7 @@ const fetchTextEntry = textEntry => {
     return (dispatch) => {
 
         // Notify App that async call is being made.
-        dispatch(postTextEntry(textEntry));
+        dispatch(fetchingTokens(textEntry));
         
         // Construct form data that API is expecting.
         const formData = new FormData();
@@ -68,6 +68,8 @@ const fetchTextEntry = textEntry => {
 
 const fetchFeedTokens = () => {
     return (dispatch) => {
+        const placeholder = "";
+        dispatch(fetchingTokens(placeholder));
         return fetch(`/Sentences/Feed/`, {
             method: "GET",
             credentials: "same-origin"

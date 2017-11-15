@@ -29,7 +29,7 @@ describe('async actions', () => {
         })
         
       const expectedActions = [
-        { type: types.POST_TEXT_ENTRY, text: "This is a fact." },
+        { type: types.FETCHING_TOKENS, text: "This is a fact." },
         { 
           type: types.RECEIVE_TOKENS, 
           tokens: {
