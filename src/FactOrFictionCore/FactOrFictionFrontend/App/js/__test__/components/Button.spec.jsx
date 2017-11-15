@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import Button from '../components/Button.jsx';
+import Button from '../../components/Button.jsx';
 
 describe('Button', () => {
 

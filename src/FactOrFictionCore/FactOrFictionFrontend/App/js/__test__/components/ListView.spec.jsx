@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import ListView from '../components/ListView.jsx';
+import ListView from '../../components/ListView.jsx';
 
 describe('ListView', () => {
 

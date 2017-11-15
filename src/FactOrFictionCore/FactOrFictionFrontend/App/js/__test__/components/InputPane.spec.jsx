@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import InputPane from '../components/InputPane.jsx';
+import InputPane from '../../components/InputPane.jsx';
 
 describe('InputPane', () => {
 

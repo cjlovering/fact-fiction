@@ -1,7 +1,7 @@
 import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import ResultPane from '../components/ResultPane.jsx';
+import ResultPane from '../../components/ResultPane.jsx';
 
 describe('ResultPane', () => {
     let textEntryTokens;

@@ -1,8 +1,8 @@
 ﻿import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import MainPane from '../components/MainPane.jsx';
-import { VIEW_INPUT, VIEW_RESULT } from '../constants/viewTypes';
+import MainPane from '../../components/MainPane.jsx';
+import { VIEW_INPUT, VIEW_RESULT } from '../../constants/viewTypes';
 
 describe('MainPane', () => {
 

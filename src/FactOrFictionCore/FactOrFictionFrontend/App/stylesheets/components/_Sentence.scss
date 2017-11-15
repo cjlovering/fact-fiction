@@ -2,8 +2,18 @@
 
 .selected {
     background-color: $selected;
+    color: white;
 }
 
+.selected:hover {
+    background-color: $hover;
+    color: white;
+}
 .highlighted {
     background-color: $highlighted;
 }
+
+.highlighted:hover {
+    background-color: $hover;
+}
+

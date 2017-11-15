@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import FactCard from '../components/FactCard.jsx';
+import FactCard from '../../components/FactCard.jsx';
 
 describe('ListView', () => {
 

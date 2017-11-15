@@ -1,7 +1,7 @@
 import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
-import Sentence from '../components/Sentence.jsx';
+import Sentence from '../../components/Sentence.jsx';
 
 describe('Sentence', () => {
 
