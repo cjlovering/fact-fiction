@@ -61,7 +61,7 @@ namespace FactOrFictionFrontend
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePages();
             }
             app.UseReact(config =>
             {
