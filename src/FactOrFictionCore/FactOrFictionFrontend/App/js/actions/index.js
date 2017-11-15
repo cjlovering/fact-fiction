@@ -2,8 +2,10 @@
     CHANGE_VIEW, 
     SELECT_ENTRY,
     POST_TEXT_ENTRY,
-    RECIEVE_TEXT_ENTRY,
-    INVALIDATE_TEXT_ENTRY
+    RECEIVE_TEXT_ENTRY,
+    INVALIDATE_TEXT_ENTRY,
+    RECEIVE_TOKENS,
+    RECEIVE_FEED
 } from '../constants/actionTypes';
 
 import fetch from 'isomorphic-fetch';
@@ -30,12 +32,25 @@ const postTextEntry = text => {
     };
 };
 
-const recieveTextEntryTokens = (text, json) => {
+const receiveTokens = json => {
     return {
-        type: RECIEVE_TEXT_ENTRY,
-        text,
-        textEntryTokens: json.sentences,
-        receivedAt: Date.now()
+        type: RECEIVE_TOKENS,
+        tokens: json.sentences.reduce(
+            (map, entry) => { map[entry.id] = entry; return map; }, {})
+    };
+};
+
+const receiveTextEntry = json => {
+    return {
+        type: RECEIVE_TEXT_ENTRY,
+        textEntryTokenIds: json.sentences.map(entry => entry.id)
+    };
+};
+
+const receiveFeed = json => {
+    return {
+        type: RECEIVE_FEED,
+        feedTokenIds: json.sentences.map(entry => entry.id)
     };
 };
 
@@ -56,14 +71,34 @@ const fetchTextEntry = textEntry => {
         })
         .then(
             response => response.json(),
-            error => console.log('An error occured.', error)
+            error => console.log('An error occured when fetching text entries.', error)
         )
         .then(json => {
             const clearSelection = "";
+            dispatch(receiveTokens(json));
+            dispatch(receiveTextEntry(json));
             dispatch(selectEntry(clearSelection));
-            dispatch(recieveTextEntryTokens(textEntry, json));
         })
     }
 }
 
-export { changeView, selectEntry, postTextEntry, recieveTextEntryTokens, fetchTextEntry };
+const fetchFeedTokens = () => {
+    return (dispatch) => {
+        return fetch(`/Sentences/Feed/`, {
+            method: "GET",
+            credentials: "same-origin"
+        })
+        .then(
+            response => response.json(),
+            error => console.log('An error occured when fetching feed entry.', error)
+        )
+        .then(json => {
+            const clearSelection = "";
+            dispatch(receiveTokens(json));
+            dispatch(receiveFeed(json));
+            dispatch(selectEntry(clearSelection));
+        })
+    }
+}
+
+export { changeView, selectEntry, postTextEntry, receiveTokens, fetchTextEntry, fetchFeedTokens };

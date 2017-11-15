@@ -17,11 +17,11 @@ describe('ResultPane', () => {
         textEntryTokens = [{
             "type": "OBJECTIVE",
             "id": "1",
-            "sentence": "Hello world"
+            "content": "Hello world"
         }, {
             "type": "SUBJECTIVE",
             "id": "2",
-            "sentence": "Hi"
+            "content": "Hi"
         }];
         resultPane = mount(
             <ResultPane 

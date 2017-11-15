@@ -4,7 +4,7 @@ import _ from '../../stylesheets/components/_Sentence.scss'
 
 export default class Sentence extends React.Component {
     render() {
-        const { id, type, sentence, selectedEntryId } = this.props;
+        const { id, type, content, selectedEntryId } = this.props;
         const isSelected = id === selectedEntryId;
         const highlighted = type === 'OBJECTIVE' ? "highlighted" : "";
 
@@ -14,7 +14,7 @@ export default class Sentence extends React.Component {
                     className={isSelected ? "selected" : highlighted}
                     onClick={() => this.handleClick()}
                 >
-                    {sentence}
+                    {content}
                 </span>
                 &nbsp;
             </span>
@@ -33,7 +33,7 @@ export default class Sentence extends React.Component {
 Sentence.propTypes = {
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    sentence: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
     selectEntry: PropTypes.func.isRequired
 }

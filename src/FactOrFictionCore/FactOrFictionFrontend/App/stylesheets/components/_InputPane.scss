@@ -1,8 +1,17 @@
-﻿
-
-.input-box {
-    margin-top: 10px;
+﻿.input-box {
     border: hidden;
     width: 100%;
 }
 
+.left-bar {
+    border: solid;
+    border-left-width: 1px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-color: black;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    min-height: 220px;
+}

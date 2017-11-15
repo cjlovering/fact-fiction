@@ -7,7 +7,6 @@ import _ from '../../stylesheets/components/_ListView.scss';
 export default class ListView extends React.Component {
     render() {
         const { entries, selectedEntryId, selectEntry } = this.props;
-
         return (
             <div className='list-view'>
                 {entries

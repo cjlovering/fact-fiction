@@ -15,7 +15,7 @@ describe('ListView', () => {
         selectedEntryId = "abc";
         entry = {
             id: "abc",
-            sentence: "This is a fact",
+            content: "This is a fact",
             type: "OBJECTIVE"
         }
 
@@ -25,6 +25,10 @@ describe('ListView', () => {
                 selectedEntryId={selectedEntryId}
                 selectEntry={selectEntry}
             />);
+    });
+
+    it('FactCard requires content prop', () => {
+        expect(factCard.props().content).toBeDefined();
     });
 
     it('FactCard requires selectEntry prop', () => {

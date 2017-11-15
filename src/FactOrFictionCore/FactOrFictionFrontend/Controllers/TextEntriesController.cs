@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using FactOrFictionTextHandling.Luis;
 using FactOrFictionTextHandling.SentenceProducer;
+using FactOrFictionFrontend.Controllers.Utils;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -34,11 +35,13 @@ namespace FactOrFictionFrontend.Controllers
                 throw new ApplicationException($"Cannot find user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var textEntries = from entry in _context.TextEntries
-                              orderby entry.CreatedAt descending
-                              select entry;
+            var textEntries = (
+                from entry in _context.TextEntries
+                orderby entry.CreatedAt descending
+                select entry
+            );
 
-            return View(await textEntries.ToListAsync());
+           return View(await textEntries.ToListAsync());
         }
 
         // GET: TextEntries/Details/5
@@ -88,13 +91,10 @@ namespace FactOrFictionFrontend.Controllers
                 _context.Add(textEntry);
                 _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
-                return Json(new {
-                    Sentences = sentences.Select(sent => new
-                    {
-                        Id = sent.Id,
-                        Sentence = sent.Content,
-                        Type = sent.Type.ToString()
-                    })
+                return Json(new
+                {
+                    Sentences = sentences.Select(
+                        sent => new SentenceViewModel(sent))
                 });
             }
             return View(textEntry);

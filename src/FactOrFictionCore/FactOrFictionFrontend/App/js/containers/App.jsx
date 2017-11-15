@@ -5,27 +5,36 @@ import { connect } from 'react-redux'
 import MainPane from '../components/MainPane'
 import * as Actions from '../actions'
 
-const App = ({ view, textEntryTokens, selectedEntryId, actions }) => (
+const App = ({tokens, isFetching, didInvalidate, textEntryTokenIds, feedTokenIds, view, selectedEntryId, actions }) => (
     <MainPane 
+        tokens={tokens}
+        isFetching={isFetching}
+        didInvalidate={didInvalidate}
+        textEntryTokenIds={textEntryTokenIds}
+        feedTokenIds={feedTokenIds}
         view={view}
         selectedEntryId={selectedEntryId}
-        textEntryTokens={textEntryTokens}
         changeView={actions.changeView}
         selectEntry={actions.selectEntry}
-        fetchTextEntry={actions.fetchTextEntry}     
+        fetchTextEntry={actions.fetchTextEntry}
+        fetchFeedTokens={actions.fetchFeedTokens}     
 	/>
 );
 
 App.propTypes = {
+    tokens: PropTypes.object.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    didInvalidate: PropTypes.bool.isRequired,
+    textEntryTokenIds: PropTypes.array.isRequired,
+    feedTokenIds: PropTypes.array.isRequired,
     view: PropTypes.string.isRequired,
-    textEntryTokens: PropTypes.array.isRequired,   
     selectedEntryId: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
+    ...state.textEntry,
     view: state.view,
-    textEntryTokens: state.textEntry.textEntryTokens,
     selectedEntryId: state.selectedEntryId
 });
 

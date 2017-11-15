@@ -12,7 +12,7 @@ export default class ResultPane extends React.Component {
 
         return (
             <div>
-                <div>
+                <div className="left-bar">
                     { textEntryTokens
                         .map(entry => (
                             <Sentence

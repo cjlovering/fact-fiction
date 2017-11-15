@@ -18,8 +18,9 @@ export default class InputPane extends React.Component {
 		const { changeView, fetchTextEntry } = this.props;
 		const { textEntry } = this.state;
         return (
-			<div>
-				<div>
+            <div>
+                
+                <div className="left-bar">
 					<textarea 
 						className="input-box"
 						rows="10" 

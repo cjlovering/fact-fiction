@@ -8,39 +8,66 @@ describe('MainPane', () => {
 
     let mainPane;
     let mainPaneResult;
-    let changeView;
-    let textEntryTokens;
-    let fetchTextEntry;
-    let selectEntry;
+
+    let tokens;
+    let isFetching;
+    let didInvalidate;
+    let textEntryTokenIds;
+    let feedTokenIds;
+    let view;
     let selectedEntryId;
-    
+
+    let changeView;
+    let selectEntry;
+    let fetchFeedTokens;
+    let fetchTextEntry;
+
     beforeEach(() => {
+        tokens = {
+            "hi": {
+                "type": "OBJECTIVE",
+                "id": "123",
+                "content": "Hello"
+            }
+        };
+        isFetching = false;
+        didInvalidate = false;
+        textEntryTokenIds = ["hi"];
+        feedTokenIds = ["hi"];
+        selectedEntryId = "abc"; 
+
+        fetchFeedTokens = jest.fn();
         fetchTextEntry = jest.fn();
         changeView = jest.fn();
         selectEntry = jest.fn();
-        selectedEntryId = "abc"; 
-        textEntryTokens = [{
-            "type": "OBJECTIVE",
-            "id": "123",
-            "sentence": "Hello"
-        }];
+
         mainPane = mount(
             <MainPane 
                 fetchTextEntry={fetchTextEntry} 
                 changeView={changeView}
                 selectedEntryId={selectedEntryId}
                 selectEntry={selectEntry}
-                textEntryTokens={textEntryTokens} 
+                fetchFeedTokens={fetchFeedTokens}
+                tokens={tokens}
+                isFetching={isFetching}
+                didInvalidate={didInvalidate}
+                textEntryTokenIds={textEntryTokenIds}
+                feedTokenIds={feedTokenIds}
                 view={VIEW_INPUT} 
             />
         );
         mainPaneResult = mount(
             <MainPane 
-                fetchTextEntry={fetchTextEntry} 
-                changeView={changeView} 
+                fetchTextEntry={fetchTextEntry}
+                changeView={changeView}
                 selectedEntryId={selectedEntryId}
                 selectEntry={selectEntry}
-                textEntryTokens={textEntryTokens} 
+                fetchFeedTokens={fetchFeedTokens}
+                tokens={tokens}
+                isFetching={isFetching}
+                didInvalidate={didInvalidate}
+                textEntryTokenIds={textEntryTokenIds}
+                feedTokenIds={feedTokenIds}
                 view={VIEW_RESULT} 
             />
         );
@@ -56,10 +83,6 @@ describe('MainPane', () => {
 
     it('MainPane requires view prop', () => {
         expect(mainPane.props().view).toBeDefined();
-    });
-
-    it('MainPane requires textEntryTokens prop', () => {
-        expect(mainPane.props().textEntryTokens).toBeDefined();
     });
 
     it('MainPane requires selectEntry prop', () => {

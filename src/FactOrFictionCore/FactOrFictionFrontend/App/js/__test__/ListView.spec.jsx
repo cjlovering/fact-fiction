@@ -11,7 +11,7 @@ describe('ListView', () => {
     let selectedEntryId;
     
     beforeEach(() => {
-        state = [{"sentence": "hi", "type":"OBJECTIVE"}]     
+        state = [{"content": "hi", "type":"OBJECTIVE", "id": "theId"}]     
         selectEntry = jest.fn();
         selectedEntryId = "abc";
         listView = mount(
@@ -52,10 +52,10 @@ describe('ListView', () => {
 
     it('ListView renders nested components == number of facts', () => {
         state = [
-            {"sentence": "hi", "type":"OBJECTIVE"},
-            {"sentence": "hi", "type":"OBJECTIVE"},
-            {"sentence": "hi", "type":"OTHER"},
-            {"sentence": "hi", "type":"SUBJECTIVE"}
+            {"content": "hi", "type":"OBJECTIVE"},
+            {"content": "hi", "type":"OBJECTIVE"},
+            {"content": "hi", "type":"OTHER"},
+            {"content": "hi", "type":"SUBJECTIVE"}
         ]
         listView = mount(
             <ListView

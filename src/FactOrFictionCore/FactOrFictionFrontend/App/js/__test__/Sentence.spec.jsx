@@ -7,7 +7,7 @@ describe('Sentence', () => {
 
     let id;
     let type;
-    let sentence;
+    let content;
     let selectedEntryId;
     let selectEntry;
     let sentenceComponent;
@@ -17,13 +17,13 @@ describe('Sentence', () => {
         type = 'OBJECTIVE';
         selectedEntryId = "abc";
         selectEntry = jest.fn();
-        sentence = 'This is a fact.';
+        content = 'This is a fact.';
         sentenceComponent = mount(
             <Sentence
                 id={id}
                 type={type}
                 selectedEntryId={selectedEntryId}
-                sentence={sentence}
+                content={content}
                 selectEntry={selectEntry}
             />);
     });
@@ -37,7 +37,7 @@ describe('Sentence', () => {
     });
 
     it('Sentence component contains the right sentence', () => {
-        expect(sentenceComponent.props().sentence).toBeDefined();
+        expect(sentenceComponent.props().content).toBeDefined();
     });
 
     it('Sentence requires selectedEntryId prop', () => {
@@ -57,7 +57,7 @@ describe('Sentence', () => {
                 id={id}
                 type={type}
                 selectedEntryId={selectedEntryId}
-                sentence={sentence}
+                content={content}
                 selectEntry={selectEntry}
             />);
         expect(sentenceComponent.find('.highlighted').exists()).toBe(false);
@@ -70,7 +70,7 @@ describe('Sentence', () => {
                 id={id}
                 type={type}
                 selectedEntryId={selectedEntryId}
-                sentence={sentence}
+                content={content}
                 selectEntry={selectEntry}
             />);
         expect(sentenceComponent.find('.highlighted').exists()).toBe(false);
@@ -84,7 +84,7 @@ describe('Sentence', () => {
                 id={id}
                 type={type}
                 selectedEntryId={selectedEntryId}
-                sentence={sentence}
+                content={content}
                 selectEntry={selectEntry}
             />);
         expect(sentenceComponent.find('.selected').exists()).toBe(true);
