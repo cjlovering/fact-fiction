@@ -2,9 +2,12 @@ from __future__ import print_function
 
 import nltk
 import csv
-import random
 import os
+import re
 import sys
+import string
+
+BRACKETS = ['(', ')', '[', ']', '{', '}', '``', '"', '<', '>']
 
 class AggregateRawData:
     """ 
@@ -52,7 +55,7 @@ class AggregateRawData:
         for c in categories:
             # tokenize all files for a category
             print('\tCategory:', c)
-            sent = self.tokenize_category(dataset_path, c, uml)
+            sent = self.__tokenize_category(dataset_path, c, uml)
             sentences.extend(sent)
 
         self.all_sentences.extend(sentences)
@@ -65,11 +68,25 @@ class AggregateRawData:
             writer.writerow(self.COLUMNS)
             writer.writerows(sentences)
 
-    def get_file_list(self, category):
+    def __get_file_list(self, category):
         """ Lists all files in the sub-folder for a category. """
         return os.listdir(category)
+    
+    def __detokenize_imdb(self, sent):
+        # Change "u . s . a ." to "u.s.a."
+        sent = re.sub(r'(\w) \. (\w) \. (\w) \.', r'\1.\2.\3.', sent)
+        # Change "u . s ." to "u.s."
+        sent = re.sub(r'(\w) \. (\w) \.', r'\1.\2.', sent)
+        sent = sent.replace('. . .', '...')
+        tokens = sent.split(' ')
+        # Add space before a non-punctuation token
+        tokens = [" " + i if not i.startswith("'")
+                         and ( i not in string.punctuation
+                            or i in BRACKETS )
+                         else i for i in tokens ]
+        return "".join(tokens).strip()
 
-    def tokenize_category(self, dataset_path, category, uml):
+    def __tokenize_category(self, dataset_path, category, uml):
         """ Tokenize all files in a category (into sentences).
 
             Args: 
@@ -79,19 +96,26 @@ class AggregateRawData:
             Returns:
                 the list of sentences from all the files in a category
         """
-        file_names = self.get_file_list("{}/{}/raw/{}/".format(self.path_prefix, dataset_path, category))
+        file_names = self.__get_file_list("{}/{}/raw/{}/".format(
+            self.path_prefix, dataset_path, category))
         out = []
         for fn in file_names:
             path_format = self.path_prefix + "/{}/raw/{}/{}"
             path = path_format.format(dataset_path, category, fn)
             with open(path, 'r', encoding='utf-8', errors='ignore') as df:
-                text = df.read().replace ('\n', ' ')
-                if uml:
-                    if '<TEXT>' in text:
-                        text = text.split('<TEXT>')[1].split('</TEXT>')[0]
-                    else:
-                        print('warning:', fn, 'does not have <TEXT> tag')
-                sent = nltk.sent_tokenize(text)
+                # the imdb dataset is handled differently
+                if 'imdb' in dataset_path:
+                    text = df.read()
+                    detok = [self.__detokenize_imdb(sent) for sent in text.split('\n')]
+                    sent = nltk.sent_tokenize(' '.join(detok))
+                else:
+                    text = df.read().replace('\n', ' ')
+                    if uml:
+                        if '<TEXT>' in text:
+                            text = text.split('<TEXT>')[1].split('</TEXT>')[0]
+                        else:
+                            print('warning:', fn, 'does not have <TEXT> tag')
+                    sent = nltk.sent_tokenize(text)
                 out.extend([[ s, category, fn, i ] for i,s in enumerate(sent)])
         return out   
 
