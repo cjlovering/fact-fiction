@@ -141,7 +141,6 @@ namespace FactOrFictionFrontend.Controllers
 
             return Json(new
             {
-                Id = _sent.Id,
                 Refererences = references,
                 Entites = entities
             });

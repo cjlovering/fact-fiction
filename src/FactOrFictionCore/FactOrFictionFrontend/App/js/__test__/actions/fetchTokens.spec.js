@@ -1,9 +1,3 @@
-
-jest.unmock('../../actions/index')
-jest.unmock('redux-mock-store')
-jest.unmock('redux-thunk')
-//jest.unmock('isomorphic-fetch')
-
 import * as actions from '../../actions/index'
 import * as types from '../../constants/actionTypes'
 import configureMockStore from 'redux-mock-store'
@@ -43,7 +37,7 @@ describe('async actions', () => {
         { type: types.SELECT_ENTRY, id: "" }
       ]
 
-      const store = mockStore({ sentences: [] })   
+      const store = mockStore({})   
       return store.dispatch(fetchTextEntry("This is a fact.")).then(() => {
         // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
