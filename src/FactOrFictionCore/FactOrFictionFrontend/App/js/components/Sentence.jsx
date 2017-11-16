@@ -23,7 +23,6 @@ export default class Sentence extends React.Component {
 
     handleClick() {
         const { id, type, selectEntry } = this.props;
-
         if (type === "OBJECTIVE") {
             selectEntry(id);
         }

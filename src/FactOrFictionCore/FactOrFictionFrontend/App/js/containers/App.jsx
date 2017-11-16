@@ -17,7 +17,7 @@ const App = ({tokens, isFetching, didInvalidate, textEntryTokenIds, feedTokenIds
         changeView={actions.changeView}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
-        fetchFeedTokens={actions.fetchFeedTokens}     
+        fetchFeedTokens={actions.fetchFeedTokens}
 	/>
 );
 

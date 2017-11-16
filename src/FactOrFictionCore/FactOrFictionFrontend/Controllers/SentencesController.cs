@@ -9,6 +9,7 @@ using FactOrFictionCommon.Models;
 using FactOrFictionFrontend.Data;
 using Microsoft.AspNetCore.Identity;
 using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionUrlSuggestions;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -48,143 +49,78 @@ namespace FactOrFictionFrontend.Controllers
             });
         }
 
-        // GET: Sentences
-        public async Task<IActionResult> Index()
+        // Get: Sentences/Details
+        public async Task<IActionResult> Details(Guid Id)
         {
-            var applicationDbContext = _context.Sentences.Include(s => s.OriginalTextEntry);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Sentences/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
                 return NotFound();
             }
-
-            var sentence = await _context.Sentences
-                .Include(s => s.OriginalTextEntry)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (sentence == null)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
                 return NotFound();
             }
-
-            return View(sentence);
-        }
-
-        // GET: Sentences/Create
-        public IActionResult Create()
-        {
-            ViewData["TextEntryId"] = new SelectList(_context.TextEntries, "Id", "Id");
-            return View();
-        }
-
-        // POST: Sentences/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,VoteTrue,VoteFalse,Position,Confidence,Type,TextEntryId")] Sentence sentence)
-        {
-            if (ModelState.IsValid)
-            {
-                sentence.Id = Guid.NewGuid();
-                _context.Add(sentence);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["TextEntryId"] = new SelectList(_context.TextEntries, "Id", "Id", sentence.TextEntryId);
-            return View(sentence);
-        }
-
-        // GET: Sentences/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
+            var _sent = _context.Sentences.SingleOrDefault(s => s.Id == Id);
+            if (_sent == null)
             {
                 return NotFound();
             }
-
-            var sentence = await _context.Sentences.SingleOrDefaultAsync(m => m.Id == id);
-            if (sentence == null)
+            if (_sent.Type != SentenceType.OBJECTIVE)
             {
                 return NotFound();
             }
-            ViewData["TextEntryId"] = new SelectList(_context.TextEntries, "Id", "Id", sentence.TextEntryId);
-            return View(sentence);
-        }
-
-        // POST: Sentences/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Content,VoteTrue,VoteFalse,Position,Confidence,Type,TextEntryId")] Sentence sentence)
-        {
-            if (id != sentence.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+            var finder = FinderFactory.CreateFinder();
+            var urlClassifier = new URLClassification();
+            var referenceTasks = (await finder.FindSuggestions(_sent.Content))
+                .Select(async uri =>
+                 {
+                     var bias = await urlClassifier.ClassifyOutletDescription(uri.Host);
+                     return new Reference
+                     {
+                         Id = Guid.NewGuid(),
+                         CreatedBy = "System",
+                         Link = uri,
+                         Tags = new List<string>(),
+                         Bias = bias == null ? null : new Bias(bias, Guid.NewGuid())
+                     };
+                 });
+            var references = await Task.WhenAll(referenceTasks);
+            var entityFinder = new EntityFinder();
+            var entityList = (await entityFinder.GetEntities(_sent.Content))
+                .Select(e => new Entity
                 {
-                    _context.Update(sentence);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    Id = Guid.NewGuid(),
+                    CreatedBy = "Microsoft Entity Linking",
+                    Name = entityFinder.ExtractEntityName(e),
+                    WikiUrl = entityFinder.ExtractEntityWikiUrlString(e),
+                    Matches = entityFinder.ExtractMatches(e)
+                            .Select(tuple => new Match
+                            {
+                                Id = Guid.NewGuid(),
+                                Text = tuple.Item1,
+                                Offset = tuple.Item2
+                            })
+                            .ToList()
+                }).ToList();
+            var entityTasks = entityList
+                .Select(async e =>
                 {
-                    if (!SentenceExists(sentence.Id))
+                    e.Persona = PersonasDBLookups.ByName[e.Name].FirstOrDefault();
+                    if (e.Persona != null)
                     {
-                        return NotFound();
+                        await e.Persona.FetchRecentStatements();
                     }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["TextEntryId"] = new SelectList(_context.TextEntries, "Id", "Id", sentence.TextEntryId);
-            return View(sentence);
-        }
+                    return e;
+                });
+            var entities = await Task.WhenAll(entityTasks);
 
-        // GET: Sentences/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
+            return Json(new
             {
-                return NotFound();
-            }
-
-            var sentence = await _context.Sentences
-                .Include(s => s.OriginalTextEntry)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (sentence == null)
-            {
-                return NotFound();
-            }
-
-            return View(sentence);
-        }
-
-        // POST: Sentences/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var sentence = await _context.Sentences.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Sentences.Remove(sentence);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool SentenceExists(Guid id)
-        {
-            return _context.Sentences.Any(e => e.Id == id);
+                Id = _sent.Id,
+                Refererences = references,
+                Entites = entities
+            });
         }
     }
 }

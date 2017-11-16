@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FactOrFictionCommon\FactOrFictionCommon.csproj" />
+    <ProjectReference Include="..\FactOrFictionReferences\FactOrFictionReferences.csproj" />
     <ProjectReference Include="..\FactOrFictionTextHandling\FactOrFictionTextHandling.csproj" />
   </ItemGroup>
 

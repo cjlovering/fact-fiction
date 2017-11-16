@@ -8,13 +8,14 @@ import _ from '../../stylesheets/components/_ResultPane.scss';
 
 export default class ResultPane extends React.Component {
     render() {
-        const { selectedEntryId, selectEntry, textEntryTokens, changeView } = this.props;
-
+        const { 
+            selectedEntryId, selectEntry, textEntryTokens, changeView 
+        } = this.props;
         return (
             <div>
                 <div className="left-bar">
-                    { textEntryTokens
-                        .map(entry => (
+                    {
+                        textEntryTokens.map(entry => (
                             <Sentence
                                 {...entry}
                                 selectedEntryId={selectedEntryId}
