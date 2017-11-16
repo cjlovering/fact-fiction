@@ -25,7 +25,7 @@ namespace FactOrFictionFrontend.Controllers
         }
 
         // GET: Sentences/Feed
-        public async Task<IActionResult> Feed()
+        public async Task<IActionResult> Feed(Guid? id)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -34,19 +34,43 @@ namespace FactOrFictionFrontend.Controllers
                     $"Cannot find user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var textEntries = (
-                from entry in _context.Sentences
-                orderby entry.OriginalTextEntry.CreatedAt descending
-                where entry.Type == SentenceType.OBJECTIVE
-                select entry
-            )
-            .Take(10)
-            .Select(sent => new SentenceViewModel(sent));
-
-            return Json(new
+            if (!id.HasValue || id.Value == Guid.Empty) 
             {
-                Sentences = await textEntries.ToListAsync()
-            });
+                var textEntries = (
+                    from entry in _context.Sentences
+                    orderby entry.OriginalTextEntry.CreatedAt descending
+                    where entry.Type == SentenceType.OBJECTIVE
+                    select entry
+                )
+                .Take(10)
+                .Select(sent => new SentenceViewModel(sent));
+
+                return Json(new
+                {
+                    Sentences = await textEntries.ToListAsync()
+                });
+            }
+            else
+            {
+                var originalTextEntry = await _context.TextEntries.SingleOrDefaultAsync(t => t.Id == id.Value);
+                var timestamp = originalTextEntry.CreatedAt;
+
+                // select the next 10 sentences that were submitted before this timestamp
+                var textEntries = (
+                    from entry in _context.Sentences
+                    orderby entry.OriginalTextEntry.CreatedAt descending
+                    where entry.Type == SentenceType.OBJECTIVE
+                    where entry.OriginalTextEntry.CreatedAt < timestamp
+                    select entry
+                )
+                .Take(10)
+                .Select(sent => new SentenceViewModel(sent));
+
+                return Json(new
+                {
+                    Sentences = await textEntries.ToListAsync()
+                });
+            }
         }
 
         // Get: Sentences/Details
