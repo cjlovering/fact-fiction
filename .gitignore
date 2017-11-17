@@ -243,9 +243,10 @@ src/FactOrFiction/FactOrFictionUrlSuggestions/bin
 src/FactOrFiction/FactOrFictionUrlSuggestions/obj
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/css/style.css
-data/*
-!data/README.md
+src/FactOrFictionML/data/*
+!src/FactOrFictionML/data/README.md
 __pycache__/
+.ipynb_checkpoints/
 
 # ignore IntelliJ project and ouput files
 target/

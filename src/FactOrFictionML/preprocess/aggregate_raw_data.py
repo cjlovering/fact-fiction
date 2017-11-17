@@ -12,7 +12,7 @@ BRACKETS = ['(', ')', '[', ']', '{', '}', '``', '"', '<', '>']
 class AggregateRawData:
     """ 
     This class tokenizes sentences in the articles of all categories for each news
-    source. After that, it aggregates all sentences in one csv file for each news
+    source. After that, it aggregates all sentences in one tsv file for each news
     source.
 
     Expected directory hierarchy and output location:
@@ -22,13 +22,13 @@ class AggregateRawData:
                 /business
                 /entertainment
                 ...
-            all.csv (output)
+            all.tsv (output)
         /cnn
             /raw
                 /cnn_crime
                 /cnn_entertainment
                 ...
-            all.csv (output)
+            all.tsv (output)
         ...
     """
     def __init__(self, path_prefix):
@@ -62,9 +62,9 @@ class AggregateRawData:
 
 
         # write all the sentences to the same place.
-        output_path = '{}/{}/all.csv'.format(self.path_prefix, dataset_path)
+        output_path = '{}/{}/all.tsv'.format(self.path_prefix, dataset_path)
         with open(output_path, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.writer(f, delimiter=',')
+            writer = csv.writer(f, delimiter='\t')
             writer.writerow(self.COLUMNS)
             writer.writerows(sentences)
 
@@ -120,9 +120,9 @@ class AggregateRawData:
         return out   
 
     def write_all_cached_sentences(self):
-        output_path = self.path_prefix + '/master_all.csv'
+        output_path = self.path_prefix + '/master_all.tsv'
         with open(output_path, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.writer(f, delimiter=',')
+            writer = csv.writer(f, delimiter='\t')
             writer.writerow(self.COLUMNS)
             writer.writerows(self.all_sentences)
 
