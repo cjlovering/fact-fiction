@@ -9,16 +9,22 @@ describe('ListView', () => {
     let listView;
     let selectEntry;
     let selectedEntryId;
+    let loadFunc;
+    let hasMore;
     
     beforeEach(() => {
         state = [{"content": "hi", "type":"OBJECTIVE", "id": "theId"}]     
         selectEntry = jest.fn();
         selectedEntryId = "abc";
+        hasMore = false;
+        loadFunc = jest.fn();
         listView = mount(
             <ListView
                 entries={state}
                 selectedEntryId={selectedEntryId}
                 selectEntry={selectEntry}
+                loadFunc={loadFunc}
+                hasMore={hasMore}
             />);
     });
 
@@ -45,6 +51,8 @@ describe('ListView', () => {
                 entries={state}
                 selectEntry={selectEntry}
                 selectedEntryId={selectedEntryId}
+                loadFunc={loadFunc}
+                hasMore={hasMore}
             />
         );
         expect(listView.find('FactCard').length).toEqual(0);
@@ -62,6 +70,8 @@ describe('ListView', () => {
                 entries={state}
                 selectEntry={selectEntry}
                 selectedEntryId={selectedEntryId}
+                loadFunc={loadFunc}
+                hasMore={hasMore}
             />
         );
         expect(listView.find('FactCard').length).toEqual(2);

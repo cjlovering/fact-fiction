@@ -16,7 +16,6 @@ const loggerMiddleware = createLogger()
 const store = createStore(reducer,
 	applyMiddleware(
 		thunkMiddleware, // lets us dispatch() functions
-		// loggerMiddleware //  neat middleware that logs actions
 	  )
 );
 const rootElement = document.getElementById('content');
@@ -27,5 +26,3 @@ render(
 	</Provider>,
     rootElement
 );
-
-

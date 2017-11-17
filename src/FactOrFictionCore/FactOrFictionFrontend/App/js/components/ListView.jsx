@@ -22,17 +22,18 @@ export default class ListView extends React.Component {
                     loader={<div className="spinner"><Spinner size={SpinnerSize.large} /></div>}
                     useWindow={false}
                 >
-                {entries
-                    .filter(entry => entry.type == "OBJECTIVE")
-                    .map(entry => (
-                        <FactCard
-                            {...entry}
-                            selectedEntryId={selectedEntryId}
-                            selectEntry={selectEntry}
-                            key={shortid.generate()}
-                        />
+                {
+                    entries
+                        .filter(entry => entry.type == "OBJECTIVE")
+                        .map(entry => (
+                            <FactCard
+                                {...entry}
+                                selectedEntryId={selectedEntryId}
+                                selectEntry={selectEntry}
+                                key={shortid.generate()}
+                            />)
                         )
-                    )}
+                }
                 </InfiniteScroll>
             </div>
         );
