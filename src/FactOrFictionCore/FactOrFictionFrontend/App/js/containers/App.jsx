@@ -5,10 +5,21 @@ import { connect } from 'react-redux'
 import MainPane from '../components/MainPane'
 import * as Actions from '../actions'
 
-const App = ({tokens, isFetching, didInvalidate, textEntryTokenIds, feedTokenIds, view, selectedEntryId, actions }) => (
+const App = ({
+    tokens, 
+    isFetching, 
+    isDoneFetchingFeed, 
+    didInvalidate, 
+    textEntryTokenIds, 
+    feedTokenIds, 
+    view, 
+    selectedEntryId, 
+    actions 
+}) => (
     <MainPane 
         tokens={tokens}
         isFetching={isFetching}
+        isDoneFetchingFeed={isDoneFetchingFeed}
         didInvalidate={didInvalidate}
         textEntryTokenIds={textEntryTokenIds}
         feedTokenIds={feedTokenIds}

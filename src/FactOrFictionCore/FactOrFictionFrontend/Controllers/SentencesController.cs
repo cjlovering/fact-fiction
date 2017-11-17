@@ -10,6 +10,7 @@ using FactOrFictionFrontend.Data;
 using Microsoft.AspNetCore.Identity;
 using FactOrFictionFrontend.Controllers.Utils;
 using FactOrFictionUrlSuggestions;
+using Microsoft.Extensions.Logging;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -17,6 +18,9 @@ namespace FactOrFictionFrontend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger _logger;
+
+        private const int PAGE_SIZE = 5;
 
         public SentencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -25,7 +29,7 @@ namespace FactOrFictionFrontend.Controllers
         }
 
         // GET: Sentences/Feed
-        public async Task<IActionResult> Feed(Guid? id)
+        public async Task<IActionResult> Feed(Guid? id, int page)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -33,44 +37,42 @@ namespace FactOrFictionFrontend.Controllers
                 throw new ApplicationException(
                     $"Cannot find user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (!id.HasValue || id.Value == Guid.Empty) 
+            DateTime timestamp = new DateTime();
+            if (!id.HasValue || id.Value == Guid.Empty || id.Value.Equals(""))
             {
-                var textEntries = (
-                    from entry in _context.Sentences
-                    orderby entry.OriginalTextEntry.CreatedAt descending
-                    where entry.Type == SentenceType.OBJECTIVE
-                    select entry
-                )
-                .Take(10)
-                .Select(sent => new SentenceViewModel(sent));
-
-                return Json(new
-                {
-                    Sentences = await textEntries.ToListAsync()
-                });
+                timestamp = DateTime.Now;
             }
             else
             {
-                var originalTextEntry = await _context.TextEntries.SingleOrDefaultAsync(t => t.Id == id.Value);
-                var timestamp = originalTextEntry.CreatedAt;
+                var originalSentence = await _context.Sentences
+                    .Include(s => s.OriginalTextEntry)
+                    .SingleOrDefaultAsync(s => s.Id == id.Value);
 
-                // select the next 10 sentences that were submitted before this timestamp
-                var textEntries = (
-                    from entry in _context.Sentences
-                    orderby entry.OriginalTextEntry.CreatedAt descending
-                    where entry.Type == SentenceType.OBJECTIVE
-                    where entry.OriginalTextEntry.CreatedAt < timestamp
-                    select entry
-                )
-                .Take(10)
+                if (originalSentence == null)
+                {
+                    return NotFound();
+                }
+                timestamp = originalSentence.OriginalTextEntry.CreatedAt;
+            }
+
+            // select the next 10 sentences that were submitted before this timestamp
+            var sentenceQuery = (
+                from entry in _context.Sentences
+                orderby entry.OriginalTextEntry.CreatedAt descending
+                where entry.Type == SentenceType.OBJECTIVE
+                where entry.OriginalTextEntry.CreatedAt.CompareTo(timestamp) < 0
+                select entry
+            );
+
+            var sentenceViewModelQuery = sentenceQuery
+                .Skip((page - 1) * PAGE_SIZE)
+                .Take(PAGE_SIZE)
                 .Select(sent => new SentenceViewModel(sent));
 
-                return Json(new
-                {
-                    Sentences = await textEntries.ToListAsync()
-                });
-            }
+            return Json(new
+            {
+                Sentences = await sentenceViewModelQuery.ToListAsync()
+            });   
         }
 
         // Get: Sentences/Details

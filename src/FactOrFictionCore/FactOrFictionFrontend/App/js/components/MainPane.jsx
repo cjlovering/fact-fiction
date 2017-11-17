@@ -17,13 +17,23 @@ import _ from '../../stylesheets/components/_MainPane.scss';
 export default class MainPane extends React.Component {
     componentDidMount() {
         const { fetchFeedTokens } = this.props;
-        fetchFeedTokens();
+        // fetchFeedTokens();
     }
 
     render() {
         const {
-            tokens, isFetching, didInvalidate, textEntryTokenIds, feedTokenIds,
-            view, selectedEntryId, selectEntry, fetchTextEntry, changeView
+            tokens, 
+            isFetching, 
+            isDoneFetchingFeed, 
+            didInvalidate, 
+            textEntryTokenIds, 
+            feedTokenIds, 
+            view,
+            selectedEntryId, 
+            selectEntry, 
+            fetchTextEntry, 
+            changeView, 
+            fetchFeedTokens
         } = this.props;
         const isInput = view === VIEW_INPUT;
         const title = isInput ? "Input" : "Results";
@@ -39,6 +49,12 @@ export default class MainPane extends React.Component {
         );
         const entries = (isInput ? feedTokenIds : textEntryTokenIds)
             .map(id => tokens[id]);
+
+        const loadFunc = isInput
+            ? (page) => {
+                fetchFeedTokens(feedTokenIds[0], page);
+            }
+            : () => {};
         return (
             <div>
                 <div className="container">
@@ -48,11 +64,12 @@ export default class MainPane extends React.Component {
                             {leftPane}
                         </div>
                         <div className="col-sm-6 col-md-6 col-lg-6">
-                            {isFetching ? <div className="spinner"><Spinner size={SpinnerSize.large} /></div> : null}
                             <ListView
                                 entries={entries}
                                 selectedEntryId={selectedEntryId}
                                 selectEntry={selectEntry}
+                                loadFunc={loadFunc}
+                                hasMore={isInput && !isDoneFetchingFeed}
                             />
                         </div>
                     </div>

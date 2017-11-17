@@ -15,12 +15,13 @@ const loggerMiddleware = createLogger()
 
 const store = createStore(reducer,
 	applyMiddleware(
-		thunkMiddleware // lets us dispatch() functions
+		thunkMiddleware, // lets us dispatch() functions
+		// loggerMiddleware //  neat middleware that logs actions
 	  )
 );
 const rootElement = document.getElementById('content');
 
-render(  
+render(
 	<Provider store={store}>
 		<App />
 	</Provider>,

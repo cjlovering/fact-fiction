@@ -66,11 +66,9 @@ const fetchTextEntry = textEntry => {
     }
 }
 
-const fetchFeedTokens = () => {
+const fetchFeedTokens = (tokenId = "", page = 0) => {
     return (dispatch) => {
-        const placeholder = "";
-        dispatch(fetchingTokens(placeholder));
-        return fetch(`/Sentences/Feed/`, {
+        return fetch(`/Sentences/Feed/${tokenId}?page=${page}`, {
             method: "GET",
             credentials: "same-origin"
         })
@@ -80,8 +78,11 @@ const fetchFeedTokens = () => {
         )
         .then(json => {
             const clearSelection = "";
+            // Put tokens into storage
             dispatch(receiveTokens(json));
+            // Add tokens to feed list
             dispatch(receiveFeed(json));
+            // Clear selection
             dispatch(selectEntry(clearSelection));
         })
     }

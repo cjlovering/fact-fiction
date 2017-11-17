@@ -1,5 +1,5 @@
 import { 
-    FETCHING_TOKENS,
+    FETCHING_TOKENS,    
     RECEIVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY,
     RECEIVE_TOKENS,
@@ -9,11 +9,13 @@ import {
 /* text entry */
 export default (
     state = {
-        isFetching: false,
-        didInvalidate: false,
-        tokens: {}, // map of token id to token
-        textEntryTokenIds: [], // a list of text entry token ids 
-        feedTokenIds: [] // a list of token ids for feed
+        isFetching: false,          // is fetching text entry result
+        didInvalidate: false,      
+        textEntryTokenIds: [],      // a list of text entry token ids 
+        tokens: {},                 // map of token id to token
+
+        isDoneFetchingFeed: false,  // is done with fetching feed
+        feedTokenIds: []            // a list of token ids for feed
     },
     action
 ) => {
@@ -39,8 +41,10 @@ export default (
                 textEntryTokenIds: action.textEntryTokenIds
             })
         case RECEIVE_FEED:
+            console.log(action.feedTokenIds);
             return Object.assign({}, state, {
-                feedTokenIds: action.feedTokenIds
+                isDoneFetchingFeed: action.feedTokenIds.length == 0,
+                feedTokenIds: [...state.feedTokenIds, ...action.feedTokenIds]
             })
         default:
             return state;
