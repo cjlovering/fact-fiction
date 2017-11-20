@@ -15,8 +15,8 @@ const loggerMiddleware = createLogger()
 
 const store = createStore(reducer,
 	applyMiddleware(
-		thunkMiddleware, // lets us dispatch() functions
-	  )
+		thunkMiddleware // lets us dispatch() functions
+	)
 );
 const rootElement = document.getElementById('content');
 

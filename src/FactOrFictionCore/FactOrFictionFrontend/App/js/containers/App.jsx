@@ -14,7 +14,9 @@ const App = ({
     feedTokenIds, 
     view, 
     selectedEntryId, 
-    actions 
+    details, 
+    detailsShown,
+    actions
 }) => (
     <MainPane 
         tokens={tokens}
@@ -25,10 +27,14 @@ const App = ({
         feedTokenIds={feedTokenIds}
         view={view}
         selectedEntryId={selectedEntryId}
+        details={details}
         changeView={actions.changeView}
+        detailsShown={detailsShown}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
         fetchFeedTokens={actions.fetchFeedTokens}
+        fetchDetails={actions.fetchDetails}
+        showDetails={actions.showDetails}
 	/>
 );
 
@@ -40,11 +46,15 @@ App.propTypes = {
     feedTokenIds: PropTypes.array.isRequired,
     view: PropTypes.string.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
+    details: PropTypes.object.isRequired,
+    detailsShown: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     ...state.textEntry,
+    details: state.sentenceDetails.details,
+    detailsShown: state.detailsShown,
     view: state.view,
     selectedEntryId: state.selectedEntryId
 });

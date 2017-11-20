@@ -9,6 +9,7 @@ describe('MainPane', () => {
     let mainPane;
     let mainPaneResult;
 
+    let details;
     let tokens;
     let isFetching;
     let didInvalidate;
@@ -21,6 +22,10 @@ describe('MainPane', () => {
     let selectEntry;
     let fetchFeedTokens;
     let fetchTextEntry;
+    let fetchDetails;
+    let detailsShown;
+    let showDetails;
+
 
     beforeEach(() => {
         tokens = {
@@ -30,12 +35,16 @@ describe('MainPane', () => {
                 "content": "Hello"
             }
         };
+        details = {}
         isFetching = false;
         didInvalidate = false;
         textEntryTokenIds = ["hi"];
         feedTokenIds = ["hi"];
         selectedEntryId = "abc"; 
+        detailsShown = {};
 
+        showDetails = jest.fn();
+        fetchDetails = jest.fn()
         fetchFeedTokens = jest.fn();
         fetchTextEntry = jest.fn();
         changeView = jest.fn();
@@ -43,6 +52,8 @@ describe('MainPane', () => {
 
         mainPane = mount(
             <MainPane 
+                details={details}
+                fetchDetails={fetchDetails}
                 fetchTextEntry={fetchTextEntry} 
                 changeView={changeView}
                 selectedEntryId={selectedEntryId}
@@ -54,10 +65,15 @@ describe('MainPane', () => {
                 textEntryTokenIds={textEntryTokenIds}
                 feedTokenIds={feedTokenIds}
                 view={VIEW_INPUT} 
+                detailsShown={detailsShown}
+                showDetails={showDetails}
             />
         );
         mainPaneResult = mount(
             <MainPane 
+                details={details}
+                fetchDetails={fetchDetails}                
+                fetchDetails={fetchDetails}
                 fetchTextEntry={fetchTextEntry}
                 changeView={changeView}
                 selectedEntryId={selectedEntryId}
@@ -69,6 +85,8 @@ describe('MainPane', () => {
                 textEntryTokenIds={textEntryTokenIds}
                 feedTokenIds={feedTokenIds}
                 view={VIEW_RESULT} 
+                detailsShown={detailsShown}
+                showDetails={showDetails}
             />
         );
     });

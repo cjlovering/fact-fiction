@@ -13,11 +13,11 @@ export default (
 ) => {
     switch(action.type) {
         case FETCHING_DETAILS:
-            return {...state, isFetching: true}
+            return Object.assign({}, state, {isFetching: true})
         case RECEIVE_DETAILS:
-            const details = { ...state.details, ...action.details}
+            const details = Object.assign({}, state.details, action.details);
             const isFetching = false;
-            return { isFetching, details };
+            return { details, isFetching }
         default:
             return state;
     }

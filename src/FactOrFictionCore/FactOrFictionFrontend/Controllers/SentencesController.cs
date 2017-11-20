@@ -1,15 +1,14 @@
-﻿using System;
+﻿using FactOrFictionCommon.Models;
+using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionFrontend.Data;
+using FactOrFictionUrlSuggestions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using FactOrFictionCommon.Models;
-using FactOrFictionFrontend.Data;
-using Microsoft.AspNetCore.Identity;
-using FactOrFictionFrontend.Controllers.Utils;
-using FactOrFictionUrlSuggestions;
 using Microsoft.Extensions.Logging;
 
 namespace FactOrFictionFrontend.Controllers
@@ -143,8 +142,8 @@ namespace FactOrFictionFrontend.Controllers
 
             return Json(new
             {
-                Refererences = references,
-                Entites = entities
+                References = references,
+                Entities = entities
             });
         }
     }

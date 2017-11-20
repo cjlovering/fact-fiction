@@ -13,13 +13,9 @@ import ResultPane from './ResultPane';
 
 import { VIEW_INPUT } from '../constants/viewTypes';
 import _ from '../../stylesheets/components/_MainPane.scss';
+import { fetchDetails } from '../actions/fetchDetails';
 
 export default class MainPane extends React.Component {
-    componentDidMount() {
-        const { fetchFeedTokens } = this.props;
-        // fetchFeedTokens();
-    }
-
     render() {
         const {
             tokens, 
@@ -33,7 +29,11 @@ export default class MainPane extends React.Component {
             selectEntry, 
             fetchTextEntry, 
             changeView, 
-            fetchFeedTokens
+            fetchFeedTokens,
+            details,
+            fetchDetails,
+            detailsShown,
+            showDetails
         } = this.props;
         const isInput = view === VIEW_INPUT;
         const title = isInput ? "Input" : "Results";
@@ -49,7 +49,6 @@ export default class MainPane extends React.Component {
         );
         const entries = (isInput ? feedTokenIds : textEntryTokenIds)
             .map(id => tokens[id]);
-
         const loadFunc = isInput
             ? (page) => {
                 fetchFeedTokens(feedTokenIds[0], page);
@@ -65,6 +64,10 @@ export default class MainPane extends React.Component {
                         </div>
                         <div className="col-sm-6 col-md-6 col-lg-6">
                             <ListView
+                                details={details}
+                                fetchDetails={fetchDetails}
+                                detailsShown={detailsShown}
+                                showDetails={showDetails}
                                 entries={entries}
                                 selectedEntryId={selectedEntryId}
                                 selectEntry={selectEntry}
@@ -80,6 +83,8 @@ export default class MainPane extends React.Component {
 }
 
 MainPane.propTypes = {
+    details: PropTypes.object.isRequired,
+    fetchDetails: PropTypes.func.isRequired,
     tokens: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
     didInvalidate: PropTypes.bool.isRequired,
@@ -90,5 +95,7 @@ MainPane.propTypes = {
     fetchTextEntry: PropTypes.func.isRequired,
     selectEntry: PropTypes.func.isRequired,
     fetchFeedTokens: PropTypes.func.isRequired,
-    changeView: PropTypes.func.isRequired
+    changeView: PropTypes.func.isRequired,
+    showDetails: PropTypes.func.isRequired,
+    detailsShown: PropTypes.object.isRequired
 }
