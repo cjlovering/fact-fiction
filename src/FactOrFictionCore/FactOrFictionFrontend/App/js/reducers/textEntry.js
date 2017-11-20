@@ -3,7 +3,8 @@ import {
     RECEIVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY,
     RECEIVE_TOKENS,
-    RECEIVE_FEED
+    RECEIVE_FEED,
+    RECEIVE_VOTES
 } from '../constants/actionTypes';
 
 /* text entry */
@@ -14,7 +15,8 @@ export default (
         textEntryTokenIds: [],      // a list of text entry token ids 
         tokens: {},                 // map of token id to token
         isDoneFetchingFeed: false,  // is done with fetching feed
-        feedTokenIds: []            // a list of token ids for feed
+        feedTokenIds: [],           // a list of token ids for feed
+        votes: {} // map of sentence id and vote type - "TRUE", "FALSE" or "UNVOTED"
     },
     action
 ) => {
@@ -34,7 +36,7 @@ export default (
                     didInvalidate: false,
                     tokens: Object.assign({}, state.tokens, action.tokens)
                 }
-            )
+            );
         case RECEIVE_TEXT_ENTRY:
             return Object.assign(
                 {},
@@ -45,7 +47,12 @@ export default (
             return Object.assign({}, state, {
                 isDoneFetchingFeed: action.feedTokenIds.length == 0,
                 feedTokenIds: [...state.feedTokenIds, ...action.feedTokenIds]
-            })
+            });
+        case RECEIVE_VOTES:
+            return Object.assign({}, state, {
+                votes: Object.assign({}, state.votes, action.votes)
+            });
+
         default:
             return state;
     }

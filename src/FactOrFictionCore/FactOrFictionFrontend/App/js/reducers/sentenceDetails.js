@@ -3,7 +3,7 @@ import {
     RECEIVE_DETAILS
 } from '../constants/actionTypes';
 
-/* text entry */
+/* sentence details */
 export default (
     state = {
         isFetching: false,

@@ -13,13 +13,16 @@ describe('ListView', () => {
     let factCard;
     let showingDetails;
     let showDetails;
-
+    let castVote;
+    let sentenceVote;
     beforeEach(() => {
         details = {};
         fetchDetails = jest.fn();
         selectEntry = jest.fn();
         showDetails = jest.fn();
         showingDetails = false;
+        castVote = jest.fn();
+        sentenceVote = "TRUE";
         selectedEntryId = "abc";
         entry = {
             id: "abc",
@@ -34,8 +37,10 @@ describe('ListView', () => {
                 fetchDetails={fetchDetails}
                 selectedEntryId={selectedEntryId}
                 selectEntry={selectEntry}
+                sentenceVote={sentenceVote}
                 showingDetails={showingDetails}
                 showDetails={showDetails}
+                castVote={castVote}
             />);
     });
 
@@ -49,6 +54,10 @@ describe('ListView', () => {
 
     it('FactCard requires selectedEntryId prop', () => {
         expect(factCard.props().selectedEntryId).toBeDefined();
+    });
+
+    it('FactCard requires castVote prop', () => {
+        expect(factCard.props().castVote).toBeDefined();
     });
 
     it('Click selects the entry', () => {

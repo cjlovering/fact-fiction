@@ -9,12 +9,14 @@ describe('ListView', () => {
     let listView;
     let selectEntry;
     let selectedEntryId;
+    let votes;
     let loadFunc;
     let hasMore;
     let details;
     let fetchDetails;
     let detailsShown;
     let showDetails;
+    let castVote;
     
     beforeEach(() => {
         state = [{"content": "hi", "type":"OBJECTIVE", "id": "theId"}]     
@@ -24,19 +26,23 @@ describe('ListView', () => {
         detailsShown = {}
         details = {};
         selectedEntryId = "abc";
+        votes = {};
         hasMore = false;
         loadFunc = jest.fn();
+        castVote = jest.fn();
         listView = mount(
             <ListView
                 details={details}
                 fetchDetails={fetchDetails}
                 entries={state}
                 selectedEntryId={selectedEntryId}
+                votes={votes}
                 selectEntry={selectEntry}
                 loadFunc={loadFunc}
                 hasMore={hasMore}
                 detailsShown={detailsShown}
                 showDetails={showDetails}
+                castVote={castVote}
             />);
     });
 
@@ -52,6 +58,14 @@ describe('ListView', () => {
         expect(listView.props().selectedEntryId).toBeDefined();
     });
 
+    it('ListView requires votes prop', () => {
+        expect(listView.props().votes).toBeDefined();
+    });
+
+    it('ListView requires castVote prop', () => {
+        expect(listView.props().castVote).toBeDefined();
+    });
+
     it('ListView renders nested components == 1', () => {
         expect(listView.find('FactCard').length).toEqual(1);
     });
@@ -65,10 +79,12 @@ describe('ListView', () => {
                 fetchDetails={fetchDetails}
                 selectEntry={selectEntry}
                 selectedEntryId={selectedEntryId}
+                votes={votes}
                 loadFunc={loadFunc}
                 hasMore={hasMore}
                 detailsShown={detailsShown}
                 showDetails={showDetails}
+                castVote={castVote}
             />
         );
         expect(listView.find('FactCard').length).toEqual(0);
@@ -88,10 +104,12 @@ describe('ListView', () => {
                 fetchDetails={fetchDetails}
                 selectEntry={selectEntry}
                 selectedEntryId={selectedEntryId}
+                votes={votes}
                 loadFunc={loadFunc}
                 hasMore={hasMore}
                 detailsShown={detailsShown}
                 showDetails={showDetails}
+                castVote={castVote}
             />
         );
         expect(listView.find('FactCard').length).toEqual(2);

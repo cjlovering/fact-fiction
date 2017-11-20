@@ -1,40 +1,16 @@
 import { 
     FETCHING_TOKENS,
-    RECEIVE_TEXT_ENTRY,
     INVALIDATE_TEXT_ENTRY,
-    RECEIVE_TOKENS,
-    RECEIVE_FEED
 } from '../constants/actionTypes';
 
 import 'whatwg-fetch';
 import { selectEntry } from './selectEntry';
+import { receiveFeed, receiveTextEntry, receiveTokens, receiveVotes } from './receive';
 
 const fetchingTokens = text => {
     return {
         type: FETCHING_TOKENS,
         text
-    };
-};
-
-const receiveTokens = json => {
-    return {
-        type: RECEIVE_TOKENS,
-        tokens: json.sentences.reduce(
-            (map, entry) => { map[entry.id] = entry; return map; }, {})
-    };
-};
-
-const receiveTextEntry = json => {
-    return {
-        type: RECEIVE_TEXT_ENTRY,
-        textEntryTokenIds: json.sentences.map(entry => entry.id)
-    };
-};
-
-const receiveFeed = json => {
-    return {
-        type: RECEIVE_FEED,
-        feedTokenIds: json.sentences.map(entry => entry.id)
     };
 };
 
@@ -78,10 +54,13 @@ const fetchFeedTokens = (tokenId = "", page = 0) => {
         )
         .then(json => {
             const clearSelection = "";
+
             // Put tokens into storage
             dispatch(receiveTokens(json));
             // Add tokens to feed list
             dispatch(receiveFeed(json));
+            // Add votes to the vote list
+            dispatch(receiveVotes(json));
             // Clear selection
             dispatch(selectEntry(clearSelection));
         })

@@ -15,9 +15,9 @@ describe('async actions', () => {
       fetchMock.restore()
     })
   
-    it('dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
+    it('fetchFeedTokens dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
       fetchMock
-        .getOnce(`/Sentences/Feed/?page=0`, { body: { sentences: [{ id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }]}})
+        .getOnce(`/Sentences/Feed/?page=0`, { body: { sentences: [{ id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }], votes: {}}})
         .catch(unmatchedUrl => {
             return fetchFeedTokens(unmatchedUrl)
         })
@@ -33,6 +33,7 @@ describe('async actions', () => {
           type: types.RECEIVE_FEED,
           feedTokenIds: ["123"]
         },
+        { type: types.RECEIVE_VOTES, votes: {} },
         { type: types.SELECT_ENTRY, id: "" }
       ]
 
@@ -43,7 +44,7 @@ describe('async actions', () => {
       });
     })
 
-    it('dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
+    it('fetchTextEntry dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
       fetchMock
       .postOnce(`/TextEntries/Create/`, { body: { sentences: [{ id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }]}})
       .catch(unmatchedUrl => {

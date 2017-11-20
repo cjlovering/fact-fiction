@@ -16,6 +16,7 @@ const App = ({
     selectedEntryId, 
     details, 
     detailsShown,
+    votes,
     actions
 }) => (
     <MainPane 
@@ -28,13 +29,15 @@ const App = ({
         view={view}
         selectedEntryId={selectedEntryId}
         details={details}
-        changeView={actions.changeView}
+        votes={votes}
         detailsShown={detailsShown}
+        changeView={actions.changeView}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
         fetchFeedTokens={actions.fetchFeedTokens}
         fetchDetails={actions.fetchDetails}
         showDetails={actions.showDetails}
+        castVote={actions.castVote}
 	/>
 );
 
@@ -48,6 +51,7 @@ App.propTypes = {
     selectedEntryId: PropTypes.string.isRequired,
     details: PropTypes.object.isRequired,
     detailsShown: PropTypes.object.isRequired,
+    votes:PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
 }
 

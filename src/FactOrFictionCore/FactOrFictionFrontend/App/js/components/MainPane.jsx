@@ -27,18 +27,23 @@ export default class MainPane extends React.Component {
             view,
             selectedEntryId, 
             selectEntry, 
+            votes,
             fetchTextEntry, 
             changeView, 
             fetchFeedTokens,
             details,
             fetchDetails,
             detailsShown,
-            showDetails
+            showDetails,
+            castVote
         } = this.props;
         const isInput = view === VIEW_INPUT;
         const title = isInput ? "Input" : "Results";
         const leftPane = isInput ? (
-            <InputPane fetchTextEntry={fetchTextEntry} changeView={changeView} />
+            <InputPane
+                fetchTextEntry={fetchTextEntry}
+                changeView={changeView}
+            />
         ) : (
            <ResultPane 
                 selectedEntryId={selectedEntryId} 
@@ -73,6 +78,8 @@ export default class MainPane extends React.Component {
                                 selectEntry={selectEntry}
                                 loadFunc={loadFunc}
                                 hasMore={isInput && !isDoneFetchingFeed}
+                                castVote={castVote}
+                                votes={votes}
                             />
                         </div>
                     </div>
@@ -92,10 +99,12 @@ MainPane.propTypes = {
     feedTokenIds: PropTypes.array.isRequired,
     view: PropTypes.string.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
+    votes: PropTypes.object.isRequired,
     fetchTextEntry: PropTypes.func.isRequired,
     selectEntry: PropTypes.func.isRequired,
     fetchFeedTokens: PropTypes.func.isRequired,
     changeView: PropTypes.func.isRequired,
     showDetails: PropTypes.func.isRequired,
-    detailsShown: PropTypes.object.isRequired
+    detailsShown: PropTypes.object.isRequired,
+    castVote: PropTypes.func.isRequired
 }

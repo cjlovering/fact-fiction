@@ -31,7 +31,7 @@ const fetchDetails = tokenId => {
         })
         .then(
             response => response.json(),
-            error => console.log('An error occured when fetching text entries.', error)
+            error => console.log(`An error occured when fetching details of sentence with id ${tokenId}.`, error)
         )
         .then(json => dispatch(recieveDetails(tokenId, json)))
     }

@@ -20,6 +20,7 @@ namespace FactOrFictionCommon.Models.RelationshipModels
     public enum VoteType
     {
         TRUE,
-        FALSE
+        FALSE,
+        UNVOTED
     }
 }

@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using FactOrFictionTextHandling.Luis;
 using FactOrFictionTextHandling.SentenceProducer;
 using FactOrFictionFrontend.Controllers.Utils;
+using System.Collections.Generic;
+using FactOrFictionCommon.Models.RelationshipModels;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -91,10 +93,23 @@ namespace FactOrFictionFrontend.Controllers
                 _context.Add(textEntry);
                 _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
+
+                //var VotesDict = new Dictionary<Guid, string>();
+                //sentences.Aggregate(new Dictionary<Guid, string>(),
+                //    (x, sent) => {
+                //            x.Add(sent.Id, VoteType.UNVOTED.ToString());
+                //            return x;
+                //        }
+                //    );
+
+                var VotesDict = sentences.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
+
                 return Json(new
                 {
                     Sentences = sentences.Select(
-                        sent => new SentenceViewModel(sent))
+                        sent => new SentenceViewModel(sent)),
+                    // Return Votes here
+                    Votes = VotesDict
                 });
             }
             return View(textEntry);

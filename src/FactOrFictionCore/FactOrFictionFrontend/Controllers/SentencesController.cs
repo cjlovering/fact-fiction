@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using FactOrFictionCommon.Models.RelationshipModels;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -31,11 +32,15 @@ namespace FactOrFictionFrontend.Controllers
         public async Task<IActionResult> Feed(Guid? id, int page)
         {
             var user = await _userManager.GetUserAsync(User);
+            
             if (user == null)
             {
                 throw new ApplicationException(
                     $"Cannot find user with ID '{_userManager.GetUserId(User)}'.");
             }
+
+            var userId = _userManager.GetUserId(User);
+
             DateTime timestamp = new DateTime();
             if (!id.HasValue || id.Value == Guid.Empty || id.Value.Equals(""))
             {
@@ -68,13 +73,32 @@ namespace FactOrFictionFrontend.Controllers
                 .Take(PAGE_SIZE)
                 .Select(sent => new SentenceViewModel(sent));
 
+            var sentences = await sentenceViewModelQuery.ToListAsync();
+
+            var previousVotes = await _context.Votes.Where(v => v.UserId == userId).ToDictionaryAsync(v => v.SentenceId, v => v.Type);
+
+            var VotesDict = sentences.ToDictionary(
+                sent => sent.Id, 
+                sent =>
+                {
+                    if (previousVotes.ContainsKey(sent.Id))
+                    {
+                        return previousVotes[sent.Id].ToString();
+                    } else
+                    {
+                        return VoteType.UNVOTED.ToString();
+                    }
+                }
+                );
+
             return Json(new
             {
-                Sentences = await sentenceViewModelQuery.ToListAsync()
+                Sentences = sentences,
+                Votes = VotesDict
             });   
         }
 
-        // Get: Sentences/Details
+        // GET: Sentences/Details
         public async Task<IActionResult> Details(Guid Id)
         {
             if (!ModelState.IsValid)

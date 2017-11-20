@@ -17,6 +17,7 @@ describe('MainPane', () => {
     let feedTokenIds;
     let view;
     let selectedEntryId;
+    let votes;
 
     let changeView;
     let selectEntry;
@@ -25,7 +26,7 @@ describe('MainPane', () => {
     let fetchDetails;
     let detailsShown;
     let showDetails;
-
+    let castVote;
 
     beforeEach(() => {
         tokens = {
@@ -42,13 +43,14 @@ describe('MainPane', () => {
         feedTokenIds = ["hi"];
         selectedEntryId = "abc"; 
         detailsShown = {};
-
+        votes = {};
         showDetails = jest.fn();
         fetchDetails = jest.fn()
         fetchFeedTokens = jest.fn();
         fetchTextEntry = jest.fn();
         changeView = jest.fn();
         selectEntry = jest.fn();
+        castVote = jest.fn();
 
         mainPane = mount(
             <MainPane 
@@ -57,6 +59,7 @@ describe('MainPane', () => {
                 fetchTextEntry={fetchTextEntry} 
                 changeView={changeView}
                 selectedEntryId={selectedEntryId}
+                votes={votes}
                 selectEntry={selectEntry}
                 fetchFeedTokens={fetchFeedTokens}
                 tokens={tokens}
@@ -67,6 +70,7 @@ describe('MainPane', () => {
                 view={VIEW_INPUT} 
                 detailsShown={detailsShown}
                 showDetails={showDetails}
+                castVote={castVote}
             />
         );
         mainPaneResult = mount(
@@ -77,6 +81,7 @@ describe('MainPane', () => {
                 fetchTextEntry={fetchTextEntry}
                 changeView={changeView}
                 selectedEntryId={selectedEntryId}
+                votes={votes}
                 selectEntry={selectEntry}
                 fetchFeedTokens={fetchFeedTokens}
                 tokens={tokens}
@@ -84,9 +89,10 @@ describe('MainPane', () => {
                 didInvalidate={didInvalidate}
                 textEntryTokenIds={textEntryTokenIds}
                 feedTokenIds={feedTokenIds}
-                view={VIEW_RESULT} 
+                view={VIEW_RESULT}
                 detailsShown={detailsShown}
                 showDetails={showDetails}
+                castVote={castVote}
             />
         );
     });
@@ -103,12 +109,20 @@ describe('MainPane', () => {
         expect(mainPane.props().view).toBeDefined();
     });
 
+    it('MainPane requires votes prop', () => {
+        expect(mainPane.props().votes).toBeDefined();
+    });
+
     it('MainPane requires selectEntry prop', () => {
         expect(mainPane.props().selectEntry).toBeDefined();
     });
 
     it('MainPane requires selectedEntryId prop', () => {
         expect(mainPane.props().selectedEntryId).toBeDefined();
+    });
+
+    it('MainPane requires castVote prop', () => {
+        expect(mainPane.props().castVote).toBeDefined();
     });
 
     it('App renders nested components (input)', () => {

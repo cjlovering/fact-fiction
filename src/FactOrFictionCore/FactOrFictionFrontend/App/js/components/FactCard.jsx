@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
+import {VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED} from '../constants/voteTypes.js'
 import _ from '../../stylesheets/components/_FactCard.scss'
 import {
     Spinner,
@@ -8,31 +9,22 @@ import {
 } from 'office-ui-fabric-react/lib/Spinner';
 
 import Button from './Button';
+import VoteButtons from './VoteButtons';
 
 export default class FactCard extends React.Component {
-
-    handleButtonClick = (hasDetails) => {
-        const {
-            id,
-            fetchDetails, 
-            showingDetails, 
-            showDetails
-        } = this.props;
-
-        showDetails(id, !showingDetails);
-        if (!hasDetails) { 
-            fetchDetails(id); 
-        }       
-    }
-
     render() {
         const { 
             content, 
             selectedEntryId, 
-            id, 
-            selectEntry, 
+            id,
             details, 
-            showingDetails
+            showingDetails,
+            sentenceVote,
+            votes, 
+            voteTrue, 
+            voteFalse, 
+            selectEntry, 
+            castVote
         } = this.props;
 
         // Change CSS class if selected.
@@ -63,11 +55,13 @@ export default class FactCard extends React.Component {
         const referencesJSXRendered = showingDetails ? referencesJSX : null;
 
         // Button for showing/hiding details 
-        const button = (
-            <Button
-                handleClick={() => this.handleButtonClick(hasDetails)}
-                text={ !showingDetails ? "+" : "-" }
-            />
+        const expandButton = (
+            <div style={{"padding": "10px", "textAlign": "center"}}>
+                <Button
+                    handleClick={() => this.handleButtonClick(hasDetails)}
+                    text={ !showingDetails ? "+" : "-" }
+                />
+            </div>
         );
 
         return (
@@ -79,11 +73,32 @@ export default class FactCard extends React.Component {
                     {content}
                 </div>
                 {referencesJSXRendered}
-                {button}
-                <div className="vote-buttons" />
+                {expandButton}
+                <VoteButtons 
+                    id={id}
+                    sentenceVote={sentenceVote} 
+                    voteTrue={voteTrue} 
+                    voteFalse={voteFalse} 
+                    castVote={castVote} 
+                />
             </div>
         );
     }
+
+    handleButtonClick = (hasDetails) => {
+        const {
+            id,
+            fetchDetails, 
+            showingDetails, 
+            showDetails
+        } = this.props;
+
+        showDetails(id, !showingDetails);
+        if (!hasDetails) { 
+            fetchDetails(id); 
+        }       
+    }
+
 }
 
 FactCard.propTypes = {
@@ -91,7 +106,12 @@ FactCard.propTypes = {
     fetchDetails: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
+    sentenceVote: PropTypes.string,
     selectEntry: PropTypes.func.isRequired,
     showingDetails: PropTypes.bool.isRequired,
-    showDetails: PropTypes.func.isRequired
+    sentenceVote: PropTypes.string.isRequired,
+    showDetails: PropTypes.func.isRequired,
+    castVote: PropTypes.func.isRequired,
+    voteTrue: PropTypes.number,
+    voteFalse: PropTypes.number
 }

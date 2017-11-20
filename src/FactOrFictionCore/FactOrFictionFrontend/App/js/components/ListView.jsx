@@ -8,23 +8,27 @@ import {
     Spinner,
     SpinnerSize
 } from 'office-ui-fabric-react/lib/Spinner';
+import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
 
 export default class ListView extends React.Component {
     render() {
         const { 
             entries, 
             selectedEntryId, 
+            hasMore,
+            details,
+            votes,
             selectEntry, 
             loadFunc, 
-            hasMore,
-            details, 
-            fetchDetails, 
             detailsShown,
-            showDetails, 
+            fetchDetails, 
+            showDetails,
+            castVote
         } = this.props;
-        // showDetails("FAK2", 44);        
         const showingDetails = id =>
             detailsShown.hasOwnProperty(id) && detailsShown[id];
+        const sentenceVote = id =>
+            votes.hasOwnProperty(id) ? votes[id] : VOTE_UNVOTED;
         return (
             <div className='list-view'>
                 <InfiniteScroll
@@ -35,26 +39,27 @@ export default class ListView extends React.Component {
                     loader={<div className="spinner"><Spinner size={SpinnerSize.large} /></div>}
                     useWindow={false}
                 >
-
-                {
-                    entries
-                        .filter(entry => entry.type == "OBJECTIVE")
-                        .map(entry => (
-                            <FactCard
-                                {...entry}
-                                details={entry.id in details ? details[entry.id] : {}}
-                                fetchDetails={fetchDetails}
-                                selectedEntryId={selectedEntryId}
-                                selectEntry={selectEntry}
-                                showDetails={showDetails}
-                                showingDetails={showingDetails(entry.id)}
-                                key={shortid.generate()}
-                            />
+                    {
+                        entries
+                            .filter(entry => entry.type == "OBJECTIVE")
+                            .map(entry => (
+                                <FactCard
+                                    {...entry}
+                                    details={entry.id in details ? details[entry.id] : {}}
+                                    fetchDetails={fetchDetails}
+                                    selectedEntryId={selectedEntryId}
+                                    selectEntry={selectEntry}
+                                    showDetails={showDetails}
+                                    showingDetails={showingDetails(entry.id)}
+                                    castVote={castVote}
+                                    sentenceVote={sentenceVote(entry.id)}
+                                    key={shortid.generate()}
+                                />
+                            )
                         )
-                    )
-                }
-            </InfiniteScroll>
-        </div>                      
+                    }
+                </InfiniteScroll>
+            </div>                      
         );
     }
 }
@@ -63,10 +68,13 @@ ListView.propTypes = {
     details: PropTypes.object.isRequired,
     fetchDetails: PropTypes.func.isRequired,
     entries: PropTypes.array.isRequired,
+    votes: PropTypes.object.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
+    votes: PropTypes.object.isRequired,
     selectEntry: PropTypes.func.isRequired,
     loadFunc: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
     detailsShown: PropTypes.object.isRequired,    
     showDetails: PropTypes.func.isRequired,
+    castVote: PropTypes.func.isRequired
 }

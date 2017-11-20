@@ -9,7 +9,8 @@ describe('textEntry reducer', () => {
         didInvalidate: false,
         tokens: {}, // map of token id to token
         textEntryTokenIds: [], // a list of text entry token ids 
-        feedTokenIds: [] // a list of token ids for feed
+        feedTokenIds: [], // a list of token ids for feed
+        votes: {}
     };
 
     it('should provide the initial state', () => {
@@ -19,7 +20,8 @@ describe('textEntry reducer', () => {
             isDoneFetchingFeed: false,
             tokens: {}, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -32,7 +34,8 @@ describe('textEntry reducer', () => {
             isDoneFetchingFeed: false,            
             tokens: {}, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -45,7 +48,8 @@ describe('textEntry reducer', () => {
             isDoneFetchingFeed: false,            
             tokens: {}, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -59,7 +63,8 @@ describe('textEntry reducer', () => {
                 'ghi': "all good"
             }, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         }, {
             type: types.RECEIVE_TOKENS,
             tokens: {
@@ -76,7 +81,8 @@ describe('textEntry reducer', () => {
                 'ghi': "all good"
             }, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -90,7 +96,8 @@ describe('textEntry reducer', () => {
             didInvalidate: false,
             tokens: {}, // map of token id to token
             textEntryTokenIds: ["abc"], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -106,7 +113,8 @@ describe('textEntry reducer', () => {
             isDoneFetchingFeed: false,            
             tokens: {}, // map of token id to token
             textEntryTokenIds: ["abc"], // a list of text entry token ids 
-            feedTokenIds: [] // a list of token ids for feed
+            feedTokenIds: [], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -120,7 +128,8 @@ describe('textEntry reducer', () => {
             isDoneFetchingFeed: false,            
             tokens: {}, // map of token id to token
             textEntryTokenIds: [], // a list of text entry token ids 
-            feedTokenIds: ["abc"] // a list of token ids for feed
+            feedTokenIds: ["abc"], // a list of token ids for feed
+            votes: {}
         })
     })
 
@@ -136,7 +145,8 @@ describe('textEntry reducer', () => {
             didInvalidate: false,
             tokens: {}, // map of token id to token
             textEntryTokenIds: [], // a list of token ids for feed            
-            feedTokenIds: ["def", "abc"] // a list of text entry token ids 
+            feedTokenIds: ["def", "abc"], // a list of text entry token ids 
+            votes: {}
         })
     })
 })
