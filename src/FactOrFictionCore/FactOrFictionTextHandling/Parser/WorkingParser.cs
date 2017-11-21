@@ -5,10 +5,11 @@ namespace FactOrFictionTextHandling.Parser
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
-    public class WorkingParser
+    public class WorkingParser : IParser
     {
-        public static Dictionary<int, string> PunctuationParse(string input)
+        public Task<Dictionary<int, string>> Parse(string input)
         {
             var start = 0;
             var index = 0;
@@ -63,10 +64,12 @@ namespace FactOrFictionTextHandling.Parser
                 }
             }
 
-            return tupleList
+            var result = tupleList
                 .Select(x => new KeyValuePair<int, string>(x.Item1, input.Substring(x.Item1, x.Item2 - x.Item1).Trim()))
                 .Where(x => !string.IsNullOrWhiteSpace(x.Value))
                 .ToDictionary(x => x.Key, x => x.Value);
+
+            return Task.FromResult(result);
         }
     }
 }

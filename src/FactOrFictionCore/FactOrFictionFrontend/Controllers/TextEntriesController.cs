@@ -8,11 +8,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using FactOrFictionTextHandling.Luis;
+using FactOrFictionTextHandling.MLClient;
 using FactOrFictionTextHandling.SentenceProducer;
 using FactOrFictionFrontend.Controllers.Utils;
 using System.Collections.Generic;
 using FactOrFictionCommon.Models.RelationshipModels;
+using FactOrFictionTextHandling.Parser;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -79,13 +80,14 @@ namespace FactOrFictionFrontend.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sentenceProducer = new SentenceProducer(new LuisClientFactory(LUIS_URL).Create());
+                var sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
                 textEntry.Id = Guid.NewGuid();
                 textEntry.UserId = _userManager.GetUserId(User);
                 textEntry.CreatedAt = DateTime.Now;
 
-                // Break text entry to sentences then send them to LUIS in parallel
-                var sentenceTasks = Task.WhenAll(sentenceProducer.GetStatements(textEntry));
+                var parsingTask = await sentenceProducer.GetStatements(textEntry);
+
+                var sentenceTasks = Task.WhenAll(parsingTask);
                 var sentences = await sentenceTasks;
 
                 Array.Sort(sentences);

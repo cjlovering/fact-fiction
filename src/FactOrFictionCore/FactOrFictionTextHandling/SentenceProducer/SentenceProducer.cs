@@ -2,24 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FactOrFictionTextHandling.Luis;
+using FactOrFictionTextHandling.MLClient;
 using FactOrFictionTextHandling.Parser;
 using FactOrFictionCommon.Models;
 
 namespace FactOrFictionTextHandling.SentenceProducer
 {
-    public class SentenceProducer
+    public class SentenceProducer<T> where T: IMLResult
     {
-        public ILuisClient LuisClient { get; set; }
-        public SentenceProducer(ILuisClient luisClient)
+        public IMLClient<T> MLClient { get; set; }
+        public IParser Parser { get; set; }
+
+        public SentenceProducer(IMLClient<T> mlClient, IParser parser)
         {
-            LuisClient = luisClient;
+            MLClient = mlClient;
+            Parser = parser;
         }
 
-        public List<Task<Sentence>> GetStatements(TextEntry textEntry)
+        public async Task<List<Task<Sentence>>> GetStatements(TextEntry textEntry)
         {
-            var statementTasks = WorkingParser.PunctuationParse(textEntry.Content).Select
-                (async text => new Sentence
+            var parserTask = Parser.Parse(textEntry.Content);
+            var getClassificationTask = parserTask.ContinueWith(parsedSentences =>
+                parsedSentences.Result.Select(
+                    async text => new Sentence
                     {
                         Id = Guid.NewGuid(),
                         Content = text.Value,
@@ -30,36 +35,14 @@ namespace FactOrFictionTextHandling.SentenceProducer
                         VoteTrue = 0,
                         //Confidence = 0
                     }
-                );
-
-            return statementTasks.ToList();
+                    ));
+            return (await getClassificationTask).ToList();
         }
 
         public async Task<SentenceType> GetStatementClassification(String text)
         {
-            LuisResult response = await LuisClient.Query(text);
-            SentenceType classification = SentenceType.OTHER;
-            try
-            {
-                switch (response.TopScoringIntent.Intent)
-                {
-                    case "SuggestedFact":
-                    case "SuggestedQuantitativeFact":
-                        classification = SentenceType.OBJECTIVE;
-                        break;
-                    case "SuggestedOpinion":
-                        classification = SentenceType.SUBJECTIVE;
-                        break;
-                    default:
-                        classification = SentenceType.OTHER;
-                        break;
-                }
-            }
-            catch (ArgumentException)
-            {
-                classification = SentenceType.OTHER;
-            }
-            return classification;
+            IMLResult response = await MLClient.Query(text);
+            return response.GetSentenceType();
         }
     }
 }
