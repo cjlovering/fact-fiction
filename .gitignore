@@ -229,6 +229,7 @@ _Pvt_Extensions
 *.v2.ncrunchproject
 
 .gitignore
+!*.gitkeep
 
 src/FactOrFiction/.vs
 src/FactOrFiction/packages
@@ -245,8 +246,18 @@ src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/css/style.css
 src/FactOrFictionML/data/*
 !src/FactOrFictionML/data/README.md
+src/FactOrFictionML/outputs/*
+data/*
+!data/README.md
 __pycache__/
 .ipynb_checkpoints/
+
+# Ignore Azure ML workbench files
+.azuremlhistory_git
+.ipynb_checkpoints
+azureml-logs
+*.dprep.user
+.vscode/settings.json
 
 # ignore IntelliJ project and ouput files
 target/

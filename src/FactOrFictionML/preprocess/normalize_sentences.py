@@ -14,10 +14,13 @@ class SentenceNormalizer(BaseEstimator, TransformerMixin):
             (r"^''(.+)$", r'\1'),                                                             # Remove '' before a word
             (r"^'([\w-][\w-][\w-]+)$", r'\1')                                                 # Remove ' before a word longer than 3
         ]
-        self.dictionary = set(dictionary) if dictionary is not None else dictionary
+        if dictionary is not None:
+            self.dictionary = {w:i for i, w in enumerate(dictionary)}
+        else:
+            self.dictionary = None
         self.discarded_tokens = set(discarded_tokens)
 
-    def fit_transform(self, sentences):
+    def fit_transform(self, sentences, to_index=False):
         new_sentences = [''] * len(sentences)
         for i, s in enumerate(sentences):
             # Hacky replacement to fix text returned from MTusk
@@ -29,6 +32,15 @@ class SentenceNormalizer(BaseEstimator, TransformerMixin):
             tokens = [self.__match_and_replace(t) for t in tokens]
             new_sent = ' '.join(tokens)
             new_sentences[i] = new_sent
+        
+        if to_index:
+            for i, s in enumerate(new_sentences):
+                tokens = s.split(' ')
+                transformed = [self.dictionary[w] 
+                               if w in self.dictionary 
+                               else self.dictionary['<UNK>'] for w in tokens]
+                new_sentences[i] = transformed
+
         return new_sentences
 
     def __match_and_replace(self, token):
