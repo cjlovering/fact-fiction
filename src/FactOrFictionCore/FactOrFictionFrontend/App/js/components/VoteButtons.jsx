@@ -4,6 +4,14 @@ import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
 import _ from '../../stylesheets/components/_VoteButtons.scss'
 
 export default class VoteButtons extends React.Component {
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        sentenceVote: PropTypes.string.isRequired,
+        castVote: PropTypes.func.isRequired,
+        voteTrue: PropTypes.number,
+        voteFalse: PropTypes.number
+    }
+
     render() {
         const { 
             sentenceVote, 

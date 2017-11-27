@@ -16,6 +16,26 @@ import _ from '../../stylesheets/components/_MainPane.scss';
 import { fetchDetails } from '../actions/fetchDetails';
 
 export default class MainPane extends React.Component {
+    static propTypes = {
+        details: PropTypes.object.isRequired,
+        fetchDetails: PropTypes.func.isRequired,
+        tokens: PropTypes.object.isRequired,
+        isFetching: PropTypes.bool.isRequired,
+        didInvalidate: PropTypes.bool.isRequired,
+        textEntryTokenIds: PropTypes.array.isRequired,
+        feedTokenIds: PropTypes.array.isRequired,
+        view: PropTypes.string.isRequired,
+        selectedEntryId: PropTypes.string.isRequired,
+        votes: PropTypes.object.isRequired,
+        fetchTextEntry: PropTypes.func.isRequired,
+        selectEntry: PropTypes.func.isRequired,
+        fetchFeedTokens: PropTypes.func.isRequired,
+        changeView: PropTypes.func.isRequired,
+        showDetails: PropTypes.func.isRequired,
+        detailsShown: PropTypes.object.isRequired,
+        castVote: PropTypes.func.isRequired
+    }
+    
     render() {
         const {
             tokens, 
@@ -87,24 +107,4 @@ export default class MainPane extends React.Component {
             </div>
         )
     }
-}
-
-MainPane.propTypes = {
-    details: PropTypes.object.isRequired,
-    fetchDetails: PropTypes.func.isRequired,
-    tokens: PropTypes.object.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    didInvalidate: PropTypes.bool.isRequired,
-    textEntryTokenIds: PropTypes.array.isRequired,
-    feedTokenIds: PropTypes.array.isRequired,
-    view: PropTypes.string.isRequired,
-    selectedEntryId: PropTypes.string.isRequired,
-    votes: PropTypes.object.isRequired,
-    fetchTextEntry: PropTypes.func.isRequired,
-    selectEntry: PropTypes.func.isRequired,
-    fetchFeedTokens: PropTypes.func.isRequired,
-    changeView: PropTypes.func.isRequired,
-    showDetails: PropTypes.func.isRequired,
-    detailsShown: PropTypes.object.isRequired,
-    castVote: PropTypes.func.isRequired
 }

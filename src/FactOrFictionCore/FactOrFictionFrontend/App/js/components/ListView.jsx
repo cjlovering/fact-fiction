@@ -11,6 +11,21 @@ import {
 import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
 
 export default class ListView extends React.Component {
+    static propTypes = {
+        details: PropTypes.object.isRequired,
+        fetchDetails: PropTypes.func.isRequired,
+        entries: PropTypes.array.isRequired,
+        votes: PropTypes.object.isRequired,
+        selectedEntryId: PropTypes.string.isRequired,
+        votes: PropTypes.object.isRequired,
+        selectEntry: PropTypes.func.isRequired,
+        loadFunc: PropTypes.func.isRequired,
+        hasMore: PropTypes.bool.isRequired,
+        detailsShown: PropTypes.object.isRequired,    
+        showDetails: PropTypes.func.isRequired,
+        castVote: PropTypes.func.isRequired
+    }
+
     render() {
         const { 
             entries, 
@@ -62,19 +77,4 @@ export default class ListView extends React.Component {
             </div>                      
         );
     }
-}
-
-ListView.propTypes = {
-    details: PropTypes.object.isRequired,
-    fetchDetails: PropTypes.func.isRequired,
-    entries: PropTypes.array.isRequired,
-    votes: PropTypes.object.isRequired,
-    selectedEntryId: PropTypes.string.isRequired,
-    votes: PropTypes.object.isRequired,
-    selectEntry: PropTypes.func.isRequired,
-    loadFunc: PropTypes.func.isRequired,
-    hasMore: PropTypes.bool.isRequired,
-    detailsShown: PropTypes.object.isRequired,    
-    showDetails: PropTypes.func.isRequired,
-    castVote: PropTypes.func.isRequired
 }

@@ -7,11 +7,13 @@ import _ from '../../stylesheets/components/_InputPane.scss';
 import { VIEW_RESULT } from '../constants/viewTypes';
 
 export default class InputPane extends React.Component {
-	constructor(props) {
-	    super(props);
-		this.state = {
-			textEntry: ""
-		}
+	static propTypes = {
+		changeView: PropTypes.func.isRequired,
+		fetchTextEntry: PropTypes.func.isRequired	
+	}
+
+	state = {
+		textEntry: ""
 	}
 
     render() {
@@ -40,9 +42,4 @@ export default class InputPane extends React.Component {
 
         );
     }
-}
-
-InputPane.propTypes = {
-	changeView: PropTypes.func.isRequired,
-	fetchTextEntry: PropTypes.func.isRequired	
 }

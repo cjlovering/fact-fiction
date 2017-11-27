@@ -7,6 +7,13 @@ import { VIEW_INPUT } from '../constants/viewTypes';
 import _ from '../../stylesheets/components/_ResultPane.scss';
 
 export default class ResultPane extends React.Component {
+    static propTypes = {
+        selectedEntryId: PropTypes.string.isRequired,
+        selectEntry: PropTypes.func.isRequired,
+        textEntryTokens: PropTypes.array.isRequired,
+        changeView: PropTypes.func.isRequired,
+    }
+    
     render() {
         const { 
             selectedEntryId, selectEntry, textEntryTokens, changeView 
@@ -33,11 +40,4 @@ export default class ResultPane extends React.Component {
             </div>
         );
     }
-}
-
-ResultPane.propTypes = {
-    selectedEntryId: PropTypes.string.isRequired,
-    selectEntry: PropTypes.func.isRequired,
-    textEntryTokens: PropTypes.array.isRequired,
-    changeView: PropTypes.func.isRequired,
 }

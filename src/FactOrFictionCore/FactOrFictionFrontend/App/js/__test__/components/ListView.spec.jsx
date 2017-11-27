@@ -92,10 +92,10 @@ describe('ListView', () => {
 
     it('ListView renders nested components == number of facts', () => {
         state = [
-            {"content": "hi", "type":"OBJECTIVE"},
-            {"content": "hi", "type":"OBJECTIVE"},
-            {"content": "hi", "type":"OTHER"},
-            {"content": "hi", "type":"SUBJECTIVE"}
+            {"content": "hi", "type":"OBJECTIVE", id: "abcg"},
+            {"content": "hi", "type":"OBJECTIVE", id: "abfc"},
+            {"content": "hi", "type":"OTHER", id: "abec"},
+            {"content": "hi", "type":"SUBJECTIVE", id: "abcd"}
         ]
         listView = mount(
             <ListView
