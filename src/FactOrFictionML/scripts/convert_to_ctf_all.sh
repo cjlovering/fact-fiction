@@ -1,5 +1,4 @@
-@echo off
-
+echo "Convert using local dictionary"
 echo final.tsv
 python preprocess/convert_to_ctf.py --root ../../data --input final/final.tsv --output final/final.ctf --map dictionary.txt labels.txt --annotated True
 echo final.train.tsv

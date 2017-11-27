@@ -21,27 +21,25 @@ namespace FactOrFictionTextHandling.SentenceProducer
 
         public async Task<List<Task<Sentence>>> GetStatements(TextEntry textEntry)
         {
-            var parserTask = Parser.Parse(textEntry.Content);
-            var getClassificationTask = parserTask.ContinueWith(parsedSentences =>
-                parsedSentences.Result.Select(
-                    async text => new Sentence
-                    {
-                        Id = Guid.NewGuid(),
-                        Content = text.Value,
-                        Position = text.Key,
-                        Type = await GetStatementClassification(text.Value),
-                        TextEntryId = textEntry.Id,
-                        VoteFalse = 0,
-                        VoteTrue = 0,
-                        //Confidence = 0
-                    }
-                    ));
-            return (await getClassificationTask).ToList();
+            var sentences = await Parser.Parse(textEntry.Content);
+            var classification = sentences.Select(async sentenceWithPosition => new Sentence
+            {
+                Id = Guid.NewGuid(),
+                Content = sentenceWithPosition.Value,
+                Position = sentenceWithPosition.Key,
+                Type = await GetStatementClassification(sentenceWithPosition),
+                TextEntryId = textEntry.Id,
+                VoteFalse = 0,
+                VoteTrue = 0,
+                //Confidence = 0
+            }
+            );
+            return classification.ToList();
         }
 
-        public async Task<SentenceType> GetStatementClassification(String text)
+        public async Task<SentenceType> GetStatementClassification(KeyValuePair<int, string> sentenceWithPosition)
         {
-            IMLResult response = await MLClient.Query(text);
+            IMLResult response = await MLClient.Query(sentenceWithPosition);
             return response.GetSentenceType();
         }
     }

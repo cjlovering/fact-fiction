@@ -1,5 +1,9 @@
-﻿using FactOrFictionFrontend.Data;
-using FactOrFictionCommon.Models;
+﻿using FactOrFictionCommon.Models;
+using FactOrFictionCommon.Models.RelationshipModels;
+using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionFrontend.Data;
+using FactOrFictionTextHandling.MLClient;
+using FactOrFictionTextHandling.SentenceProducer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,13 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using FactOrFictionTextHandling.MLClient;
-using FactOrFictionTextHandling.SentenceProducer;
-using FactOrFictionFrontend.Controllers.Utils;
-using System.Collections.Generic;
-using FactOrFictionCommon.Models.RelationshipModels;
-using FactOrFictionTextHandling.Parser;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -22,6 +19,7 @@ namespace FactOrFictionFrontend.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private const string LUIS_URL = "https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=784cc32302a84581ab894febc8775393&timezoneOffset=0&verbose=true&q=";
+        private const string HACC_URL = "http://127.0.0.1:32788/score";
 
         public TextEntriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -80,7 +78,9 @@ namespace FactOrFictionFrontend.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
+                //var sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
+                HaccClient client = new HaccClient(HACC_URL);
+                var sentenceProducer = new SentenceProducer<HaccResult>(client, client);
                 textEntry.Id = Guid.NewGuid();
                 textEntry.UserId = _userManager.GetUserId(User);
                 textEntry.CreatedAt = DateTime.Now;
@@ -95,14 +95,6 @@ namespace FactOrFictionFrontend.Controllers
                 _context.Add(textEntry);
                 _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
-
-                //var VotesDict = new Dictionary<Guid, string>();
-                //sentences.Aggregate(new Dictionary<Guid, string>(),
-                //    (x, sent) => {
-                //            x.Add(sent.Id, VoteType.UNVOTED.ToString());
-                //            return x;
-                //        }
-                //    );
 
                 var VotesDict = sentences.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
 

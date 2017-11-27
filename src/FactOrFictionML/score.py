@@ -13,7 +13,7 @@ def init():
     share_path = os.environ['AZUREML_NATIVE_SHARE_DIRECTORY'] if 'AZUREML_NATIVE_SHARE_DIRECTORY' in os.environ else 'outputs/'
     
     global model
-    model = load_model(os.path.join(share_path, 'lstm_model.cmf'))
+    model = load_model(os.path.join(share_path, 'model.cmf'))
 
     global dictionary
     with open('dictionary.txt', 'r', encoding='utf-8') as f:

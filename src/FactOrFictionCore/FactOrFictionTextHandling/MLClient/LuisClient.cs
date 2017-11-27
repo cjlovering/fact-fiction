@@ -19,9 +19,9 @@ namespace FactOrFictionTextHandling.MLClient
             BaseUri = baseUri;
         }
 
-        public async Task<LuisResult> Query(string sentenceFragment)
+        public async Task<LuisResult> Query(KeyValuePair<int, string> sentenceWithPosition)
         {
-            var uri = new Uri(this.BaseUri + HttpUtility.UrlEncode(sentenceFragment));
+            var uri = new Uri(this.BaseUri + HttpUtility.UrlEncode(sentenceWithPosition.Value));
             var request = WebRequest.Create(uri);
             var response = await request.GetResponseAsync();
             return await ReadAllAsync(response.GetResponseStream());

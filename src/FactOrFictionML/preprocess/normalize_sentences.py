@@ -1,11 +1,12 @@
 import re
 import sys
+import string
 from sklearn.base import BaseEstimator, TransformerMixin
 from nltk.tokenize import word_tokenize
 
 class SentenceNormalizer(BaseEstimator, TransformerMixin):
 
-    def __init__(self, dictionary=None, discarded_tokens=set()):
+    def __init__(self, dictionary=None, discarded_tokens=set(), remove_punctuation=True):
         self.patterns = [
             (r'^([£€])?[-+]?\d+(,\d+)*(\.\d+)?(bn|m)?$', r'<NUM>'),                           # Turn numbers to <NUM>
             (r'^([£€])?[-+]?\d+(,\d+)*(\.\d+)?\-(?P<rest>[a-zA-Z\-]+)$', r'<NUM>-\g<rest>'),  # Turn numbers-something to <NUM>-something
@@ -19,6 +20,7 @@ class SentenceNormalizer(BaseEstimator, TransformerMixin):
         else:
             self.dictionary = None
         self.discarded_tokens = set(discarded_tokens)
+        self.remove_punctuation = remove_punctuation
 
     def fit_transform(self, sentences, to_index=False):
         new_sentences = [''] * len(sentences)
@@ -28,6 +30,9 @@ class SentenceNormalizer(BaseEstimator, TransformerMixin):
             tokens = word_tokenize(s)
             # Filter discarded tokens
             tokens = [t for t in tokens if t not in self.discarded_tokens]
+            # Filter punctuation if needed
+            if self.remove_punctuation:
+                tokens = [t for t in tokens if t not in string.punctuation]
             # Replace tokens with pre-defined rules
             tokens = [self.__match_and_replace(t) for t in tokens]
             new_sent = ' '.join(tokens)

@@ -1,9 +1,10 @@
-﻿namespace FactOrFictionTextHandling.MLClient
-{
-    using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace FactOrFictionTextHandling.MLClient
+{
     public interface IMLClient<T> where T: IMLResult
     {
-        Task<T> Query(string textEntry);
+        Task<T> Query(KeyValuePair<int, string> sentenceWithPosition);
     }
 }

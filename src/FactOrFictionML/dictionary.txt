@@ -1,9 +1,4 @@
-﻿!
-#
-$
-%
-&
-'
+
 ''
 '////////////
 '03
@@ -118,9 +113,6 @@ $
 'we
 'wo
 'y
-(
-)
-*
 ***
 ***Flawless
 *Note
@@ -132,11 +124,8 @@ $
 *facepalm*
 *possibly*
 *that*
-+
 +++
 +/-
-,
--
 --
 -21°C
 -A
@@ -206,7 +195,6 @@ $
 -who
 -year
 -year-olds
-.
 ..
 ...
 ..oh
@@ -270,7 +258,6 @@ $
 .travel
 .uk
 .xxx
-/
 //
 //arxiv.org/abs/1312.0613
 //bit.ly/1a40CaE
@@ -2388,9 +2375,6 @@ $
 9p/10pE
 9th
 9th-century
-:
-;
-<
 <NUM>
 <NUM>-A
 <NUM>-Ball
@@ -2627,10 +2611,6 @@ $
 <TIME>
 <UNK>
 <URL>
-=
->
-?
-@
 A
 A'ja
 A***OLE
@@ -44352,9 +44332,6 @@ Zyana
 Zynga
 Zytiga
 Zürs
-[
-]
-_
 __
 ___
 ____
@@ -101436,9 +101413,6 @@ zurich
 zwick
 zyzaks
 zzz
-{
-|
-}
 ~a
 ¡Cuatro
 £17.m
@@ -101587,4 +101561,4 @@ zzz
 ▼
 春節
 農曆新年
-﻿<UNK>
+﻿
