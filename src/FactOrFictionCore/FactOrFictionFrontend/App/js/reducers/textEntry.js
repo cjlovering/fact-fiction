@@ -16,7 +16,7 @@ export default (
         tokens: {},                 // map of token id to token
         isDoneFetchingFeed: false,  // is done with fetching feed
         feedTokenIds: [],           // a list of token ids for feed
-        votes: {} // map of sentence id and vote type - "TRUE", "FALSE" or "UNVOTED"
+        votes: {}                   // map of sentence id and vote type - "TRUE", "FALSE" or "UNVOTED"
     },
     action
 ) => {

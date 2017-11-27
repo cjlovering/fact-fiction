@@ -68,7 +68,7 @@ export default class ListView extends React.Component {
                                     showingDetails={showingDetails(entry.id)}
                                     castVote={castVote}
                                     sentenceVote={sentenceVote(entry.id)}
-                                    key={shortid.generate()}
+                                    key={entry.id}
                                 />
                             )
                         )

@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
+import TextareaAutosize from 'react-autosize-textarea';
 
 import Button from './Button';
 
@@ -21,14 +22,19 @@ export default class InputPane extends React.Component {
 		const { textEntry } = this.state;
         return (
             <div>
-                
                 <div className="left-bar">
-					<textarea 
+					<TextareaAutosize
 						className="input-box"
-						rows="10" 
 						placeholder="Enter some text..."
+						rows={11}
 						value={textEntry}
-						onChange={e => this.setState({ textEntry: e.target.value })}
+						onChange={e => this.setState({
+							textEntry: e.target.value,
+						})}
+						autoComplete="off"
+						autoCorrect="off"
+						autoCapitalize="off"
+						spellCheck="false"
 					/>
 				</div>
 				<Button
@@ -41,5 +47,5 @@ export default class InputPane extends React.Component {
 			</div>
 
         );
-    }
+	}
 }
