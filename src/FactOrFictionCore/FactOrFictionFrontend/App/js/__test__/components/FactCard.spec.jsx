@@ -15,11 +15,16 @@ describe('ListView', () => {
     let showDetails;
     let castVote;
     let sentenceVote;
+    let fetchSimilarTokens;
+    let similarTokenIds;
+
     beforeEach(() => {
         details = {};
         fetchDetails = jest.fn();
         selectEntry = jest.fn();
         showDetails = jest.fn();
+        fetchSimilarTokens = jest.fn();
+        similarTokenIds = {};
         showingDetails = false;
         castVote = jest.fn();
         sentenceVote = "TRUE";
@@ -41,6 +46,8 @@ describe('ListView', () => {
                 showingDetails={showingDetails}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />);
     });
 

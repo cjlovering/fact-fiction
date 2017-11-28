@@ -3,24 +3,12 @@ import {
     RECEIVE_DETAILS
 } from '../constants/actionTypes';
 import 'whatwg-fetch';
+import { receiveDetails } from './receive'
 
 const fetchingDetails = tokenId => ({
     type: FETCHING_DETAILS,
     tokenId
 })
-
-const recieveDetails = (tokenId, json) => {
-    let details = {}
-    details[tokenId] = {
-        references: json.references,
-        entities: json.entities
-    }
-    
-    return {
-        type: RECEIVE_DETAILS,
-        details
-    }
-}
 
 const fetchDetails = tokenId => {
     return (dispatch) => {
@@ -33,7 +21,7 @@ const fetchDetails = tokenId => {
             response => response.json(),
             error => console.log(`An error occured when fetching details of sentence with id ${tokenId}.`, error)
         )
-        .then(json => dispatch(recieveDetails(tokenId, json)))
+        .then(json => dispatch(receiveDetails(tokenId, json)))
     }
 }
 

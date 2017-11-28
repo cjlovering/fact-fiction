@@ -4,6 +4,7 @@ import { fetchTextEntry, fetchFeedTokens } from './fetchTokens';
 import { fetchDetails } from './fetchDetails';
 import { showDetails } from './showDetails';
 import { castVote } from './castVote';
+import { fetchSimilarTokens } from './fetchSimilar';
 
 /* action creators */
 export { 
@@ -13,5 +14,6 @@ export {
     fetchFeedTokens,
     fetchDetails, 
     showDetails,
-    castVote
+    castVote,
+    fetchSimilarTokens
 };

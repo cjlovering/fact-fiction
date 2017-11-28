@@ -13,7 +13,6 @@ import ResultPane from './ResultPane';
 
 import { VIEW_INPUT } from '../constants/viewTypes';
 import _ from '../../stylesheets/components/_MainPane.scss';
-import { fetchDetails } from '../actions/fetchDetails';
 
 export default class MainPane extends React.Component {
     static propTypes = {
@@ -33,7 +32,9 @@ export default class MainPane extends React.Component {
         changeView: PropTypes.func.isRequired,
         showDetails: PropTypes.func.isRequired,
         detailsShown: PropTypes.object.isRequired,
-        castVote: PropTypes.func.isRequired
+        castVote: PropTypes.func.isRequired,
+        fetchSimilarTokens: PropTypes.func.isRequired,
+        similarTokenIds: PropTypes.object.isRequired
     }
     
     render() {
@@ -55,7 +56,9 @@ export default class MainPane extends React.Component {
             fetchDetails,
             detailsShown,
             showDetails,
-            castVote
+            castVote,
+            fetchSimilarTokens,
+            similarTokenIds
         } = this.props;
         const isInput = view === VIEW_INPUT;
         const title = isInput ? "Input" : "Results";
@@ -72,22 +75,35 @@ export default class MainPane extends React.Component {
                 changeView={changeView} 
             />
         );
-        const entries = (isInput ? feedTokenIds : textEntryTokenIds)
-            .map(id => tokens[id]);
+        const entries = (
+            isInput 
+            ? feedTokenIds 
+            : textEntryTokenIds
+        ).map(id => tokens[id]);
+
+        const similarEntries = (
+            similarTokenIds.hasOwnProperty(selectedEntryId) 
+            ? similarTokenIds[selectedEntryId] 
+            : []
+        ).map(id => tokens[id]);
         const loadFunc = isInput
             ? (page) => {
                 fetchFeedTokens(feedTokenIds[0], page);
             }
             : () => {};
+        const handleClick = () => {
+
+        }
         return (
             <div>
                 <div className="container">
-                    <span className="ms-font-su ms-fontColor-themePrimary">{title}</span>
-                    <div className="row">
-                        <div className="col-sm-6 col-md-6 col-lg-6">
+                    <div className="row"> 
+                        <div className="col-sm-4 col-md-4 col-lg-4">
+                        <span className="box-title ms-font-xxl ms-fontColor-themePrimary">{title}</span>
                             {leftPane}
                         </div>
-                        <div className="col-sm-6 col-md-6 col-lg-6">
+                        <div className="col-sm-4 col-md-4 col-lg-4">
+                        <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Objective Statements</span>
                             <ListView
                                 details={details}
                                 fetchDetails={fetchDetails}
@@ -100,6 +116,26 @@ export default class MainPane extends React.Component {
                                 hasMore={isInput && !isDoneFetchingFeed}
                                 castVote={castVote}
                                 votes={votes}
+                                fetchSimilarTokens={fetchSimilarTokens}
+                                similarTokenIds={similarTokenIds}
+                            />
+                        </div>
+                        <div className="col-sm-4 col-md-4 col-lg-4">
+                        <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Similar Sentences</span>
+                            <ListView
+                                details={details}
+                                fetchDetails={fetchDetails}
+                                detailsShown={detailsShown}
+                                showDetails={showDetails}
+                                entries={similarEntries}
+                                selectedEntryId={selectedEntryId}
+                                selectEntry={() => {}}
+                                loadFunc={() => {}}
+                                hasMore={false}
+                                castVote={castVote}
+                                votes={votes}
+                                fetchSimilarTokens={fetchSimilarTokens}
+                                similarTokenIds={similarTokenIds}
                             />
                         </div>
                     </div>

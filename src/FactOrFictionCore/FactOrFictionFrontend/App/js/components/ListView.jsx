@@ -17,13 +17,14 @@ export default class ListView extends React.Component {
         entries: PropTypes.array.isRequired,
         votes: PropTypes.object.isRequired,
         selectedEntryId: PropTypes.string.isRequired,
-        votes: PropTypes.object.isRequired,
         selectEntry: PropTypes.func.isRequired,
         loadFunc: PropTypes.func.isRequired,
         hasMore: PropTypes.bool.isRequired,
         detailsShown: PropTypes.object.isRequired,    
         showDetails: PropTypes.func.isRequired,
-        castVote: PropTypes.func.isRequired
+        castVote: PropTypes.func.isRequired,
+        fetchSimilarTokens: PropTypes.func.isRequired,
+        similarTokenIds: PropTypes.object.isRequired
     }
 
     render() {
@@ -38,7 +39,9 @@ export default class ListView extends React.Component {
             detailsShown,
             fetchDetails, 
             showDetails,
-            castVote
+            castVote,
+            fetchSimilarTokens,
+            similarTokenIds
         } = this.props;
         const showingDetails = id =>
             detailsShown.hasOwnProperty(id) && detailsShown[id];
@@ -69,6 +72,8 @@ export default class ListView extends React.Component {
                                     castVote={castVote}
                                     sentenceVote={sentenceVote(entry.id)}
                                     key={entry.id}
+                                    fetchSimilarTokens={fetchSimilarTokens}
+                                    similarTokenIds={similarTokenIds}
                                 />
                             )
                         )

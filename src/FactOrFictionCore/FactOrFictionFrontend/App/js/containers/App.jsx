@@ -17,6 +17,7 @@ const App = ({
     details, 
     detailsShown,
     votes,
+    similarTokenIds,
     actions
 }) => (
     <MainPane 
@@ -31,6 +32,7 @@ const App = ({
         details={details}
         votes={votes}
         detailsShown={detailsShown}
+        similarTokenIds={similarTokenIds}
         changeView={actions.changeView}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
@@ -38,6 +40,7 @@ const App = ({
         fetchDetails={actions.fetchDetails}
         showDetails={actions.showDetails}
         castVote={actions.castVote}
+        fetchSimilarTokens={actions.fetchSimilarTokens}
 	/>
 );
 
@@ -51,7 +54,8 @@ App.propTypes = {
     selectedEntryId: PropTypes.string.isRequired,
     details: PropTypes.object.isRequired,
     detailsShown: PropTypes.object.isRequired,
-    votes:PropTypes.object.isRequired,
+    votes: PropTypes.object.isRequired,
+    similarTokenIds: PropTypes.object.isRequired, 
     actions: PropTypes.object.isRequired
 }
 
@@ -60,7 +64,8 @@ const mapStateToProps = state => ({
     details: state.sentenceDetails.details,
     detailsShown: state.detailsShown,
     view: state.view,
-    selectedEntryId: state.selectedEntryId
+    selectedEntryId: state.selectedEntryId,
+    similarTokenIds: state.similarTokens.similarTokenIds
 });
 
 const mapDispatchToProps = dispatch => ({

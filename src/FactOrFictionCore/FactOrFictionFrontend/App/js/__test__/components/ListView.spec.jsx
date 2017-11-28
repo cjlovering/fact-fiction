@@ -17,6 +17,8 @@ describe('ListView', () => {
     let detailsShown;
     let showDetails;
     let castVote;
+    let similarTokenIds;
+    let fetchSimilarTokens;
     
     beforeEach(() => {
         state = [{"content": "hi", "type":"OBJECTIVE", "id": "theId"}]     
@@ -30,6 +32,8 @@ describe('ListView', () => {
         hasMore = false;
         loadFunc = jest.fn();
         castVote = jest.fn();
+        fetchSimilarTokens = jest.fn();
+        similarTokenIds = {};
         listView = mount(
             <ListView
                 details={details}
@@ -43,6 +47,8 @@ describe('ListView', () => {
                 detailsShown={detailsShown}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />);
     });
 
@@ -85,6 +91,8 @@ describe('ListView', () => {
                 detailsShown={detailsShown}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />
         );
         expect(listView.find('FactCard').length).toEqual(0);
@@ -110,6 +118,8 @@ describe('ListView', () => {
                 detailsShown={detailsShown}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />
         );
         expect(listView.find('FactCard').length).toEqual(2);

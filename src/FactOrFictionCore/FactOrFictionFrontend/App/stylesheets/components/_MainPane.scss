@@ -2,6 +2,10 @@
     font-family: 'Segoe UI', 'Open Sans', Helvetica, sans-serif;
 }
 
+.row {
+    margin-top: 10px;
+}
+
 .spinner {
     margin-left: 45%;
     margin-top: 100px;
@@ -10,4 +14,8 @@
 .ms-Spinner-circle {
     opacity: 100;
     background-color: white;
+}
+
+.list-title {
+    padding-left: 10px;
 }

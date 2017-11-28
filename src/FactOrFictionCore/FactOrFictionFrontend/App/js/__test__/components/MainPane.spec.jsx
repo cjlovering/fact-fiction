@@ -27,6 +27,8 @@ describe('MainPane', () => {
     let detailsShown;
     let showDetails;
     let castVote;
+    let fetchSimilarTokens;
+    let similarTokenIds;
 
     beforeEach(() => {
         tokens = {
@@ -51,6 +53,8 @@ describe('MainPane', () => {
         changeView = jest.fn();
         selectEntry = jest.fn();
         castVote = jest.fn();
+        fetchSimilarTokens = jest.fn();
+        similarTokenIds = {};
 
         mainPane = mount(
             <MainPane 
@@ -71,6 +75,8 @@ describe('MainPane', () => {
                 detailsShown={detailsShown}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />
         );
         mainPaneResult = mount(
@@ -93,6 +99,8 @@ describe('MainPane', () => {
                 detailsShown={detailsShown}
                 showDetails={showDetails}
                 castVote={castVote}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />
         );
     });
@@ -129,8 +137,8 @@ describe('MainPane', () => {
         expect(mainPane.find('InputPane').length).toEqual(1);
     });
 
-    it('App renders nested components (result)', () => {
-        expect(mainPaneResult.find('ListView').length).toEqual(1);
+    it('App renders listView components (result)', () => {
+        expect(mainPaneResult.find('ListView').length).toEqual(2);
     });
 
     it('Button click calls changeView', () => {

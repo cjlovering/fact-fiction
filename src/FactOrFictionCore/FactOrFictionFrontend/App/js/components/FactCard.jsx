@@ -31,7 +31,9 @@ export default class FactCard extends React.Component {
         showDetails: PropTypes.func.isRequired,
         castVote: PropTypes.func.isRequired,
         voteTrue: PropTypes.number,
-        voteFalse: PropTypes.number
+        voteFalse: PropTypes.number,
+        fetchSimilarTokens: PropTypes.func.isRequired,
+        similarTokenIds: PropTypes.object.isRequired
     }
 
     render() {
@@ -46,14 +48,16 @@ export default class FactCard extends React.Component {
             voteTrue, 
             voteFalse, 
             selectEntry, 
-            castVote
+            castVote,
+            fetchSimilarTokens,
+            similarTokenIds
         } = this.props;
 
         // Change CSS class if selected.
         const isSelected = id === selectedEntryId ? "card-selected" : "";
 
         // Render all the references.
-        const hasDetails = 'references' in details && details['references'];
+        const hasDetails = details.hasOwnProperty('references') && details['references'];
         const { references, entities } = details;       
         
         const loadingDetails = hasDetails ? (
@@ -103,15 +107,22 @@ export default class FactCard extends React.Component {
             <div style={{"padding": "10px", "textAlign": "center"}}>
                 <Button
                     handleClick={() => this.handleButtonClick(hasDetails)}
-                    text={ !showingDetails ? "+" : "-" }
+                    text={!showingDetails ? "+" : "-"}
                 />
             </div>
         );
 
+        const selectAndFetchOnClick = () => {
+            selectEntry(id);
+            if (!similarTokenIds.hasOwnProperty(id)) {
+                fetchSimilarTokens(id);
+            }
+        }
+
         return (
             <div
                 className={`fact-card ${isSelected}`}
-                onClick={() => selectEntry(id)}
+                onClick={selectAndFetchOnClick}
             >
                 <div>
                     {content}
