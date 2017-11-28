@@ -8,7 +8,7 @@ using FactOrFictionCommon.Models;
 
 namespace FactOrFictionTextHandling.SentenceProducer
 {
-    public class SentenceProducer<T> where T: IMLResult
+    public class SentenceProducer<T> : ISentenceProducer where T: IMLResult
     {
         public IMLClient<T> MLClient { get; set; }
         public IParser Parser { get; set; }

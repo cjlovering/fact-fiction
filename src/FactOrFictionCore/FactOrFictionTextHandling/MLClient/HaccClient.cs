@@ -14,15 +14,15 @@ namespace FactOrFictionTextHandling.MLClient
     public class HaccClient : IParser, IMLClient<HaccResult>
     {
 
-        //private const string API_KEY = "your service key";
-
         private Dictionary<int, HaccResult> _classification = new Dictionary<int, HaccResult>();
 
         public string BaseUri { get; set; }
+        public string ApiKey { get; set; }
 
-        public HaccClient(string baseUri)
+        public HaccClient(string baseUri, string apiKey)
         {
             BaseUri = baseUri;
+            ApiKey = apiKey;
         }
 
         public async Task<Dictionary<int, string>> Parse(string textEntry)
@@ -39,8 +39,9 @@ namespace FactOrFictionTextHandling.MLClient
             {
                 BaseAddress = new Uri(BaseUri)
             };
+            
             //For local web service, comment out this line.
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", API_KEY);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
 
             var request = new HttpRequestMessage(HttpMethod.Post, string.Empty)
             {

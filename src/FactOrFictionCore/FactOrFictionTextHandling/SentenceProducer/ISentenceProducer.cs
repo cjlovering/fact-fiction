@@ -1,12 +1,11 @@
-﻿using System;
+﻿using FactOrFictionCommon.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FactOrFictionTextHandling.SentenceProducer
 {
-    interface ISentenceProducer
+    public interface ISentenceProducer
     {
+        Task<List<Task<Sentence>>> GetStatements(TextEntry textEntry);
     }
 }

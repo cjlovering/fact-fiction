@@ -3,11 +3,13 @@ using FactOrFictionCommon.Models.RelationshipModels;
 using FactOrFictionFrontend.Controllers.Utils;
 using FactOrFictionFrontend.Data;
 using FactOrFictionTextHandling.MLClient;
+using FactOrFictionTextHandling.Parser;
 using FactOrFictionTextHandling.SentenceProducer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,13 +20,13 @@ namespace FactOrFictionFrontend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private const string LUIS_URL = "https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/79af6370-41bd-4d03-9c7c-5f234eb6049c?subscription-key=784cc32302a84581ab894febc8775393&timezoneOffset=0&verbose=true&q=";
-        private const string HACC_URL = "http://127.0.0.1:32788/score";
+        private readonly IConfiguration _configuration;
 
-        public TextEntriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public TextEntriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         // GET: TextEntries
@@ -78,9 +80,21 @@ namespace FactOrFictionFrontend.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
-                HaccClient client = new HaccClient(HACC_URL);
-                var sentenceProducer = new SentenceProducer<HaccResult>(client, client);
+                ISentenceProducer sentenceProducer;
+                if (_configuration["MLService:Type"] == "HACC")
+                {
+                    string HACC_URL = _configuration["MLService:Url"];
+                    string HACC_KEY = _configuration["MLService:HACC:Key"];
+                    HaccClient client = new HaccClient(HACC_URL, HACC_KEY);
+                    sentenceProducer = new SentenceProducer<HaccResult>(client, client);
+                }
+                else
+                {
+                    string LUIS_KEY = _configuration["MLService:LUIS:Key"];
+                    string LUIS_URL = _configuration["MLService:Url"].Replace("<KEY>", LUIS_KEY);
+                    sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
+                }
+
                 textEntry.Id = Guid.NewGuid();
                 textEntry.UserId = _userManager.GetUserId(User);
                 textEntry.CreatedAt = DateTime.Now;
