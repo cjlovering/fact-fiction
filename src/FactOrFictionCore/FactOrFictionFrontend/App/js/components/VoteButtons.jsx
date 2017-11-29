@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from './Button';
 import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
 import _ from '../../stylesheets/components/_VoteButtons.scss'
 
@@ -28,20 +29,29 @@ export default class VoteButtons extends React.Component {
                     <tbody>
                         <tr>
                             <th style={{"textAlign": "right"}}>
-                                <button 
-                                    className={"ff-Button change-view-button ms-Button"}
-                                    onClick={() => this.handleClick(VOTE_TRUE)}>
-                                    <i
-                                        className={`ms-Icon ms-Icon--triangleUp ${trueClass}`}
-                                        aria-hidden="true"
-                                    />
-                                    <span>  True {voteTrue}</span>
-                                </button>
+                                <Button 
+                                    handleClick={() => {
+                                        this.handleClick(VOTE_TRUE);                                        
+                                    }}
+                                    content={
+                                        <div>
+                                            <i
+                                                className={`ms-Icon ms-Icon--triangleUp ${trueClass}`}
+                                                aria-hidden="true"
+                                            />
+                                            <span>  True {voteTrue}</span>
+                                        </div>
+                                    }
+                                />
                             </th>
                             <th style={{"textAlign": "left"}}>
                                 <button 
                                     className={"ff-Button change-view-button ms-Button"}
-                                    onClick={() => this.handleClick(VOTE_FALSE)}>
+                                    onClickCapture={e => {
+                                        e.stopPropagation();
+                                        this.handleClick(VOTE_FALSE);
+                                        return false;
+                                    }}>                                    
                                     <i
                                         className={`ms-Icon ms-Icon--triangleDown ${falseClass}`}
                                         aria-hidden="true"

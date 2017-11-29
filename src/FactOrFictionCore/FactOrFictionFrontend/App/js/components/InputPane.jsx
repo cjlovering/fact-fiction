@@ -42,7 +42,7 @@ export default class InputPane extends React.Component {
 						fetchTextEntry(textEntry);
 						changeView(VIEW_RESULT);
 					}}
-					text="Start"
+					content="Start"
 				/>
 			</div>
 

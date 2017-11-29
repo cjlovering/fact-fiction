@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 const Button = (props) => (
     <button 
         className={"ff-Button change-view-button ms-Button"}
-        onClick={props.handleClick}>
-        {props.text}
+        onClickCapture={e => {
+            e.stopPropagation();
+            props.handleClick(); 
+            return false;         
+        }}>
+        {props.content}
     </button>
 );
 
 Button.propTypes = {
-    text: PropTypes.string.isRequired,
+    content: PropTypes.node.isRequired,
     handleClick: PropTypes.func.isRequired
 }
 
