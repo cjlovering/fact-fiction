@@ -11,10 +11,10 @@
 
 <h2>@ViewData["Title"]</h2>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-3">
         <section>
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Use a local account to log in.</h4>
+                <h4>Login using your local account</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -48,10 +48,9 @@
                 </div>
             </form>
         </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
+        <br />
         <section>
-            <h4>Use another service to log in.</h4>
+            <h4>Login using other services</h4>
             <hr />
             @{
                 var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -71,7 +70,21 @@
                             <p>
                                 @foreach (var provider in loginProviders)
                                 {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                                    <button type="submit" 
+                                            class="btn btn-block btn-social btn-@provider.Name.ToLower()" 
+                                            name="provider" 
+                                            value="@provider.Name" 
+                                            title="Log in using your @provider.DisplayName account">
+                                        @if (provider.Name.ToLower() == "microsoft")
+                                        {
+                                            <span class="fa fa-windows"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fa fa-@provider.Name.ToLower()"></span>
+                                        }
+                                        @provider.Name
+                                    </button>
                                 }
                             </p>
                         </div>
