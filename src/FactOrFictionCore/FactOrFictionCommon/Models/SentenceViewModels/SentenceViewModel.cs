@@ -13,7 +13,6 @@ namespace FactOrFictionFrontend.Controllers.Utils
         public string Type { get; set; }
         public int VoteTrue { get; set; }
         public int VoteFalse { get; set; }
-
         public SentenceViewModel(Sentence sent)
         {
             Id = sent.Id;

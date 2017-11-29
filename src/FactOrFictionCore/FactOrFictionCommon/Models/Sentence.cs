@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +18,20 @@ namespace FactOrFictionCommon.Models
 
         public Guid TextEntryId { get; set; }
         public virtual TextEntry OriginalTextEntry { get; set; }
+        public string InferSentVectorsString { get; set; }
+        
+        [NotMapped]
+        public double[] InferSentVectorsDouble
+        {
+            get
+            {
+                return Array.ConvertAll(InferSentVectorsString.Split(';'), Double.Parse);
+            }
+            set
+            {
+                InferSentVectorsString = String.Join(";", value.Select(p => p.ToString()).ToArray());
+            }
+        }
 
         public int CompareTo(object obj)
         {

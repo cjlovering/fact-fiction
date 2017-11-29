@@ -31,7 +31,7 @@ namespace FactOrFictionFrontend.Controllers
         public async Task<IActionResult> Feed(Guid? id, int page)
         {
             var user = await _userManager.GetUserAsync(User);
-            
+
             if (user == null)
             {
                 throw new ApplicationException(
@@ -77,13 +77,14 @@ namespace FactOrFictionFrontend.Controllers
             var previousVotes = await _context.Votes.Where(v => v.UserId == userId).ToDictionaryAsync(v => v.SentenceId, v => v.Type);
 
             var VotesDict = sentences.ToDictionary(
-                sent => sent.Id, 
+                sent => sent.Id,
                 sent =>
                 {
                     if (previousVotes.ContainsKey(sent.Id))
                     {
                         return previousVotes[sent.Id].ToString();
-                    } else
+                    }
+                    else
                     {
                         return VoteType.UNVOTED.ToString();
                     }
@@ -94,7 +95,7 @@ namespace FactOrFictionFrontend.Controllers
             {
                 Sentences = sentences,
                 Votes = VotesDict
-            });   
+            });
         }
 
         // GET: Sentences/Details
@@ -167,6 +168,50 @@ namespace FactOrFictionFrontend.Controllers
             {
                 References = references,
                 Entities = entities
+            });
+        }
+
+        // GET: Sentences/Related
+        public async Task<IActionResult> Related(Guid Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+
+            var _sent = await _context.Sentences.SingleOrDefaultAsync(s => s.Id == Id);
+            if (_sent == null)
+            {
+                return NotFound();
+            }
+            if (_sent.Type != SentenceType.OBJECTIVE)
+            {
+                return NotFound();
+            }
+            if (String.IsNullOrEmpty(_sent.InferSentVectorsString))
+            {
+                return NotFound();
+            }
+            var inferSentVector = _sent.InferSentVectorsDouble;
+
+            var relatedSentencesQuery = _context.Sentences
+                .Where(candidate => candidate.InferSentVectorsDouble != null && candidate.Id != Id)
+                .Select(candidate => new
+                {
+                    sentence = candidate,
+                    distance = DistanceCalculator.CalculateCosineSimilarity (_sent.InferSentVectorsDouble, candidate.InferSentVectorsDouble) // distance = 1 if 2 sentences are the same
+                })
+                .OrderByDescending(candidate => candidate.distance)
+                .Take(10)
+                .Select(_sentence => _sentence.sentence);
+
+            List<Sentence> relatedSentences = await relatedSentencesQuery.ToListAsync();
+
+            return Json(new
+            {
+                Sentences = relatedSentences.Select(
+                        sent => new SentenceViewModel(sent)),
+                SentenceId = Id
             });
         }
     }

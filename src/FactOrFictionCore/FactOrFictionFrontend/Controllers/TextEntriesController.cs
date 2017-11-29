@@ -2,6 +2,7 @@
 using FactOrFictionCommon.Models.RelationshipModels;
 using FactOrFictionFrontend.Controllers.Utils;
 using FactOrFictionFrontend.Data;
+using FactOrFictionTextHandling.InferSentClient;
 using FactOrFictionTextHandling.MLClient;
 using FactOrFictionTextHandling.Parser;
 using FactOrFictionTextHandling.SentenceProducer;
@@ -107,17 +108,23 @@ namespace FactOrFictionFrontend.Controllers
                 var sentenceTasks = Task.WhenAll(parsingTask);
                 var sentences = await sentenceTasks;
 
-                Array.Sort(sentences);
+                string INFERSENT_URL = ""; // change these
+                string INFERSENT_KEY = "";
+                InferSentClient inferSentClient = new InferSentClient(INFERSENT_URL, INFERSENT_KEY);
+                var sentencesWithRelated = await inferSentClient.ConnectInferSent(sentences);
+                
+                Array.Sort(sentencesWithRelated);
 
                 _context.Add(textEntry);
-                _context.AddRange(sentences);
+                _context.AddRange(sentencesWithRelated);
                 await _context.SaveChangesAsync();
 
-                var VotesDict = sentences.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
+                
+                var VotesDict = sentencesWithRelated.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
 
                 return Json(new
                 {
-                    Sentences = sentences.Select(
+                    Sentences = sentencesWithRelated.Select(
                         sent => new SentenceViewModel(sent)),
                     // Return Votes here
                     Votes = VotesDict
