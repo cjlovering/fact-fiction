@@ -64,7 +64,7 @@ export default class FactCard extends React.Component {
         const that = this;
         const formatReference = ref => {
             return {
-                "link": that.cleanLink(ref.link),
+                "link": (ref.link),
                 "bias": (ref.hasOwnProperty('bias') && ref.bias !== null) 
                     ? ref.bias.biasType
                     : null

@@ -15,7 +15,7 @@ export default class References extends React.Component {
             references.map(ref => (
                 <tr key={shortid.generate()} style={{width: "100%"}}>
                     <th>
-                        <a href={ref.link} > {cleanLink(ref.link)} </a>
+                        <a href={ref.link} target="_blank"> {cleanLink(ref.link)} </a>
                     </th>
                     <th>
                         {ref.bias}
