@@ -108,23 +108,17 @@ namespace FactOrFictionFrontend.Controllers
                 var sentenceTasks = Task.WhenAll(parsingTask);
                 var sentences = await sentenceTasks;
 
-                string INFERSENT_URL = ""; // change these
-                string INFERSENT_KEY = "";
-                InferSentClient inferSentClient = new InferSentClient(INFERSENT_URL, INFERSENT_KEY);
-                var sentencesWithRelated = await inferSentClient.ConnectInferSent(sentences);
-                
-                Array.Sort(sentencesWithRelated);
+                Array.Sort(sentences);
 
                 _context.Add(textEntry);
-                _context.AddRange(sentencesWithRelated);
+                _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
 
-                
-                var VotesDict = sentencesWithRelated.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
+                var VotesDict = sentences.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
 
                 return Json(new
                 {
-                    Sentences = sentencesWithRelated.Select(
+                    Sentences = sentences.Select(
                         sent => new SentenceViewModel(sent)),
                     // Return Votes here
                     Votes = VotesDict
