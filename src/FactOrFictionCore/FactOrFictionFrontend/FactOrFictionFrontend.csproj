@@ -25,6 +25,8 @@
     <Compile Include="Migrations\20171110180540_InitialSchema.Designer.cs" />
     <Compile Include="Migrations\20171110191824_SentencePositionColumn.cs" />
     <Compile Include="Migrations\20171110191824_SentencePositionColumn.Designer.cs" />
+    <Compile Include="Migrations\20171129172513_SentenceInferSentVectorStringColumn.cs" />
+    <Compile Include="Migrations\20171129172513_SentenceInferSentVectorStringColumn.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
 
