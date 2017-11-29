@@ -5,6 +5,7 @@ using FactOrFictionFrontend.Data;
 using FactOrFictionTextHandling.MLClient;
 using FactOrFictionTextHandling.Parser;
 using FactOrFictionTextHandling.SentenceProducer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,8 +39,10 @@ namespace FactOrFictionFrontend.Controllers
                 throw new ApplicationException($"Cannot find user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, ApplicationRole.ADMINISTRATOR);
             var textEntries = (
-                from entry in _context.TextEntries
+                from entry in _context.TextEntries.Include(t => t.CreatedByUser)
+                where isAdmin || entry.UserId == user.Id
                 orderby entry.CreatedAt descending
                 select entry
             );
@@ -123,55 +126,8 @@ namespace FactOrFictionFrontend.Controllers
             return View(textEntry);
         }
 
-        // GET: TextEntries1/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var textEntry = await _context.TextEntries.SingleOrDefaultAsync(m => m.Id == id);
-            if (textEntry == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", textEntry.UserId);
-            return View(textEntry);
-        }
-
-        // POST: TextEntries1/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditTextEntry(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var textEntryToUpdate = await _context.TextEntries.SingleOrDefaultAsync(e => e.Id == id);
-            if (await TryUpdateModelAsync<TextEntry>(
-                textEntryToUpdate,
-                "",
-                e => e.Content))
-            {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException)
-                {
-                    ModelState.AddModelError("", "Unable to save changes.");
-                }
-            }
-            return View(textEntryToUpdate);
-        }
-
         // GET: TextEntries1/Delete/5
+        [Authorize(Roles = ApplicationRole.ADMINISTRATOR)]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -191,6 +147,7 @@ namespace FactOrFictionFrontend.Controllers
         }
 
         // POST: TextEntries1/Delete/5
+        [Authorize(Roles = ApplicationRole.ADMINISTRATOR)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

@@ -1,23 +1,30 @@
 ﻿@model IEnumerable<FactOrFictionCommon.Models.TextEntry>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "History";
 }
 
-<h2>Index</h2>
+@using FactOrFictionCommon.Models
+
+<h2>History</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
+    <colgroup>
+        <col />
+        <col />
+        <col />
+        <col width="150"/>
+    </colgroup>
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Content)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedAt)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedByUser)
             </th>
@@ -37,9 +44,11 @@
                 @Html.DisplayFor(modelItem => item.CreatedByUser.UserName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @if (User.IsInRole(ApplicationRole.ADMINISTRATOR))
+                {
+                    @(" | ")<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
             </td>
         </tr>
 }

@@ -18,7 +18,6 @@ namespace FactOrFictionFrontend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger _logger;
 
         private const int PAGE_SIZE = 5;
 

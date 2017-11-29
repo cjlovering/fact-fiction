@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using FactOrFictionCommon.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FactOrFictionFrontend</title>
+    <title>@ViewData["Title"] - Fact or Fiction</title>
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
     <environment include="Development">
@@ -30,14 +36,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">FactOrFictionFrontend</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Fact or Fiction</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="TextEntries" asp-action="Index">Admin Panel</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole(ApplicationRole.ADMINISTRATOR))
+                        {
+                            <li><a asp-area="" asp-controller="TextEntries" asp-action="Index"> Admin Panel </a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-area="" asp-controller="TextEntries" asp-action="Index"> Submission History </a></li>
+                        }
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

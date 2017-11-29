@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System;
 
 namespace FactOrFictionFrontend.Views.Manage
 {
@@ -17,15 +14,11 @@ namespace FactOrFictionFrontend.Views.Manage
 
         public static string ExternalLogins => "ExternalLogins";
 
-        public static string TwoFactorAuthentication => "TwoFactorAuthentication";
-
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 
         public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);
-
-        public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
     
         public static string PageNavClass(ViewContext viewContext, string page)
         {

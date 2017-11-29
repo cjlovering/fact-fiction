@@ -9,11 +9,11 @@ namespace FactOrFictionCommon.Models
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
-        [DisplayName("Created At")]
+        [DisplayName("Created at")]
         public DateTime CreatedAt { get; set; }
         public string UserId { get; set; }
 
-        [ForeignKey("UserId"), DisplayName("Created By")]
+        [ForeignKey("UserId"), DisplayName("Created by")]
         public virtual ApplicationUser CreatedByUser { get; set; }
         public virtual ICollection<Sentence> Sentences { get; set; }
     }
