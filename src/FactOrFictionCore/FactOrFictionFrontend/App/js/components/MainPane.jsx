@@ -95,48 +95,46 @@ export default class MainPane extends React.Component {
 
         }
         return (
-            <div className="container">
-                <div className="row"> 
-                    <div className="col-sm-12 col-md-12 col-lg-4">
-                        <span className="box-title ms-font-xxl ms-fontColor-themePrimary">{title}</span>
-                        {leftPane}
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                        <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Objective Statements</span>
-                        <ListView
-                            details={details}
-                            fetchDetails={fetchDetails}
-                            detailsShown={detailsShown}
-                            showDetails={showDetails}
-                            entries={entries}
-                            selectedEntryId={selectedEntryId}
-                            selectEntry={selectEntry}
-                            loadFunc={loadFunc}
-                            hasMore={isInput && !isDoneFetchingFeed}
-                            castVote={castVote}
-                            votes={votes}
-                            fetchSimilarTokens={fetchSimilarTokens}
-                            similarTokenIds={similarTokenIds}
-                        />
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                        <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Similar Sentences</span>
-                        <ListView
-                            details={details}
-                            fetchDetails={fetchDetails}
-                            detailsShown={detailsShown}
-                            showDetails={showDetails}
-                            entries={similarEntries}
-                            selectedEntryId={selectedEntryId}
-                            selectEntry={() => {}}
-                            loadFunc={() => {}}
-                            hasMore={false}
-                            castVote={castVote}
-                            votes={votes}
-                            fetchSimilarTokens={fetchSimilarTokens}
-                            similarTokenIds={similarTokenIds}
-                        />
-                    </div>
+            <div className="row"> 
+                <div className="col-sm-12 col-md-12 col-lg-4 col-xl-5">
+                    <span className="box-title ms-font-xxl ms-fontColor-themePrimary">{title}</span>
+                    {leftPane}
+                </div>
+                <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3-5">
+                    <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Objective Statements</span>
+                    <ListView
+                        details={details}
+                        fetchDetails={fetchDetails}
+                        detailsShown={detailsShown}
+                        showDetails={showDetails}
+                        entries={entries}
+                        selectedEntryId={selectedEntryId}
+                        selectEntry={selectEntry}
+                        loadFunc={loadFunc}
+                        hasMore={isInput && !isDoneFetchingFeed}
+                        castVote={castVote}
+                        votes={votes}
+                        fetchSimilarTokens={fetchSimilarTokens}
+                        similarTokenIds={similarTokenIds}
+                    />
+                </div>
+                <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3-5">
+                    <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Similar Sentences</span>
+                    <ListView
+                        details={details}
+                        fetchDetails={fetchDetails}
+                        detailsShown={detailsShown}
+                        showDetails={showDetails}
+                        entries={similarEntries}
+                        selectedEntryId={selectedEntryId}
+                        selectEntry={() => {}}
+                        loadFunc={() => {}}
+                        hasMore={false}
+                        castVote={castVote}
+                        votes={votes}
+                        fetchSimilarTokens={fetchSimilarTokens}
+                        similarTokenIds={similarTokenIds}
+                    />
                 </div>
             </div>
         )
