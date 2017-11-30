@@ -1,10 +1,15 @@
 ﻿namespace FactOrFictionUrlSuggestions
 {
-    public static class FinderFactory
+    public class FinderFactory
     {
-        public static IFinder CreateFinder()
+        private string SubscriptionKey;
+        public FinderFactory(string SubscriptionKey)
         {
-            return new BingV5Finder();
+            this.SubscriptionKey = SubscriptionKey;
+        }
+        public IFinder CreateFinder()
+        {
+            return new BingV7Finder(SubscriptionKey);
         }
     }
 }

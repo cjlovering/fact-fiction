@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using FactOrFictionCommon.Models.RelationshipModels;
+using Microsoft.Extensions.Configuration;
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -18,13 +19,15 @@ namespace FactOrFictionFrontend.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
         private const int PAGE_SIZE = 5;
 
-        public SentencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public SentencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         // GET: Sentences/Feed
@@ -119,7 +122,8 @@ namespace FactOrFictionFrontend.Controllers
             {
                 return NotFound();
             }
-            var finder = FinderFactory.CreateFinder();
+           var factory = new FinderFactory(_configuration["Authentication:Finder:Key"]);
+            var finder = factory.CreateFinder();
             var urlClassifier = new URLClassification();
             var referenceTasks = (await finder.FindSuggestions(_sent.Content))
                 .Select(async uri =>
@@ -135,7 +139,7 @@ namespace FactOrFictionFrontend.Controllers
                      };
                  });
             var references = await Task.WhenAll(referenceTasks);
-            var entityFinder = new EntityFinder();
+            var entityFinder = new EntityFinder(_configuration["Authentication:Entity:Key"]);
             var entityList = (await entityFinder.GetEntities(_sent.Content))
                 .Select(e => new Entity
                 {

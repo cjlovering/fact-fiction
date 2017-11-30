@@ -13,7 +13,11 @@ namespace FactOrFictionUrlSuggestions
     public sealed class EntityFinder : CognitiveServicesFinder
     {
         protected override string Endpoint { get; } = "https://westus.api.cognitive.microsoft.com/entitylinking/v1.0/link";
-        protected override string SubscriptionKey { get; } = "a2d4e8071a1f48dd93ea5986ed265a88";
+        protected override string SubscriptionKey { get; }
+        public EntityFinder(string SubscriptionKey)
+        {
+            this.SubscriptionKey = SubscriptionKey;
+        }
         public async Task<JToken> GetEntities(string query)
         {
             var response = await QueryCognitiveServices(query);
