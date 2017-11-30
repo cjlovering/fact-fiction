@@ -3,6 +3,7 @@
 .selected {
     background-color: $selected;
     color: white;
+    cursor: pointer;
 }
 
 .selected:hover {
@@ -11,6 +12,7 @@
 }
 .highlighted {
     background-color: $highlighted;
+    cursor: pointer;
 }
 
 .highlighted:hover {
