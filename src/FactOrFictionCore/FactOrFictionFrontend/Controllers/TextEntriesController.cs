@@ -61,11 +61,13 @@ namespace FactOrFictionFrontend.Controllers
 
             var textEntry = await _context.TextEntries
                 .Include(t => t.CreatedByUser)
+                .Include(t => t.Sentences)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (textEntry == null)
             {
                 return NotFound();
             }
+            textEntry.Sentences.Sort();
 
             return View(textEntry);
         }

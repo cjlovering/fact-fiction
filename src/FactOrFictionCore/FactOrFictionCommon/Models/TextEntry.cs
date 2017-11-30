@@ -15,7 +15,7 @@ namespace FactOrFictionCommon.Models
 
         [ForeignKey("UserId"), DisplayName("Created by")]
         public virtual ApplicationUser CreatedByUser { get; set; }
-        public virtual ICollection<Sentence> Sentences { get; set; }
+        public virtual List<Sentence> Sentences { get; set; }
     }
 }
 

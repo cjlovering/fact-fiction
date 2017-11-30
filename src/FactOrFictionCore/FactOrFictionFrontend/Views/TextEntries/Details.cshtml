@@ -4,11 +4,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
-
+<h2>Details of Text Entry</h2>
 <div>
-    <h4>Text Entry</h4>
-    <hr />
+    <a asp-action="Index">Back to List</a>
+</div>
+<div>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Content)
@@ -31,5 +31,40 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sentences.FirstOrDefault().Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sentences.FirstOrDefault().Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sentences.FirstOrDefault().VoteTrue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sentences.FirstOrDefault().VoteFalse)
+                </th>
+            </tr>
+        </thead>
+        @foreach (var sentence in Model.Sentences)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => sentence.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sentence.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sentence.VoteTrue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => sentence.VoteFalse)
+                </td>
+            </tr>
+        }
+    </table>
+
 </div>

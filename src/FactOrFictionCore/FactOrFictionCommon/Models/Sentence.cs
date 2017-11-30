@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace FactOrFictionCommon.Models
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
+        [DisplayName("Vote True")]
         public int VoteTrue { get; set; }
+        [DisplayName("Vote False")]
         public int VoteFalse { get; set; }
         public int Position { get; set; }
         public float Confidence { get; set; }
