@@ -14,8 +14,6 @@ using React.AspNet;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace FactOrFictionFrontend
 {
@@ -80,7 +78,7 @@ namespace FactOrFictionFrontend
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -125,28 +123,6 @@ namespace FactOrFictionFrontend
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            var roleManager = app.ApplicationServices.GetRequiredService<RoleManager<ApplicationRole>>();
-            await CreateRoles(roleManager);
-        }
-
-        private async Task CreateRoles(RoleManager<ApplicationRole> roleManager)
-        {
-            var roles = new List<ApplicationRole>
-            {
-                // These are just the roles I made up. You can make your own!
-                new ApplicationRole {Name = ApplicationRole.ADMINISTRATOR},
-                new ApplicationRole {Name = ApplicationRole.USER}
-            };
-
-            foreach (var role in roles)
-            {
-                if (await roleManager.RoleExistsAsync(role.Name)) continue;
-                var result = await roleManager.CreateAsync(role);
-                if (result.Succeeded) continue;
-
-                throw new ApplicationException($"Could not create '{role.Name}' role.");
-            }
         }
     }
 }
