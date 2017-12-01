@@ -6,18 +6,18 @@ import {
 /* sentence details */
 export default (
     state = {
-        isFetching: false,
+        isFetchingSimilar: false,
         similarTokenIds: {}, // token id --> []
     },
     action
 ) => {
     switch(action.type) {
         case FETCHING_SIMILAR:
-            return Object.assign({}, state, {isFetching: true})
+            return Object.assign({}, state, {isFetchingSimilar: true})
         case RECEIVE_SIMILAR:
             const similarTokenIds = Object.assign({}, state.similarTokenIds, action.similarTokenIds);
-            const isFetching = false;
-            return { similarTokenIds, isFetching }
+            const isFetchingSimilar = false;
+            return { similarTokenIds, isFetchingSimilar }
         default:
             return state;
     }

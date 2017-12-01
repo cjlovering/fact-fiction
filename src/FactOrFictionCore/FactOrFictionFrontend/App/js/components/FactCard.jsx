@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
+import { changeFocus } from '../utils/scroll';
 import {
     Spinner,
     SpinnerSize
@@ -22,6 +23,7 @@ const MAX_LINK_LEN = 35;
 
 export default class FactCard extends React.Component {
     static propTypes = {
+        isInMiddlePane: PropTypes.bool.isRequired,
         details: PropTypes.object.isRequired,
         fetchDetails: PropTypes.func.isRequired,
         content: PropTypes.string.isRequired,
@@ -38,9 +40,10 @@ export default class FactCard extends React.Component {
         fetchSimilarTokens: PropTypes.func.isRequired,
         similarTokenIds: PropTypes.object.isRequired
     }
-
+ 
     render() {
         const { 
+            isInMiddlePane,
             content, 
             selectedEntryId, 
             id,
@@ -132,15 +135,21 @@ export default class FactCard extends React.Component {
         );
 
         const selectAndFetchOnClick = () => {
-            selectEntry(id);
-            if (!similarTokenIds.hasOwnProperty(id)) {
-                fetchSimilarTokens(id);
+            if (isInMiddlePane) {
+                selectEntry(id);
+                if (!isSelected) { changeFocus(id, "fact-card"); }
+                if (!similarTokenIds.hasOwnProperty(id)) {
+                    fetchSimilarTokens(id);
+                }
+            } else{
+                return;
             }
         }
 
         return (
             <div
                 className={`fact-card ${isSelected}`}
+                id={id + "-fact-card"}
                 onClick={selectAndFetchOnClick}
             >
                 <div>

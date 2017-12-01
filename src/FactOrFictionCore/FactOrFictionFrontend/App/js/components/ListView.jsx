@@ -12,6 +12,7 @@ import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
 
 export default class ListView extends React.Component {
     static propTypes = {
+        isMiddlePane: PropTypes.bool.isRequired,
         details: PropTypes.object.isRequired,
         fetchDetails: PropTypes.func.isRequired,
         entries: PropTypes.array.isRequired,
@@ -29,6 +30,7 @@ export default class ListView extends React.Component {
 
     render() {
         const { 
+            isMiddlePane,
             entries, 
             selectedEntryId, 
             hasMore,
@@ -47,8 +49,9 @@ export default class ListView extends React.Component {
             detailsShown.hasOwnProperty(id) && detailsShown[id];
         const sentenceVote = id =>
             votes.hasOwnProperty(id) ? votes[id] : VOTE_UNVOTED;
+        const domId = isMiddlePane ? 'list-view' : 'similar-view';
         return (
-            <div className='list-view'>
+            <div className='list-view' id={domId}>
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={loadFunc}
@@ -61,7 +64,10 @@ export default class ListView extends React.Component {
                         entries
                             .filter(entry => entry.type == "OBJECTIVE")
                             .map(entry => (
+                               
                                 <FactCard
+                                    key={entry.id}
+                                    isInMiddlePane={isMiddlePane}
                                     {...entry}
                                     details={entry.id in details ? details[entry.id] : {}}
                                     fetchDetails={fetchDetails}
@@ -71,7 +77,6 @@ export default class ListView extends React.Component {
                                     showingDetails={showingDetails(entry.id)}
                                     castVote={castVote}
                                     sentenceVote={sentenceVote(entry.id)}
-                                    key={entry.id}
                                     fetchSimilarTokens={fetchSimilarTokens}
                                     similarTokenIds={similarTokenIds}
                                 />

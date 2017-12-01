@@ -34,7 +34,8 @@ export default class MainPane extends React.Component {
         detailsShown: PropTypes.object.isRequired,
         castVote: PropTypes.func.isRequired,
         fetchSimilarTokens: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired
+        similarTokenIds: PropTypes.object.isRequired,
+        isFetchingSimilar: PropTypes.bool.isRequired
     }
     
     render() {
@@ -58,10 +59,12 @@ export default class MainPane extends React.Component {
             showDetails,
             castVote,
             fetchSimilarTokens,
-            similarTokenIds
+            similarTokenIds,
+            isFetchingSimilar
         } = this.props;
         const isInput = view === VIEW_INPUT;
-        const title = isInput ? "Input" : "Results";
+        const leftPaneTitle = isInput ? "Input" : "Results";
+        const middlePaneTitle= isInput ? "Feed" : "Objective Statements";
         const leftPane = isInput ? (
             <InputPane
                 fetchTextEntry={fetchTextEntry}
@@ -73,6 +76,8 @@ export default class MainPane extends React.Component {
                 selectEntry={selectEntry} 
                 textEntryTokens={textEntryTokenIds.map(id => tokens[id])} 
                 changeView={changeView} 
+                similarTokenIds={similarTokenIds}
+                fetchSimilarTokens={fetchSimilarTokens}
             />
         );
         const entries = (
@@ -94,47 +99,56 @@ export default class MainPane extends React.Component {
         const handleClick = () => {
 
         }
+        const middlePane = isFetching ? 
+        <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
+        <ListView
+            isMiddlePane={true}
+            details={details}
+            fetchDetails={fetchDetails}
+            detailsShown={detailsShown}
+            showDetails={showDetails}
+            entries={entries}
+            selectedEntryId={selectedEntryId}
+            selectEntry={selectEntry}
+            loadFunc={loadFunc}
+            hasMore={isInput && !isDoneFetchingFeed}
+            castVote={castVote}
+            votes={votes}
+            fetchSimilarTokens={fetchSimilarTokens}
+            similarTokenIds={similarTokenIds}
+        />
+
+        const rightPane = isFetchingSimilar ? 
+        <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
+        <ListView
+            isMiddlePane={false}
+            details={details}
+            fetchDetails={fetchDetails}
+            detailsShown={detailsShown}
+            showDetails={showDetails}
+            entries={similarEntries}
+            selectedEntryId={selectedEntryId}
+            selectEntry={() => {}}
+            loadFunc={() => {}}
+            hasMore={false}
+            castVote={castVote}
+            votes={votes}
+            fetchSimilarTokens={fetchSimilarTokens}
+            similarTokenIds={similarTokenIds}
+        />
         return (
             <div className="row"> 
                 <div className="col-sm-12 col-md-12 col-lg-4 col-xl-5">
-                    <span className="box-title ms-font-xxl ms-fontColor-themePrimary">{title}</span>
+                    <span className="box-title ms-font-xxl ms-fontColor-themePrimary">{leftPaneTitle}</span>
                     {leftPane}
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3-5">
-                    <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Objective Statements</span>
-                    <ListView
-                        details={details}
-                        fetchDetails={fetchDetails}
-                        detailsShown={detailsShown}
-                        showDetails={showDetails}
-                        entries={entries}
-                        selectedEntryId={selectedEntryId}
-                        selectEntry={selectEntry}
-                        loadFunc={loadFunc}
-                        hasMore={isInput && !isDoneFetchingFeed}
-                        castVote={castVote}
-                        votes={votes}
-                        fetchSimilarTokens={fetchSimilarTokens}
-                        similarTokenIds={similarTokenIds}
-                    />
+                    <span className="list-title ms-font-xxl ms-fontColor-themePrimary">{middlePaneTitle}</span>
+                    {middlePane}
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3-5">
                     <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Similar Sentences</span>
-                    <ListView
-                        details={details}
-                        fetchDetails={fetchDetails}
-                        detailsShown={detailsShown}
-                        showDetails={showDetails}
-                        entries={similarEntries}
-                        selectedEntryId={selectedEntryId}
-                        selectEntry={() => {}}
-                        loadFunc={() => {}}
-                        hasMore={false}
-                        castVote={castVote}
-                        votes={votes}
-                        fetchSimilarTokens={fetchSimilarTokens}
-                        similarTokenIds={similarTokenIds}
-                    />
+                    {rightPane}
                 </div>
             </div>
         )

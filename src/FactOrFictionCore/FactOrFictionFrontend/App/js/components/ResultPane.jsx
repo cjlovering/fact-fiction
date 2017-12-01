@@ -14,11 +14,18 @@ export default class ResultPane extends React.Component {
         selectEntry: PropTypes.func.isRequired,
         textEntryTokens: PropTypes.array.isRequired,
         changeView: PropTypes.func.isRequired,
+        similarTokenIds: PropTypes.object.isRequired,
+        fetchSimilarTokens: PropTypes.func.isRequired
     }
     
     render() {
         const { 
-            selectedEntryId, selectEntry, textEntryTokens, changeView 
+            selectedEntryId, 
+            selectEntry, 
+            textEntryTokens, 
+            changeView, 
+            similarTokenIds,
+            fetchSimilarTokens
         } = this.props;
 
         var objectiveCount = textEntryTokens.filter(e => e.type == "OBJECTIVE").length;
@@ -27,17 +34,21 @@ export default class ResultPane extends React.Component {
         return (
             <div>
                 <div className="left-bar">
+                    <div className="result-box" id="result-box">
                     {
                         textEntryTokens.map(entry => (
                             <Sentence
                                 {...entry}
                                 selectedEntryId={selectedEntryId}
                                 selectEntry={selectEntry}
-                                key={shortid.generate()}                       
+                                key={shortid.generate()}   
+                                similarTokenIds={similarTokenIds} 
+                                fetchSimilarTokens={fetchSimilarTokens}                   
                             />
                             )
                         )
                     }
+                    </div>
                 </div>
                 <Progress 
                     percent={percentObjective} 

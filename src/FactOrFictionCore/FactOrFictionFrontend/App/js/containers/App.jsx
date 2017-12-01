@@ -18,6 +18,7 @@ const App = ({
     detailsShown,
     votes,
     similarTokenIds,
+    isFetchingSimilar,
     actions
 }) => (
     <MainPane 
@@ -33,6 +34,7 @@ const App = ({
         votes={votes}
         detailsShown={detailsShown}
         similarTokenIds={similarTokenIds}
+        isFetchingSimilar={isFetchingSimilar}
         changeView={actions.changeView}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
@@ -56,6 +58,7 @@ App.propTypes = {
     detailsShown: PropTypes.object.isRequired,
     votes: PropTypes.object.isRequired,
     similarTokenIds: PropTypes.object.isRequired, 
+    isFetchingSimilar: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
 }
 
@@ -65,7 +68,8 @@ const mapStateToProps = state => ({
     detailsShown: state.detailsShown,
     view: state.view,
     selectedEntryId: state.selectedEntryId,
-    similarTokenIds: state.similarTokens.similarTokenIds
+    similarTokenIds: state.similarTokens.similarTokenIds,
+    isFetchingSimilar: state.similarTokens.isFetchingSimilar
 });
 
 const mapDispatchToProps = dispatch => ({

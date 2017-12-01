@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { changeFocus } from '../utils/scroll';
 import _ from '../../stylesheets/components/_Sentence.scss'
 
 export default class Sentence extends React.Component {
@@ -8,7 +9,9 @@ export default class Sentence extends React.Component {
         type: PropTypes.string.isRequired,
         content: PropTypes.string.isRequired,
         selectedEntryId: PropTypes.string.isRequired,
-        selectEntry: PropTypes.func.isRequired
+        selectEntry: PropTypes.func.isRequired,
+        similarTokenIds: PropTypes.object.isRequired,
+        fetchSimilarTokens: PropTypes.func.isRequired
     }
 
     render() {
@@ -17,7 +20,7 @@ export default class Sentence extends React.Component {
         const highlighted = type === 'OBJECTIVE' ? "highlighted" : "";
 
         return (
-            <span>
+            <span id={id+"-sentence"}>
                 <span
                     className={isSelected ? "selected" : highlighted}
                     onClick={() => this.handleClick()}
@@ -30,9 +33,14 @@ export default class Sentence extends React.Component {
     }
 
     handleClick() {
-        const { id, type, selectEntry } = this.props;
+        const { id, type, selectEntry, similarTokenIds, fetchSimilarTokens, selectedEntryId } = this.props;
+        const isSelected = id === selectedEntryId;
         if (type === "OBJECTIVE") {
             selectEntry(id);
+            if (!isSelected) { changeFocus(id, "sentence"); }
+            if (!similarTokenIds.hasOwnProperty(id)) {
+                fetchSimilarTokens(id);
+            }
         }
     }
 }
