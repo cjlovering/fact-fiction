@@ -10,7 +10,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: [/\.scss$/, /\.css$/],
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
@@ -42,6 +42,6 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: ['.js', '.jsx', '.scss' ]
+        extensions: ['.js', '.jsx', '.scss', '.css' ]
     }
 };
