@@ -14,6 +14,7 @@ import _ from '../../stylesheets/components/_FactCard.scss'
 import Button from './Button';
 import VoteButtons from './VoteButtons';
 import References from './References';
+import Entities from './Entities';
 
 const TOP_K_HITS = 5;
 const MAX_FACT_LEN = 175;
@@ -61,27 +62,45 @@ export default class FactCard extends React.Component {
         // Render all the references.
         const hasDetails = details.hasOwnProperty('references') && details['references'];
         const { references, entities } = details;
-        const that = this;
-        const formatReference = ref => {
-            return {
-                "link": (ref.link),
-                "bias": (ref.hasOwnProperty('bias') && ref.bias !== null) 
-                    ? ref.bias.biasType
-                    : null
-            };
-        };
+
+        // Entity elements
+        const entityHeader = entities ? (
+            <tr>
+                <th>
+                    Recognized entities
+                </th>
+            </tr>
+        ) : null;
+        const entitiesJSX = entities ? (
+            <Entities
+                entities={ 
+                    entities
+                        .slice(0, TOP_K_HITS)
+                }
+            />
+        ) : null;
+
 
         const loadingDetails = hasDetails ? (
             <table style={{width: "100%"}}>
                 <tbody>
+                    <tr>
+                        <th>
+                            Related information
+                        </th>
+                        <th>
+                            Site bias
+                        </th>
+                    </tr>
                     <References
                         references={ 
                             references
                                 .slice(0, TOP_K_HITS)
-                                .map(ref => formatReference(ref))
                         }
                         cleanLink={text => this.cleanLink(text)}
                     />
+                    {entityHeader}
+                    {entitiesJSX}
                 </tbody>
             </table>
         ) : (
