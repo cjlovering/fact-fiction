@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import FactCard from './FactCard';
@@ -79,6 +80,7 @@ export default class ListView extends React.Component {
                                     sentenceVote={sentenceVote(entry.id)}
                                     fetchSimilarTokens={fetchSimilarTokens}
                                     similarTokenIds={similarTokenIds}
+                                    ref={(card) => { if (entry.id === selectedEntryId) this.selectFactCard = card}}
                                 />
                             )
                         )
@@ -86,5 +88,25 @@ export default class ListView extends React.Component {
                 </InfiniteScroll>
             </div>                      
         );
+    }
+
+    componentDidUpdate(prevProps) {
+        // only scroll into view if the active item changed last render
+        if (this.props.selectedEntryId !== prevProps.selectedEntryId) {
+          this.ensureActiveItemVisible();
+        }
+      }
+    
+    ensureActiveItemVisible() {
+        var itemComponent = this.selectFactCard;
+        if (itemComponent) {
+            var domNode = ReactDOM.findDOMNode(itemComponent);
+            this.scrollElementIntoViewIfNeeded(domNode);
+        }
+    }
+    
+    scrollElementIntoViewIfNeeded(domNode) {
+        var containerDomNode = ReactDOM.findDOMNode(this);
+        domNode.scrollIntoView({behavior: "smooth"});
     }
 }

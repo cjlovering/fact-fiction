@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import Button from './Button';
@@ -43,7 +44,7 @@ export default class ResultPane extends React.Component {
                                 selectEntry={selectEntry}
                                 key={shortid.generate()}   
                                 similarTokenIds={similarTokenIds} 
-                                fetchSimilarTokens={fetchSimilarTokens}                   
+                                fetchSimilarTokens={fetchSimilarTokens}
                             />
                             )
                         )
