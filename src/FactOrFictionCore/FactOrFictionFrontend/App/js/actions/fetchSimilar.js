@@ -14,13 +14,12 @@ const fetchingSimilar = tokenId => {
 
 const fetchSimilarTokens = (tokenId) => {
     return (dispatch) => {
-        return fetch(`/Sentences/Feed/${tokenId}`, {
+        return fetch(`/Sentences/Related/${tokenId}`, {
             method: "GET",
             credentials: "same-origin"
         })
         .then(
-            response => response.json(),
-            error => console.log('An error occured when fetching similar sentences.', error)
+            response => response.json()
         )
         .then(json => {
             // Put tokens into storage
@@ -30,6 +29,9 @@ const fetchSimilarTokens = (tokenId) => {
             // Add similar sentences to the similar map
             dispatch(receiveSimilar(tokenId, json));
         })
+        .catch(
+            error => console.log('An error occured when fetching similar sentences.', error)
+        )
     }
 }
 

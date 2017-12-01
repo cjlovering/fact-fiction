@@ -1,6 +1,8 @@
 ﻿using FactOrFictionCommon.Models;
-using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionCommon.Models.RelationshipModels;
+using FactOrFictionCommon.Models.SentenceViewModels;
 using FactOrFictionFrontend.Data;
+using FactOrFictionTextHandling.InferSentClient;
 using FactOrFictionUrlSuggestions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using FactOrFictionCommon.Models.RelationshipModels;
 using Microsoft.Extensions.Configuration;
 
 namespace FactOrFictionFrontend.Controllers
@@ -108,12 +108,8 @@ namespace FactOrFictionFrontend.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            var _sent = _context.Sentences.SingleOrDefault(s => s.Id == Id);
+            var _sent = _context.Sentences
+                                .SingleOrDefault(s => (s.Id == Id && s.Type == SentenceType.OBJECTIVE));
             if (_sent == null)
             {
                 return NotFound();
@@ -122,8 +118,9 @@ namespace FactOrFictionFrontend.Controllers
             {
                 return NotFound();
             }
-           var factory = new FinderFactory(_configuration["Authentication:Finder:Key"]);
+            var factory = new FinderFactory(_configuration["Authentication:Finder:Key"]);
             var finder = factory.CreateFinder();
+
             var urlClassifier = new URLClassification();
             var referenceTasks = (await finder.FindSuggestions(_sent.Content))
                 .Select(async uri =>
@@ -139,7 +136,9 @@ namespace FactOrFictionFrontend.Controllers
                      };
                  });
             var references = await Task.WhenAll(referenceTasks);
+
             var entityFinder = new EntityFinder(_configuration["Authentication:Entity:Key"]);
+
             var entityList = (await entityFinder.GetEntities(_sent.Content))
                 .Select(e => new Entity
                 {
@@ -175,38 +174,36 @@ namespace FactOrFictionFrontend.Controllers
             });
         }
 
-        // GET: Sentences/Related
+        // GET: Sentences/Related/Id
         public async Task<IActionResult> Related(Guid Id)
         {
             if (!ModelState.IsValid)
             {
                 return NotFound();
             }
-
-            var _sent = await _context.Sentences.SingleOrDefaultAsync(s => s.Id == Id);
+            var _sent = await _context.Sentences
+                                      .SingleOrDefaultAsync(s => s.Id == Id 
+                                                              && s.Type == SentenceType.OBJECTIVE
+                                                              && s.InferSentVectorsString != null);
             if (_sent == null)
             {
                 return NotFound();
             }
-            if (_sent.Type != SentenceType.OBJECTIVE)
-            {
-                return NotFound();
-            }
-            if (String.IsNullOrEmpty(_sent.InferSentVectorsString))
-            {
-                return NotFound();
-            }
+
             var inferSentVector = _sent.InferSentVectorsDouble;
 
             var relatedSentencesQuery = _context.Sentences
-                .Where(candidate => candidate.InferSentVectorsDouble != null && candidate.Id != Id)
+                .Where(candidate => candidate.InferSentVectorsString != null && candidate.Id != Id && candidate.TextEntryId != _sent.TextEntryId)
                 .Select(candidate => new
                 {
                     sentence = candidate,
-                    distance = DistanceCalculator.CalculateCosineSimilarity (_sent.InferSentVectorsDouble, candidate.InferSentVectorsDouble) // distance = 1 if 2 sentences are the same
+                    distance = DistanceCalculator.CalculateCosineSimilarity(
+                        _sent.InferSentVectorsDouble,
+                        candidate.InferSentVectorsDouble) // distance = 1 if the two sentences are the same
                 })
+                .Where(_sentence => _sentence.distance < 1.0 && _sentence.distance > 0.7)
                 .OrderByDescending(candidate => candidate.distance)
-                .Take(10)
+                .Take(5)
                 .Select(_sentence => _sentence.sentence);
 
             List<Sentence> relatedSentences = await relatedSentencesQuery.ToListAsync();

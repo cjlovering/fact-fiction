@@ -1,6 +1,6 @@
 ﻿using FactOrFictionCommon.Models;
 using FactOrFictionCommon.Models.RelationshipModels;
-using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionCommon.Models.SentenceViewModels;
 using FactOrFictionFrontend.Data;
 using FactOrFictionTextHandling.InferSentClient;
 using FactOrFictionTextHandling.MLClient;
@@ -9,7 +9,6 @@ using FactOrFictionTextHandling.SentenceProducer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -87,6 +86,7 @@ namespace FactOrFictionFrontend.Controllers
             if (ModelState.IsValid)
             {
                 ISentenceProducer sentenceProducer;
+                // Select ML service based on configuration
                 if (_configuration["MLService:Type"] == "HACC")
                 {
                     string HACC_URL = _configuration["MLService:Url"];
@@ -101,28 +101,40 @@ namespace FactOrFictionFrontend.Controllers
                     sentenceProducer = new SentenceProducer<LuisResult>(new LuisClient(LUIS_URL), new WorkingParser());
                 }
 
+                // Populate text entry with user data
                 textEntry.Id = Guid.NewGuid();
                 textEntry.UserId = _userManager.GetUserId(User);
                 textEntry.CreatedAt = DateTime.Now;
 
+                // Tokenize and classify the sentences
                 var parsingTask = await sentenceProducer.GetStatements(textEntry);
-
                 var sentenceTasks = Task.WhenAll(parsingTask);
                 var sentences = await sentenceTasks;
 
+                // Sort the sentences by their positions
                 Array.Sort(sentences);
+
+                // Get InferSent vectors
+                var objectiveSentencesView = sentences.Where(s => s.Type == SentenceType.OBJECTIVE).ToArray();
+                if (objectiveSentencesView.Length > 0)
+                {
+                    var infersentClient = new InferSentClient(_configuration["InferSent:Url"], _configuration["InferSent:Key"]);
+                    await infersentClient.GetEmbeddingVectors(objectiveSentencesView);
+                }
 
                 _context.Add(textEntry);
                 _context.AddRange(sentences);
                 await _context.SaveChangesAsync();
 
-                var VotesDict = sentences.ToDictionary(sent => sent.Id, sent => VoteType.UNVOTED.ToString());
+                var VotesDict = sentences.ToDictionary(
+                    sent => sent.Id, 
+                    sent => VoteType.UNVOTED.ToString());
 
                 return Json(new
                 {
                     Sentences = sentences.Select(
                         sent => new SentenceViewModel(sent)),
-                    // Return Votes here
+
                     Votes = VotesDict
                 });
             }

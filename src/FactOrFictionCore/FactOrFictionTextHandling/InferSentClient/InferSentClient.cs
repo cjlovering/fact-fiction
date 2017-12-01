@@ -1,8 +1,6 @@
 ﻿using FactOrFictionCommon.Models;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,8 +19,12 @@ namespace FactOrFictionTextHandling.InferSentClient
             ApiKey = apiKey;
         }
 
-        public async Task<Sentence[]> ConnectInferSent(Sentence[] sentences) 
+        public async Task<Sentence[]> GetEmbeddingVectors(Sentence[] sentences) 
         {
+            if (sentences.Length == 0)
+            {
+                return sentences;
+            }
             HttpClient client = new HttpClient
             {
                 BaseAddress = new Uri(BaseUri)
@@ -31,11 +33,13 @@ namespace FactOrFictionTextHandling.InferSentClient
             //For local web service, comment out this line.
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
 
+            var sentencesContent = sentences.Select(s => s.Content).ToArray();
+
             var request = new HttpRequestMessage(HttpMethod.Post, string.Empty)
             {
                 Content = new StringContent(JsonConvert.SerializeObject(new
                 {
-                    _sentences = sentences
+                    sentences = sentencesContent
                 }))
             };
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -50,9 +54,9 @@ namespace FactOrFictionTextHandling.InferSentClient
             InferSentResponseObj content
                 = JsonConvert.DeserializeObject<InferSentResponseObj>(responseContent);
 
-            for (int i = 0; i < content.Sentences.Length; i++)
+            for (int i = 0; i < sentences.Length; i++)
             {
-                sentences[i].InferSentVectorsString = content.Vectors[i];
+                sentences[i].InferSentVectorsDouble = content.Vectors[i];
             }
             return sentences;
         }
@@ -60,9 +64,7 @@ namespace FactOrFictionTextHandling.InferSentClient
 
     public class InferSentResponseObj
     {
-        [JsonProperty("sentences")]
-        public string[] Sentences { get; set; }
-        [JsonProperty("vectors")]
-        public string[] Vectors { get; set; }
+        [JsonProperty("embeddings")]
+        public double[][] Vectors { get; set; }
     }
 }

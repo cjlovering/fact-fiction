@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FactOrFictionFrontend.Controllers.Utils
+namespace FactOrFictionTextHandling.InferSentClient
 {
     public class DistanceCalculator
     {

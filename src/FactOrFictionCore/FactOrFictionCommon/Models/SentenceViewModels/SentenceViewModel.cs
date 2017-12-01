@@ -1,10 +1,6 @@
-﻿using FactOrFictionCommon.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace FactOrFictionFrontend.Controllers.Utils
+namespace FactOrFictionCommon.Models.SentenceViewModels
 {
     public class SentenceViewModel
     {

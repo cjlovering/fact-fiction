@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using FactOrFictionCommon.Models;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
-using FactOrFictionFrontend.Controllers.Utils;
+using FactOrFictionCommon.Models.SentenceViewModels;
 
 namespace FactOrFictionFrontend.Controllers
 {
