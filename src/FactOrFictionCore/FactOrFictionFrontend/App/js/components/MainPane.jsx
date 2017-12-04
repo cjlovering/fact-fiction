@@ -106,6 +106,7 @@ export default class MainPane extends React.Component {
         const handleClick = () => {
 
         }
+
         const middlePane = isFetching ? 
         <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
         <ListView
@@ -124,7 +125,7 @@ export default class MainPane extends React.Component {
             fetchSimilarTokens={fetchSimilarTokens}
             similarTokenIds={similarTokenIds}
         />
-
+        
         const rightPane = isFetchingSimilar ? 
         <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
         <ListView

@@ -14,6 +14,9 @@ const fetchingSimilar = tokenId => {
 
 const fetchSimilarTokens = (tokenId) => {
     return (dispatch) => {
+         // Notify App that async call is being made.
+         dispatch(fetchingSimilar(tokenId));
+
         return fetch(`/Sentences/Related/${tokenId}`, {
             method: "GET",
             credentials: "same-origin"
