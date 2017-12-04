@@ -42,7 +42,6 @@ const receiveDetails = (sentenceId, json) => {
         references: json.references,
         entities: json.entities
     }
-    
     return {
         type: RECEIVE_DETAILS,
         details

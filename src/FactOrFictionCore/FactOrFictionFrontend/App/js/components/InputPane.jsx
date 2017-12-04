@@ -18,7 +18,6 @@ export default class InputPane extends React.Component {
 	}
 
     render() {
-		const { changeView, fetchTextEntry } = this.props;
 		const { textEntry } = this.state;
         return (
             <div>
@@ -40,14 +39,23 @@ export default class InputPane extends React.Component {
 					/>
 				</div>
 				<Button
-					handleClick={() => {
-						fetchTextEntry(textEntry);
-						changeView(VIEW_RESULT);
-					}}
+					handleClick={() => this.handleInputClick()}
 					content="Start"
 				/>
 			</div>
 
         );
+	}
+
+	handleInputClick = () => {
+		const { changeView, fetchTextEntry } = this.props;		
+		const { textEntry } = this.state;
+		if (!textEntry)	{
+			// Stop call.
+			return;
+		} else {	
+			fetchTextEntry(textEntry);
+			changeView(VIEW_RESULT);
+		}
 	}
 }

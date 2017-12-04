@@ -150,7 +150,7 @@ export default class FactCard extends React.Component {
                 onClick={selectAndFetchOnClick}
             >
                 <div>
-                    { !showingDetails ? content : this.cleanfact(content) }
+                    { showingDetails ? content : this.cleanfact(content) }
                 </div>
                 <hr className="divider" />
                 {referencesJSXRendered}
