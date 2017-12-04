@@ -10,7 +10,7 @@ import { VIEW_RESULT } from '../constants/viewTypes';
 export default class InputPane extends React.Component {
 	static propTypes = {
 		changeView: PropTypes.func.isRequired,
-		fetchTextEntry: PropTypes.func.isRequired	
+		fetchTextEntry: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -28,9 +28,11 @@ export default class InputPane extends React.Component {
 						placeholder="Enter some text..."
 						rows={11}
 						value={textEntry}
-						onChange={e => this.setState({
-							textEntry: e.target.value,
-						})}
+						onChange={e => {
+							this.setState({
+								textEntry: e.target.value,
+							});
+						}}
 						autoComplete="off"
 						autoCorrect="off"
 						autoCapitalize="off"

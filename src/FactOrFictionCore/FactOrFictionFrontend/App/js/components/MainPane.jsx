@@ -28,6 +28,7 @@ export default class MainPane extends React.Component {
         view: PropTypes.string.isRequired,
         selectedEntryId: PropTypes.string.isRequired,
         votes: PropTypes.object.isRequired,
+        textEntry: PropTypes.string.isRequired,
         fetchTextEntry: PropTypes.func.isRequired,
         selectEntry: PropTypes.func.isRequired,
         fetchFeedSentences: PropTypes.func.isRequired,
@@ -52,6 +53,7 @@ export default class MainPane extends React.Component {
             selectedEntryId, 
             selectEntry, 
             votes,
+            textEntry,
             fetchTextEntry, 
             changeView, 
             fetchFeedSentences,
@@ -86,6 +88,8 @@ export default class MainPane extends React.Component {
                 changeView={changeView} 
                 similarSentenceIds={similarSentenceIds}
                 fetchSimilarSentences={fetchSimilarSentences}
+                isFetching={isFetching}
+                textEntry={textEntry}
             />
         );
         const entries = (

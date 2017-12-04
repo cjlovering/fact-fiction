@@ -16,7 +16,9 @@ export default class ResultPane extends React.Component {
         textEntrySentences: PropTypes.array.isRequired,
         changeView: PropTypes.func.isRequired,
         similarSentenceIds: PropTypes.object.isRequired,
-        fetchSimilarSentences: PropTypes.func.isRequired
+        fetchSimilarSentences: PropTypes.func.isRequired,
+        isFetching: PropTypes.bool.isRequired,        
+        textEntry: PropTypes.string.isRequired,        
     }
     
     render() {
@@ -26,31 +28,34 @@ export default class ResultPane extends React.Component {
             textEntrySentences, 
             changeView, 
             similarSentenceIds,
-            fetchSimilarSentences
+            fetchSimilarSentences,
+            isFetching,
+            textEntry
         } = this.props;
 
         var objectiveCount = textEntrySentences.filter(e => e.type == "OBJECTIVE").length;
-        var percentObjective = parseFloat(objectiveCount * 100.0 / textEntrySentences.length).toFixed(1);
+        var percentObjective = isFetching ? 0 : parseFloat(objectiveCount * 100.0 / textEntrySentences.length).toFixed(1);
+        var resultDisplayText = isFetching ? 
+            textEntry : 
+            <div className="result-box" id="result-box">
+            {
+                textEntrySentences.map(entry => (
+                    <Sentence
+                        {...entry}
+                        selectedEntryId={selectedEntryId}
+                        selectEntry={selectEntry}
+                        key={shortid.generate()}   
+                        similarSentenceIds={similarSentenceIds} 
+                        fetchSimilarSentences={fetchSimilarSentences}
+                    />
+                    )
+                )
+            }
+            </div>;
 
         return (
             <div>
-                <div className="left-bar">
-                    <div className="result-box" id="result-box">
-                    {
-                        textEntrySentences.map(entry => (
-                            <Sentence
-                                {...entry}
-                                selectedEntryId={selectedEntryId}
-                                selectEntry={selectEntry}
-                                key={shortid.generate()}   
-                                similarSentenceIds={similarSentenceIds} 
-                                fetchSimilarSentences={fetchSimilarSentences}
-                            />
-                            )
-                        )
-                    }
-                    </div>
-                </div>
+                <div className="left-bar">{resultDisplayText}</div>
                 <Progress 
                     percent={percentObjective} 
                     status="success" 
