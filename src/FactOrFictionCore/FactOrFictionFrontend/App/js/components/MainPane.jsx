@@ -4,6 +4,7 @@ import {
     Spinner,
     SpinnerSize
 } from 'office-ui-fabric-react/lib/Spinner';
+
 import InputPane from './InputPane';
 import ListView from './ListView';
 import Button from './Button';
@@ -103,32 +104,33 @@ export default class MainPane extends React.Component {
                 fetchFeedSentences(feedSentenceIds[0], page);
             }
             : () => {};
-        const handleClick = () => {
-
-        }
+        const handleClick = () => {}
 
         const middlePane = isFetching ? 
-        <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
-        <ListView
-            isMiddlePane={true}
-            details={details}
-            fetchDetails={fetchDetails}
-            detailsShown={detailsShown}
-            showDetails={showDetails}
-            entries={entries}
-            selectedEntryId={selectedEntryId}
-            selectEntry={selectEntry}
-            loadFunc={loadFunc}
-            hasMore={isInput && !isDoneFetchingFeed}
-            castVote={castVote}
-            votes={votes}
-            fetchSimilarSentences={fetchSimilarSentences}
-            similarSentenceIds={similarSentenceIds}
-        />
-
-        const rightPane = isFetchingSimilar ? (
-            <div className="spinner"><Spinner size={SpinnerSize.large} /></div>
-        ) : (
+            <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
+            <ListView
+                isMiddlePane={true}
+                details={details}
+                fetchDetails={fetchDetails}
+                detailsShown={detailsShown}
+                showDetails={showDetails}
+                entries={entries}
+                selectedEntryId={selectedEntryId}
+                selectEntry={selectEntry}
+                loadFunc={loadFunc}
+                hasMore={isInput && !isDoneFetchingFeed}
+                castVote={castVote}
+                votes={votes}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
+            />
+        
+        const noSimilarMessage = selectedEntryId == "" ? 
+            "Please select an objective statement to see similar sentences. " : 
+            "No similar objective sentence found.";
+        const rightPane = isFetchingSimilar ? 
+            <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
+            ( similarTokenIds.hasOwnProperty(selectedEntryId) ? 
             <ListView
                 isMiddlePane={false}
                 details={details}
@@ -142,10 +144,12 @@ export default class MainPane extends React.Component {
                 hasMore={false}
                 castVote={castVote}
                 votes={votes}
-                fetchSimilarSentences={fetchSimilarSentences}
-                similarSentenceIds={similarSentenceIds}
+                fetchSimilarTokens={fetchSimilarTokens}
+                similarTokenIds={similarTokenIds}
             />
-        );
+            : 
+            <div className="no-similar">{noSimilarMessage}</div>
+            );
         return (
             <div className="row"> 
                 <ReactTooltip place="right" type="dark" effect="float" multiline={true}/>
@@ -162,6 +166,7 @@ export default class MainPane extends React.Component {
                 <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3-5">
                     <span className="list-title ms-font-xxl ms-fontColor-themePrimary">Similar Sentences</span>
                     <span className="help-icon fa fa-question-circle-o " aria-hidden="true" data-tip="These are sentences related to<br/>your selected objective sentence."></span>
+
                     {rightPane}
                 </div>
             </div>
