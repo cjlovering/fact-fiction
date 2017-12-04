@@ -125,16 +125,17 @@ export default class MainPane extends React.Component {
                 hasMore={isInput && !isDoneFetchingFeed}
                 castVote={castVote}
                 votes={votes}
-                fetchSimilarTokens={fetchSimilarTokens}
-                similarTokenIds={similarTokenIds}
+                fetchSimilarSentences={fetchSimilarSentences}
+                similarSentenceIds={similarSentenceIds}
             />
         
         const noSimilarMessage = selectedEntryId == "" ? 
             "Please select an objective statement to see similar sentences. " : 
             "No similar objective sentence found.";
-        const rightPane = isFetchingSimilar ? 
+        const rightPane = isFetchingSimilar ?
             <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
-            ( similarTokenIds.hasOwnProperty(selectedEntryId) ? 
+            ( similarSentenceIds.hasOwnProperty(selectedEntryId) && 
+              similarSentenceIds[selectedEntryId].length > 0 ? 
             <ListView
                 isMiddlePane={false}
                 details={details}
@@ -148,8 +149,8 @@ export default class MainPane extends React.Component {
                 hasMore={false}
                 castVote={castVote}
                 votes={votes}
-                fetchSimilarTokens={fetchSimilarTokens}
-                similarTokenIds={similarTokenIds}
+                fetchSimilarSentences={fetchSimilarSentences}
+                similarSentenceIds={similarSentenceIds}
             />
             : 
             <div className="no-similar">{noSimilarMessage}</div>

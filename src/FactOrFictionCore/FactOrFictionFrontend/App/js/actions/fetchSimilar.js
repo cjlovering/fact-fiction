@@ -16,7 +16,7 @@ const fetchSimilarSentences = (sentenceId) => {
     return (dispatch) => {
 
         // Notify App that async call is being made.
-         dispatch(fetchingSimilar(tokenId));
+         dispatch(fetchingSimilar(sentenceId));
 
         return fetch(`/Sentences/Related/${sentenceId}`, {
             method: "GET",
