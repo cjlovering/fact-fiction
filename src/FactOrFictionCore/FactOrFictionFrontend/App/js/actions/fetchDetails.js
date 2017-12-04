@@ -5,23 +5,23 @@ import {
 import 'whatwg-fetch';
 import { receiveDetails } from './receive'
 
-const fetchingDetails = tokenId => ({
+const fetchingDetails = sentenceId => ({
     type: FETCHING_DETAILS,
-    tokenId
+    sentenceId
 })
 
-const fetchDetails = tokenId => {
+const fetchDetails = sentenceId => {
     return (dispatch) => {
-        dispatch(fetchingDetails(tokenId));
-        return fetch(`/Sentences/Details/${tokenId}`, {
+        dispatch(fetchingDetails(sentenceId));
+        return fetch(`/Sentences/Details/${sentenceId}`, {
             method: "GET",
             credentials: 'same-origin'
         })
         .then(
             response => response.json(),
-            error => console.log(`An error occured when fetching details of sentence with id ${tokenId}.`, error)
+            error => console.log(`An error occured when fetching details of sentence with id ${sentenceId}.`, error)
         )
-        .then(json => dispatch(receiveDetails(tokenId, json)))
+        .then(json => dispatch(receiveDetails(sentenceId, json)))
     }
 }
 

@@ -4,7 +4,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 import expect from 'expect'
-import { fetchTextEntry, fetchFeedTokens } from '../../actions/fetchTokens';
+import { fetchTextEntry, fetchFeedSentences } from '../../actions/fetchSentences';
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
@@ -15,36 +15,35 @@ describe('async actions', () => {
       fetchMock.restore()
     })
   
-    it('fetchFeedTokens dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
+    it('fetchFeedSentences dispatches selectEntry and receiveTextEntrySentences when fetch text entry has been done', () => {
       fetchMock
         .getOnce(`/Sentences/Feed/?page=0`, { body: { sentences: [{ id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }], votes: {}}})
         .catch(unmatchedUrl => {
-            return fetchFeedTokens(unmatchedUrl)
+            return fetchFeedSentences(unmatchedUrl)
         })
         
       const expectedActions = [
         { 
-          type: types.RECEIVE_TOKENS, 
-          tokens: {
+          type: types.RECEIVE_SENTENCES, 
+          sentences: {
             '123': { id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }
           }
         },
         {
           type: types.RECEIVE_FEED,
-          feedTokenIds: ["123"]
+          feedSentenceIds: ["123"]
         },
-        { type: types.RECEIVE_VOTES, votes: {} },
-        { type: types.SELECT_ENTRY, id: "" }
+        { type: types.RECEIVE_VOTES, votes: {} }
       ]
 
       const store = mockStore({})   
-      return store.dispatch(fetchFeedTokens()).then(() => {
+      return store.dispatch(fetchFeedSentences()).then(() => {
         // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
       });
     })
 
-    it('fetchTextEntry dispatches selectEntry and receiveTextEntryTokens when fetch text entry has been done', () => {
+    it('fetchTextEntry dispatches selectEntry and receiveTextEntrySentences when fetch text entry has been done', () => {
       fetchMock
       .postOnce(`/TextEntries/Create/`, { body: { sentences: [{ id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }]}})
       .catch(unmatchedUrl => {
@@ -52,16 +51,16 @@ describe('async actions', () => {
       })
       
     const expectedActions = [
-      { type: types.FETCHING_TOKENS, text: "This is a fact." },
+      { type: types.FETCHING_SENTENCES, text: "This is a fact." },
       { 
-        type: types.RECEIVE_TOKENS, 
-        tokens: {
+        type: types.RECEIVE_SENTENCES, 
+        sentences: {
           '123': { id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }
         }
       },
       {
         type: types.RECEIVE_TEXT_ENTRY,
-        textEntryTokenIds: ["123"]
+        textEntrySentenceIds: ["123"]
       },
       { type: types.SELECT_ENTRY, id: "" }
     ]

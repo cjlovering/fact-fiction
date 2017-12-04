@@ -6,70 +6,70 @@ import MainPane from '../components/MainPane'
 import * as Actions from '../actions'
 
 const App = ({
-    tokens, 
+    sentences, 
     isFetching, 
     isDoneFetchingFeed, 
     didInvalidate, 
-    textEntryTokenIds, 
-    feedTokenIds, 
+    textEntrySentenceIds, 
+    feedSentenceIds, 
     view, 
     selectedEntryId, 
     details, 
     detailsShown,
     votes,
-    similarTokenIds,
     isFetchingSimilar,
+    similarSentenceIds,
     actions
 }) => (
     <MainPane 
-        tokens={tokens}
+        sentences={sentences}
         isFetching={isFetching}
         isDoneFetchingFeed={isDoneFetchingFeed}
         didInvalidate={didInvalidate}
-        textEntryTokenIds={textEntryTokenIds}
-        feedTokenIds={feedTokenIds}
+        textEntrySentenceIds={textEntrySentenceIds}
+        feedSentenceIds={feedSentenceIds}
         view={view}
         selectedEntryId={selectedEntryId}
         details={details}
         votes={votes}
         detailsShown={detailsShown}
-        similarTokenIds={similarTokenIds}
         isFetchingSimilar={isFetchingSimilar}
+        similarSentenceIds={similarSentenceIds}
         changeView={actions.changeView}
         selectEntry={actions.selectEntry}
         fetchTextEntry={actions.fetchTextEntry}
-        fetchFeedTokens={actions.fetchFeedTokens}
+        fetchFeedSentences={actions.fetchFeedSentences}
         fetchDetails={actions.fetchDetails}
         showDetails={actions.showDetails}
         castVote={actions.castVote}
-        fetchSimilarTokens={actions.fetchSimilarTokens}
+        fetchSimilarSentences={actions.fetchSimilarSentences}
 	/>
 );
 
 App.propTypes = {
-    tokens: PropTypes.object.isRequired,
+    sentences: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
     didInvalidate: PropTypes.bool.isRequired,
-    textEntryTokenIds: PropTypes.array.isRequired,
-    feedTokenIds: PropTypes.array.isRequired,
+    textEntrySentenceIds: PropTypes.array.isRequired,
+    feedSentenceIds: PropTypes.array.isRequired,
     view: PropTypes.string.isRequired,
     selectedEntryId: PropTypes.string.isRequired,
     details: PropTypes.object.isRequired,
     detailsShown: PropTypes.object.isRequired,
     votes: PropTypes.object.isRequired,
-    similarTokenIds: PropTypes.object.isRequired, 
     isFetchingSimilar: PropTypes.bool.isRequired,
+    similarSentenceIds: PropTypes.object.isRequired, 
     actions: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    ...state.textEntry,
+    ...state.sentences,
     details: state.sentenceDetails.details,
     detailsShown: state.detailsShown,
     view: state.view,
     selectedEntryId: state.selectedEntryId,
-    similarTokenIds: state.similarTokens.similarTokenIds,
-    isFetchingSimilar: state.similarTokens.isFetchingSimilar
+    similarSentenceIds: state.similarSentences.similarSentenceIds,    
+    isFetchingSimilar: state.similarSentences.isFetchingSimilar
 });
 
 const mapDispatchToProps = dispatch => ({

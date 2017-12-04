@@ -21,7 +21,7 @@ describe('sentenceDetails reducer', () => {
     })
 
     it('should handle FETCHING_DETAILS action', () => {
-        expect(sentenceDetails(state, { type: types.FETCHING_DETAILS, tokenId: "123" }))
+        expect(sentenceDetails(state, { type: types.FETCHING_DETAILS, sentenceId: "123" }))
             .toEqual({
                 details: {
                     "abc": {

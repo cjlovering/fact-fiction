@@ -36,8 +36,8 @@ export default class FactCard extends React.Component {
         castVote: PropTypes.func.isRequired,
         voteTrue: PropTypes.number,
         voteFalse: PropTypes.number,
-        fetchSimilarTokens: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired
+        fetchSimilarSentences: PropTypes.func.isRequired,
+        similarSentenceIds: PropTypes.object.isRequired
     }
  
     render() {
@@ -54,8 +54,8 @@ export default class FactCard extends React.Component {
             voteFalse, 
             selectEntry, 
             castVote,
-            fetchSimilarTokens,
-            similarTokenIds
+            fetchSimilarSentences,
+            similarSentenceIds
         } = this.props;
 
         // Change CSS class if selected.
@@ -136,8 +136,8 @@ export default class FactCard extends React.Component {
         const selectAndFetchOnClick = () => {
             if (isInMiddlePane) {
                 selectEntry(id);
-                if (!similarTokenIds.hasOwnProperty(id)) {
-                    fetchSimilarTokens(id);
+                if (!similarSentenceIds.hasOwnProperty(id)) {
+                    fetchSimilarSentences(id);
                 }
             } else{
                 return;

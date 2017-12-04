@@ -42,8 +42,8 @@ describe('castVote async action', () => {
           
         const expectedActions = [
             { 
-                type: types.RECEIVE_TOKENS, 
-                tokens: {
+                type: types.RECEIVE_SENTENCES, 
+                sentences: {
                   '123': { id: '123' , content: 'This is a fact.', type: 'OBJECTIVE' }
                 }
             },

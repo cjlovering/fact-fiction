@@ -13,38 +13,38 @@ export default class ResultPane extends React.Component {
     static propTypes = {
         selectedEntryId: PropTypes.string.isRequired,
         selectEntry: PropTypes.func.isRequired,
-        textEntryTokens: PropTypes.array.isRequired,
+        textEntrySentences: PropTypes.array.isRequired,
         changeView: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired,
-        fetchSimilarTokens: PropTypes.func.isRequired
+        similarSentenceIds: PropTypes.object.isRequired,
+        fetchSimilarSentences: PropTypes.func.isRequired
     }
     
     render() {
         const { 
             selectedEntryId, 
             selectEntry, 
-            textEntryTokens, 
+            textEntrySentences, 
             changeView, 
-            similarTokenIds,
-            fetchSimilarTokens
+            similarSentenceIds,
+            fetchSimilarSentences
         } = this.props;
 
-        var objectiveCount = textEntryTokens.filter(e => e.type == "OBJECTIVE").length;
-        var percentObjective = parseFloat(objectiveCount * 100.0 / textEntryTokens.length).toFixed(1);
+        var objectiveCount = textEntrySentences.filter(e => e.type == "OBJECTIVE").length;
+        var percentObjective = parseFloat(objectiveCount * 100.0 / textEntrySentences.length).toFixed(1);
 
         return (
             <div>
                 <div className="left-bar">
                     <div className="result-box" id="result-box">
                     {
-                        textEntryTokens.map(entry => (
+                        textEntrySentences.map(entry => (
                             <Sentence
                                 {...entry}
                                 selectedEntryId={selectedEntryId}
                                 selectEntry={selectEntry}
                                 key={shortid.generate()}   
-                                similarTokenIds={similarTokenIds} 
-                                fetchSimilarTokens={fetchSimilarTokens}
+                                similarSentenceIds={similarSentenceIds} 
+                                fetchSimilarSentences={fetchSimilarSentences}
                             />
                             )
                         )

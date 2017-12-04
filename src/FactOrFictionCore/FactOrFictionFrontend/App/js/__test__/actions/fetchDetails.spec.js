@@ -24,7 +24,7 @@ describe('fetchDetails async action', () => {
           })
           
         const expectedActions = [
-          { type: types.FETCHING_DETAILS, tokenId: "123" },
+          { type: types.FETCHING_DETAILS, sentenceId: "123" },
           { 
             type: types.RECEIVE_DETAILS, 
             details: {

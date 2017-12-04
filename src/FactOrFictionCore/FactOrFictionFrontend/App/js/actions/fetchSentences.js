@@ -1,15 +1,15 @@
 import { 
-    FETCHING_TOKENS,
+    FETCHING_SENTENCES,
     INVALIDATE_TEXT_ENTRY,
 } from '../constants/actionTypes';
 
 import 'whatwg-fetch';
 import { selectEntry } from './selectEntry';
-import { receiveFeed, receiveTextEntry, receiveTokens, receiveVotes } from './receive';
+import { receiveFeed, receiveTextEntry, receiveSentences, receiveVotes } from './receive';
 
-const fetchingTokens = text => {
+const fetchingSentences = text => {
     return {
-        type: FETCHING_TOKENS,
+        type: FETCHING_SENTENCES,
         text
     };
 };
@@ -18,7 +18,7 @@ const fetchTextEntry = textEntry => {
     return (dispatch) => {
 
         // Notify App that async call is being made.
-        dispatch(fetchingTokens(textEntry));
+        dispatch(fetchingSentences(textEntry));
         
         // Construct form data that API is expecting.
         const formData = new FormData();
@@ -35,16 +35,16 @@ const fetchTextEntry = textEntry => {
         )
         .then(json => {
             const clearSelection = "";
-            dispatch(receiveTokens(json));
+            dispatch(receiveSentences(json));
             dispatch(receiveTextEntry(json));
             dispatch(selectEntry(clearSelection));
         })
     }
 }
 
-const fetchFeedTokens = (tokenId = "", page = 0) => {
+const fetchFeedSentences = (sentenceId = "", page = 0) => {
     return (dispatch) => {
-        return fetch(`/Sentences/Feed/${tokenId}?page=${page}`, {
+        return fetch(`/Sentences/Feed/${sentenceId}?page=${page}`, {
             method: "GET",
             credentials: "same-origin"
         })
@@ -53,18 +53,14 @@ const fetchFeedTokens = (tokenId = "", page = 0) => {
             error => console.log('An error occured when fetching feed entry.', error)
         )
         .then(json => {
-            const clearSelection = "";
-
-            // Put tokens into storage
-            dispatch(receiveTokens(json));
-            // Add tokens to feed list
+            // Put sentences into storage
+            dispatch(receiveSentences(json));
+            // Add sentences to feed list
             dispatch(receiveFeed(json));
             // Add votes to the vote list
             dispatch(receiveVotes(json));
-            // Clear selection
-            dispatch(selectEntry(clearSelection));
         })
     }
 }
 
-export { fetchTextEntry, fetchFeedTokens };
+export { fetchTextEntry, fetchFeedSentences };

@@ -9,8 +9,8 @@ export default class Sentence extends React.Component {
         content: PropTypes.string.isRequired,
         selectedEntryId: PropTypes.string.isRequired,
         selectEntry: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired,
-        fetchSimilarTokens: PropTypes.func.isRequired
+        similarSentenceIds: PropTypes.object.isRequired,
+        fetchSimilarSentences: PropTypes.func.isRequired
     }
 
     render() {
@@ -32,11 +32,11 @@ export default class Sentence extends React.Component {
     }
 
     handleClick() {
-        const { id, type, selectEntry, similarTokenIds, fetchSimilarTokens } = this.props;
+        const { id, type, selectEntry, similarSentenceIds, fetchSimilarSentences } = this.props;
         if (type === "OBJECTIVE") {
             selectEntry(id);
-            if (!similarTokenIds.hasOwnProperty(id)) {
-                fetchSimilarTokens(id);
+            if (!similarSentenceIds.hasOwnProperty(id)) {
+                fetchSimilarSentences(id);
             }
         }
     }

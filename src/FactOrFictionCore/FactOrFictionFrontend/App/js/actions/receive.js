@@ -1,16 +1,16 @@
 import { 
     RECEIVE_TEXT_ENTRY,
-    RECEIVE_TOKENS,
+    RECEIVE_SENTENCES,
     RECEIVE_FEED,
     RECEIVE_VOTES,
     RECEIVE_DETAILS,
     RECEIVE_SIMILAR
 } from '../constants/actionTypes';
 
-const receiveTokens = json => {
+const receiveSentences = json => {
     return {
-        type: RECEIVE_TOKENS,
-        tokens: json.sentences.reduce(
+        type: RECEIVE_SENTENCES,
+        sentences: json.sentences.reduce(
             (map, entry) => { map[entry.id] = entry; return map; }, {})
     };
 };
@@ -18,14 +18,14 @@ const receiveTokens = json => {
 const receiveTextEntry = json => {
     return {
         type: RECEIVE_TEXT_ENTRY,
-        textEntryTokenIds: json.sentences.map(entry => entry.id)
+        textEntrySentenceIds: json.sentences.map(entry => entry.id)
     };
 };
 
 const receiveFeed = json => {
     return {
         type: RECEIVE_FEED,
-        feedTokenIds: json.sentences.map(entry => entry.id)
+        feedSentenceIds: json.sentences.map(entry => entry.id)
     };
 };
 
@@ -36,9 +36,9 @@ const receiveVotes = json => {
     }
 }
 
-const receiveDetails = (tokenId, json) => {
+const receiveDetails = (sentenceId, json) => {
     let details = {}
-    details[tokenId] = {
+    details[sentenceId] = {
         references: json.references,
         entities: json.entities
     }
@@ -49,13 +49,13 @@ const receiveDetails = (tokenId, json) => {
     }
 }
 
-const receiveSimilar = (tokenId, json) => {
-    let similarTokenIds = {}
-    similarTokenIds[tokenId] = json.sentences.map(entry => entry.id)
+const receiveSimilar = (sentenceId, json) => {
+    let similarSentenceIds = {}
+    similarSentenceIds[sentenceId] = json.sentences.map(entry => entry.id)
     return {
         type: RECEIVE_SIMILAR,
-        similarTokenIds
+        similarSentenceIds
     }
 }
 
-export { receiveTokens, receiveTextEntry, receiveFeed, receiveDetails, receiveVotes, receiveSimilar };
+export { receiveSentences, receiveTextEntry, receiveFeed, receiveDetails, receiveVotes, receiveSimilar };

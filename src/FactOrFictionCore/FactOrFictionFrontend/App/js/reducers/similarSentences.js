@@ -7,7 +7,7 @@ import {
 export default (
     state = {
         isFetchingSimilar: false,
-        similarTokenIds: {}, // token id --> []
+        similarSentenceIds: {}, // token id --> []
     },
     action
 ) => {
@@ -15,9 +15,9 @@ export default (
         case FETCHING_SIMILAR:
             return Object.assign({}, state, {isFetchingSimilar: true})
         case RECEIVE_SIMILAR:
-            const similarTokenIds = Object.assign({}, state.similarTokenIds, action.similarTokenIds);
+            const similarSentenceIds = Object.assign({}, state.similarSentenceIds, action.similarSentenceIds);
             const isFetchingSimilar = false;
-            return { similarTokenIds, isFetchingSimilar }
+            return { similarSentenceIds, isFetchingSimilar }
         default:
             return state;
     }

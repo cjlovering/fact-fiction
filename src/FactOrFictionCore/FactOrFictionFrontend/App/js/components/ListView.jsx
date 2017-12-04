@@ -25,8 +25,8 @@ export default class ListView extends React.Component {
         detailsShown: PropTypes.object.isRequired,    
         showDetails: PropTypes.func.isRequired,
         castVote: PropTypes.func.isRequired,
-        fetchSimilarTokens: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired
+        fetchSimilarSentences: PropTypes.func.isRequired,
+        similarSentenceIds: PropTypes.object.isRequired
     }
 
     render() {
@@ -43,8 +43,8 @@ export default class ListView extends React.Component {
             fetchDetails, 
             showDetails,
             castVote,
-            fetchSimilarTokens,
-            similarTokenIds
+            fetchSimilarSentences,
+            similarSentenceIds
         } = this.props;
         const showingDetails = id =>
             detailsShown.hasOwnProperty(id) && detailsShown[id];
@@ -65,7 +65,6 @@ export default class ListView extends React.Component {
                         entries
                             .filter(entry => entry.type == "OBJECTIVE")
                             .map(entry => (
-                               
                                 <FactCard
                                     key={entry.id}
                                     isInMiddlePane={isMiddlePane}
@@ -78,8 +77,8 @@ export default class ListView extends React.Component {
                                     showingDetails={showingDetails(entry.id)}
                                     castVote={castVote}
                                     sentenceVote={sentenceVote(entry.id)}
-                                    fetchSimilarTokens={fetchSimilarTokens}
-                                    similarTokenIds={similarTokenIds}
+                                    similarSentenceIds={similarSentenceIds}
+                                    fetchSimilarSentences={fetchSimilarSentences}
                                     ref={(card) => { if (entry.id === selectedEntryId) this.selectFactCard = card}}
                                 />
                             )

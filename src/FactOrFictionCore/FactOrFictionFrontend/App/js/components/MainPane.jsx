@@ -19,48 +19,48 @@ export default class MainPane extends React.Component {
     static propTypes = {
         details: PropTypes.object.isRequired,
         fetchDetails: PropTypes.func.isRequired,
-        tokens: PropTypes.object.isRequired,
+        sentences: PropTypes.object.isRequired,
         isFetching: PropTypes.bool.isRequired,
         didInvalidate: PropTypes.bool.isRequired,
-        textEntryTokenIds: PropTypes.array.isRequired,
-        feedTokenIds: PropTypes.array.isRequired,
+        textEntrySentenceIds: PropTypes.array.isRequired,
+        feedSentenceIds: PropTypes.array.isRequired,
         view: PropTypes.string.isRequired,
         selectedEntryId: PropTypes.string.isRequired,
         votes: PropTypes.object.isRequired,
         fetchTextEntry: PropTypes.func.isRequired,
         selectEntry: PropTypes.func.isRequired,
-        fetchFeedTokens: PropTypes.func.isRequired,
+        fetchFeedSentences: PropTypes.func.isRequired,
         changeView: PropTypes.func.isRequired,
         showDetails: PropTypes.func.isRequired,
         detailsShown: PropTypes.object.isRequired,
         castVote: PropTypes.func.isRequired,
-        fetchSimilarTokens: PropTypes.func.isRequired,
-        similarTokenIds: PropTypes.object.isRequired,
+        fetchSimilarSentences: PropTypes.func.isRequired,
+        similarSentenceIds: PropTypes.object.isRequired,
         isFetchingSimilar: PropTypes.bool.isRequired
     }
     
     render() {
         const {
-            tokens, 
+            sentences, 
             isFetching, 
             isDoneFetchingFeed, 
             didInvalidate, 
-            textEntryTokenIds, 
-            feedTokenIds, 
+            textEntrySentenceIds, 
+            feedSentenceIds, 
             view,
             selectedEntryId, 
             selectEntry, 
             votes,
             fetchTextEntry, 
             changeView, 
-            fetchFeedTokens,
+            fetchFeedSentences,
             details,
             fetchDetails,
             detailsShown,
             showDetails,
             castVote,
-            fetchSimilarTokens,
-            similarTokenIds,
+            fetchSimilarSentences,
+            similarSentenceIds,
             isFetchingSimilar
         } = this.props;
         const isInput = view === VIEW_INPUT;
@@ -81,26 +81,26 @@ export default class MainPane extends React.Component {
            <ResultPane 
                 selectedEntryId={selectedEntryId} 
                 selectEntry={selectEntry} 
-                textEntryTokens={textEntryTokenIds.map(id => tokens[id])} 
+                textEntrySentences={textEntrySentenceIds.map(id => sentences[id])} 
                 changeView={changeView} 
-                similarTokenIds={similarTokenIds}
-                fetchSimilarTokens={fetchSimilarTokens}
+                similarSentenceIds={similarSentenceIds}
+                fetchSimilarSentences={fetchSimilarSentences}
             />
         );
         const entries = (
             isInput 
-            ? feedTokenIds 
-            : textEntryTokenIds
-        ).map(id => tokens[id]);
+            ? feedSentenceIds 
+            : textEntrySentenceIds
+        ).map(id => sentences[id]);
 
         const similarEntries = (
-            similarTokenIds.hasOwnProperty(selectedEntryId) 
-            ? similarTokenIds[selectedEntryId] 
+            similarSentenceIds.hasOwnProperty(selectedEntryId) 
+            ? similarSentenceIds[selectedEntryId] 
             : []
-        ).map(id => tokens[id]);
+        ).map(id => sentences[id]);
         const loadFunc = isInput
             ? (page) => {
-                fetchFeedTokens(feedTokenIds[0], page);
+                fetchFeedSentences(feedSentenceIds[0], page);
             }
             : () => {};
         const handleClick = () => {
@@ -122,28 +122,30 @@ export default class MainPane extends React.Component {
             hasMore={isInput && !isDoneFetchingFeed}
             castVote={castVote}
             votes={votes}
-            fetchSimilarTokens={fetchSimilarTokens}
-            similarTokenIds={similarTokenIds}
+            fetchSimilarSentences={fetchSimilarSentences}
+            similarSentenceIds={similarSentenceIds}
         />
-        
-        const rightPane = isFetchingSimilar ? 
-        <div className="spinner"><Spinner size={SpinnerSize.large} /></div> :
-        <ListView
-            isMiddlePane={false}
-            details={details}
-            fetchDetails={fetchDetails}
-            detailsShown={detailsShown}
-            showDetails={showDetails}
-            entries={similarEntries}
-            selectedEntryId={selectedEntryId}
-            selectEntry={() => {}}
-            loadFunc={() => {}}
-            hasMore={false}
-            castVote={castVote}
-            votes={votes}
-            fetchSimilarTokens={fetchSimilarTokens}
-            similarTokenIds={similarTokenIds}
-        />
+
+        const rightPane = isFetchingSimilar ? (
+            <div className="spinner"><Spinner size={SpinnerSize.large} /></div>
+        ) : (
+            <ListView
+                isMiddlePane={false}
+                details={details}
+                fetchDetails={fetchDetails}
+                detailsShown={detailsShown}
+                showDetails={showDetails}
+                entries={similarEntries}
+                selectedEntryId={selectedEntryId}
+                selectEntry={() => {}}
+                loadFunc={() => {}}
+                hasMore={false}
+                castVote={castVote}
+                votes={votes}
+                fetchSimilarSentences={fetchSimilarSentences}
+                similarSentenceIds={similarSentenceIds}
+            />
+        );
         return (
             <div className="row"> 
                 <ReactTooltip place="right" type="dark" effect="float" multiline={true}/>

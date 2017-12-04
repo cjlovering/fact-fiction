@@ -1,18 +1,18 @@
 ﻿import { combineReducers } from 'redux';
 import view from './view';
-import textEntry from './textEntry';
+import sentences from './sentences';
 import selectedEntryId from './selectedEntryId';
 import sentenceDetails from './sentenceDetails';
 import detailsShown from './detailsShown';
-import similarTokens from './similarTokens';
+import similarSentences from './similarSentences';
 
 const root = combineReducers({
     view,
-    textEntry,
+    sentences,
     selectedEntryId,
     sentenceDetails,
     detailsShown,
-    similarTokens
+    similarSentences
 })
 
 export default root;

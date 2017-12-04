@@ -1,19 +1,19 @@
 ﻿import { changeView } from './changeView';
 import { selectEntry } from './selectEntry';
-import { fetchTextEntry, fetchFeedTokens } from './fetchTokens';
+import { fetchTextEntry, fetchFeedSentences } from './fetchSentences';
 import { fetchDetails } from './fetchDetails';
 import { showDetails } from './showDetails';
 import { castVote } from './castVote';
-import { fetchSimilarTokens } from './fetchSimilar';
+import { fetchSimilarSentences } from './fetchSimilar';
 
 /* action creators */
 export { 
     changeView, 
     selectEntry, 
     fetchTextEntry, 
-    fetchFeedTokens,
+    fetchFeedSentences,
     fetchDetails, 
     showDetails,
     castVote,
-    fetchSimilarTokens
+    fetchSimilarSentences
 };

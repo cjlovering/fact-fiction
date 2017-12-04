@@ -1,11 +1,11 @@
 ﻿import 'whatwg-fetch';
 
 import { RECEIVE_VOTE } from '../constants/actionTypes';
-import { receiveTokens, receiveVotes } from './receive';
+import { receiveSentences, receiveVotes } from './receive';
 
-const castVote = (tokenId, type) => {
+const castVote = (sentenceId, type) => {
     const formData = new FormData();
-    formData.append("sentenceId", tokenId);
+    formData.append("sentenceId", sentenceId);
     formData.append("type", type);
     return (dispatch) => {
         return fetch(`/Votes/Cast/`, {
@@ -15,10 +15,10 @@ const castVote = (tokenId, type) => {
         })
         .then(
             response => response.json(),
-            error => console.log(`An error occured when casting votes for sentence id: ${tokenId}. `, error)
+            error => console.log(`An error occured when casting votes for sentence id: ${sentenceId}. `, error)
         )
         .then(json => {
-            dispatch(receiveTokens(json));
+            dispatch(receiveSentences(json));
             dispatch(receiveVotes(json));  
         })
     }
