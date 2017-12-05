@@ -11,7 +11,7 @@ namespace FactOrFictionFrontend.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Create", "TextEntries");
         }
     }
 }

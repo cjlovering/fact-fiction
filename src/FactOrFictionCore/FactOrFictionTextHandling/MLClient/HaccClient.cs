@@ -30,7 +30,7 @@ namespace FactOrFictionTextHandling.MLClient
             Dictionary<int, string> parsedSentences = new Dictionary<int, string>();
 
             textEntry = textEntry.Trim();
-            if (textEntry == String.Empty)
+            if (String.IsNullOrEmpty(textEntry))
             {
                 return parsedSentences;
             }

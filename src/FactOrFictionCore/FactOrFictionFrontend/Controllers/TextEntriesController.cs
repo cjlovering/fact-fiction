@@ -141,7 +141,7 @@ namespace FactOrFictionFrontend.Controllers
             return View(textEntry);
         }
 
-        // GET: TextEntries1/Delete/5
+        // GET: TextEntries/Delete/5
         [Authorize(Roles = ApplicationRole.ADMINISTRATOR)]
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -161,21 +161,21 @@ namespace FactOrFictionFrontend.Controllers
             return View(textEntry);
         }
 
-        // POST: TextEntries1/Delete/5
+        // POST: TextEntries/Delete/5
         [Authorize(Roles = ApplicationRole.ADMINISTRATOR)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var textEntry = await _context.TextEntries.SingleOrDefaultAsync(m => m.Id == id);
+            if (textEntry == null)
+            {
+                throw new ApplicationException($"Cannot find text entry with ID '{id.ToString()}'");
+            }
             _context.TextEntries.Remove(textEntry);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool TextEntryExists(Guid id)
-        {
-            return _context.TextEntries.Any(e => e.Id == id);
-        }
+    
     }
 }

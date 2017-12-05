@@ -7,11 +7,12 @@ using FactOrFictionUrlSuggestions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+
 
 namespace FactOrFictionFrontend.Controllers
 {
@@ -111,10 +112,6 @@ namespace FactOrFictionFrontend.Controllers
             var _sent = _context.Sentences
                                 .SingleOrDefault(s => (s.Id == Id && s.Type == SentenceType.OBJECTIVE));
             if (_sent == null)
-            {
-                return NotFound();
-            }
-            if (_sent.Type != SentenceType.OBJECTIVE)
             {
                 return NotFound();
             }
