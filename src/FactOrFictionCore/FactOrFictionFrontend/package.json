@@ -53,6 +53,7 @@
     "redux-thunk": "^2.2.0",
     "segoe-fonts": "^1.0.1",
     "shortid": "^2.2.8",
+    "smoothscroll-polyfill": "^0.4.0",
     "webpack": "^3.8.1",
     "whatwg-fetch": "^2.0.3"
   },

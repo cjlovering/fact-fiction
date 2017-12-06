@@ -9,7 +9,10 @@ import {
     Spinner,
     SpinnerSize
 } from 'office-ui-fabric-react/lib/Spinner';
+import { polyfill } from 'smoothscroll-polyfill'
 import { VOTE_TRUE, VOTE_FALSE, VOTE_UNVOTED } from '../constants/voteTypes.js'
+
+polyfill(); // smoothscroll-polyfill
 
 export default class ListView extends React.Component {
     static propTypes = {
@@ -106,6 +109,6 @@ export default class ListView extends React.Component {
     
     scrollElementIntoViewIfNeeded(domNode) {
         var containerDomNode = ReactDOM.findDOMNode(this);
-        domNode.scrollIntoView({behavior: "smooth"});
+        domNode.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
     }
 }
