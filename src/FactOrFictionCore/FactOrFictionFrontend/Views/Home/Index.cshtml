@@ -1,7 +1,59 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Welcome";
 }
 
-<h2>Index</h2>
+<div class="row my-4">
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+        <h1 class="display-3">Fact or Fiction</h1>
+        <p class="lead">Work together to separate facts from opinion and falsehood.</p>
+        <a asp-action="Create" asp-controller="TextEntries" class="btn btn-primary">Get Started</a>
+    </header>
 
+    <!-- Page Features -->
+    <div class="row text-center">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div>
+                <img width="250" src="~/input.png" alt="">
+                <div>
+                    <h3>Input some text</h3>
+                    <p class="card-text">For example, a movie review or a news article.</p>
+                </div>   
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div>
+                <img width="250" src="~/result.png" alt="">
+                <div>
+                    <h3>See objective statements</h3>
+                    <p class="card-text">After hitting the 'Start' button, the application will detect and highlight objective statements from the input.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div>
+                <img width="250" src="~/reference.png" alt="">
+                <div>
+                    <h3>Reference</h3>
+                    <p class="card-text">Click the '+' button to find links or entities related to a submitted objective statements.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div>
+                <img width="250" src="~/vote.png" alt="">
+                <div>
+                    <h3>Vote</h3>
+                    <p class="card-text">Vote if you think a statement is true or false.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
