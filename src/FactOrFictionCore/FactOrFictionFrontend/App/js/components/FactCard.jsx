@@ -75,10 +75,7 @@ export default class FactCard extends React.Component {
         ) : null;
         const entitiesJSX = entities ? (
             <Entities
-                entities={ 
-                    entities
-                        .slice(0, TOP_K_HITS)
-                }
+                entities={entities.slice(0, TOP_K_HITS)}
             />
         ) : null;
 
@@ -95,10 +92,7 @@ export default class FactCard extends React.Component {
                         </th>
                     </tr>
                     <References
-                        references={ 
-                            references
-                                .slice(0, TOP_K_HITS)
-                        }
+                        references={references.slice(0, TOP_K_HITS)}
                         cleanLink={text => this.cleanLink(text)}
                     />
                     {entityHeader}
