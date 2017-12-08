@@ -68,7 +68,7 @@ export default class ResultPane extends React.Component {
                 />
                 <Button 
                     handleClick={() => changeView(VIEW_INPUT)} 
-                    content="View Input"
+                    content="Back"
                 />
             </div>
         );

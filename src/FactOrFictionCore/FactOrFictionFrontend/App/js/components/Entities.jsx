@@ -12,7 +12,7 @@ export default class Entities extends React.Component {
         return entities.map(entity => (
                 <tr key={shortid.generate()} style={{width: "100%"}}>
                     <td>
-                        <a href={entity.wikiUrl} > {entity.name} </a>
+                        <a href={entity.wikiUrl} target="_blank" > {entity.name} </a>
                     </td>
                 </tr>
             )

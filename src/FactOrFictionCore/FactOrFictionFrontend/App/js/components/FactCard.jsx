@@ -41,18 +41,18 @@ export default class FactCard extends React.Component {
     }
  
     render() {
-        const { 
+        const {
             isInMiddlePane,
-            content, 
-            selectedEntryId, 
+            content,
+            selectedEntryId,
             id,
-            details, 
+            details,
             showingDetails,
             sentenceVote,
-            votes, 
-            voteTrue, 
-            voteFalse, 
-            selectEntry, 
+            votes,
+            voteTrue,
+            voteFalse,
+            selectEntry,
             castVote,
             fetchSimilarSentences,
             similarSentenceIds
@@ -81,7 +81,7 @@ export default class FactCard extends React.Component {
 
 
         const loadingDetails = hasDetails ? (
-            <table style={{width: "100%"}}>
+            <table style={{ width: "100%" }}>
                 <tbody>
                     <tr>
                         <th>
@@ -99,10 +99,9 @@ export default class FactCard extends React.Component {
                     {entitiesJSX}
                 </tbody>
             </table>
-        ) : (
-            <div className="spinner-div">
-                <Spinner size={SpinnerSize.large} />
-            </div>
+        ) :
+        (
+            <Spinner className="center-spinner" size={SpinnerSize.large} />
         );
 
         const referencesJSX = (
