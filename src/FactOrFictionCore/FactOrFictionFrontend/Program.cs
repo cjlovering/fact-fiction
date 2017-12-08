@@ -1,7 +1,9 @@
 ﻿using FactOrFictionCommon.Models;
+using FactOrFictionFrontend.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +24,9 @@ namespace FactOrFictionFrontend
 
                 try
                 {
+                    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+                    dbContext.Database.Migrate();
+
                     var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
                     CreateRoles(roleManager).Wait();
                 }
