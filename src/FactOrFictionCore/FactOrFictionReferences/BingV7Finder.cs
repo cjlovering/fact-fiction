@@ -15,6 +15,10 @@ namespace FactOrFictionUrlSuggestions
         }
         protected override IReadOnlyList<Uri> ParseJson(JObject json)
         {
+            if (json["webPages"] == null)
+            {
+                return new List<Uri>();
+            }
             return json["webPages"]["value"]
                 .Select(obj => new Uri(obj["url"].ToString()))
                 .ToList();

@@ -65,46 +65,50 @@ export default class FactCard extends React.Component {
         const hasDetails = details.hasOwnProperty('references') && details['references'];
         const { references, entities } = details;
 
+        // Reference elements
+        const referenceHeader = (references && references.length > 0) ? (
+            <tr>
+                <th>
+                    Related information
+                </th>
+                <th>
+                    Site bias
+                </th>
+            </tr>
+        ) : null;
+        const referenceJSX = (references && references.length > 0) ? (
+            <References
+                references={references.slice(0, TOP_K_HITS)}
+                cleanLink={text => this.cleanLink(text)}
+            />
+        ) : null;
+
         // Entity elements
-        const entityHeader = entities ? (
+        const entityHeader = (entities && entities.length > 0) ? (
             <tr>
                 <th>
                     Recognized entities
                 </th>
             </tr>
         ) : null;
-        const entitiesJSX = entities ? (
+        const entitiesJSX = (entities && entities.length > 0) ? (
             <Entities
                 entities={entities.slice(0, TOP_K_HITS)}
             />
         ) : null;
 
-
         const loadingDetails = hasDetails ? (
             <table style={{ width: "100%" }}>
                 <tbody>
-                    <tr>
-                        <th>
-                            Related information
-                        </th>
-                        <th>
-                            Site bias
-                        </th>
-                    </tr>
-                    <References
-                        references={references.slice(0, TOP_K_HITS)}
-                        cleanLink={text => this.cleanLink(text)}
-                    />
+                    {referenceHeader}
+                    {referenceJSX}
                     {entityHeader}
                     {entitiesJSX}
                 </tbody>
             </table>
-        ) :
-        (
-            <Spinner className="center-spinner" size={SpinnerSize.large} />
-        );
+        ) : <Spinner className="center-spinner" size={SpinnerSize.large} />;
 
-        const referencesJSX = (
+        const detailsJSX = (
             <div>
                 {loadingDetails}
                 <hr className="divider" />
@@ -112,8 +116,8 @@ export default class FactCard extends React.Component {
         )                                 
 
         // Hide details if not showing (even if loaded.)
-        const referencesJSXRendered = showingDetails 
-            ? referencesJSX 
+        const detailsJSXRendered = showingDetails 
+            ? detailsJSX 
             : null;
 
         // Button for showing/hiding details 
@@ -146,7 +150,7 @@ export default class FactCard extends React.Component {
                     { showingDetails ? content : this.cleanfact(content) }
                 </div>
                 <hr className="divider" />
-                {referencesJSXRendered}
+                {detailsJSXRendered}
                 {expandButton}
                 <VoteButtons 
                     id={id}
