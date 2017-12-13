@@ -33,39 +33,44 @@ export default class ResultPane extends React.Component {
             textEntry
         } = this.props;
 
-        var objectiveCount = textEntrySentences.filter(e => e.type == "OBJECTIVE").length;
-        var percentObjective = isFetching ? 0 : parseFloat(objectiveCount * 100.0 / textEntrySentences.length).toFixed(1);
-        var resultDisplayText = isFetching ? 
-            textEntry : 
+        const objectiveCount = textEntrySentences.filter(e => e.type == "OBJECTIVE").length;
+        const percentObjective = isFetching ? 0 : parseFloat(objectiveCount * 100.0 / textEntrySentences.length).toFixed(1);
+        const resultDisplayText = isFetching ? textEntry : ( 
             <div className="result-box" id="result-box">
-            {
-                textEntrySentences.map(entry => (
-                    <Sentence
-                        {...entry}
-                        selectedEntryId={selectedEntryId}
-                        selectEntry={selectEntry}
-                        key={shortid.generate()}   
-                        similarSentenceIds={similarSentenceIds} 
-                        fetchSimilarSentences={fetchSimilarSentences}
-                    />
+                {
+                    textEntrySentences.map(entry => (
+                        <Sentence
+                            {...entry}
+                            selectedEntryId={selectedEntryId}
+                            selectEntry={selectEntry}
+                            key={shortid.generate()}   
+                            similarSentenceIds={similarSentenceIds} 
+                            fetchSimilarSentences={fetchSimilarSentences}
+                        />
+                        )
                     )
-                )
-            }
-            </div>;
-
-        return (
+                }
+            </div>
+        );
+        const progress = isFetching ? null : (
             <div>
-                <div className="left-bar">{resultDisplayText}</div>
                 <Progress 
                     percent={percentObjective} 
                     status="success" 
                     theme={{
                         success: {
-                          symbol: percentObjective + '%',
-                          color: '#7cbb00'
+                        symbol: percentObjective + '%',
+                        color: '#7cbb00'
                         }
                     }}
                 />
+                <span> {percentObjective}% of the sentences in this document are objective. </span>
+            </div>
+        )
+        return (
+            <div>
+                <div className="left-bar">{resultDisplayText}</div>
+                {progress}
                 <Button 
                     handleClick={() => changeView(VIEW_INPUT)} 
                     content="Back"
