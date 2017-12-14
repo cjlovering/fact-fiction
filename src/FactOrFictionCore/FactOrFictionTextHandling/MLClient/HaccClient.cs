@@ -45,10 +45,7 @@ namespace FactOrFictionTextHandling.MLClient
 
             var request = new HttpRequestMessage(HttpMethod.Post, string.Empty)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new
-                {
-                    text_entry = textEntry
-                }))
+                Content = new StringContent(textEntry)
             };
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
