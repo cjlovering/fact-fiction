@@ -101,3 +101,16 @@ This command may take a couple minutes. It then gives us an ID of the created se
 ```
 az ml service create realtime --image-id <img-id> -n factorfictionmlservice
 ```
+
+One-command deployment for LSTM:
+
+```
+az ml service create realtime -n factorfictionmlservice -c aml_config\conda_dependencies.yml -m outputs\model.cmf -d dictionary.txt -d labels.txt -d preprocess -r python -f score_lstm.py -s outputs\service_schema.json
+```
+
+To update with a new model:
+```
+az ml image create -n factorfictionmlservice -c aml_config\conda_dependencies.yml -m outputs\model.cmf -d dictionary.txt -d labels.txt -d preprocess -r python -f score_lstm.py -s outputs\service_schema.json
+
+az ml service update realtime --image-id <img-id> -i <service-id>
+```

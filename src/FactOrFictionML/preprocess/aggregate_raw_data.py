@@ -179,6 +179,20 @@ if __name__ == "__main__":
             ],
             "uml": False
         },
+        {
+            'dataset_path': 'wiki',
+            'categories': [
+                '.'
+            ],
+            'uml': False
+        },
+        {
+            'dataset_path': 'custom',
+            'categories': [
+                '.'
+            ],
+            'uml': False
+        }
     ]
 
     path_prefix = sys.argv[1] if len(sys.argv) >= 2 else '.'

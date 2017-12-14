@@ -246,7 +246,7 @@ src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/js/bundle.js
 src/FactOrFictionCore/FactOrFictionFrontend/wwwroot/css/style.css
 src/FactOrFictionML/data/*
 !src/FactOrFictionML/data/README.md
-src/FactOrFictionML/outputs/*
+outputs/
 data/*
 !data/README.md
 __pycache__/

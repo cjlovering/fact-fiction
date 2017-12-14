@@ -1,0 +1,10 @@
+ArgumentVector:
+- $file
+CondaDependenciesFile: aml_config/conda_dependencies_tensorflow.yml
+EnvironmentVariables: null
+Framework: PySpark
+PrepareEnvironment: false
+SparkDependenciesFile: aml_config/spark_dependencies.yml
+Target: dsvm_tensorflow
+TrackedRun: true
+UseSampling: true

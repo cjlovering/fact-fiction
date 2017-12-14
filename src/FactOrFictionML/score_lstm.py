@@ -17,7 +17,7 @@ def init():
 
     global dictionary
     with open('dictionary.txt', 'r', encoding='utf-8') as f:
-        dictionary = f.read().strip().split('\n') 
+        dictionary = f.read().rstrip('\r\n').split('\n') 
 
     global vocab_size
     vocab_size = len(dictionary)
@@ -54,7 +54,7 @@ def main():
   from azureml.api.realtime.services import generate_schema
   import numpy as np
 
-  text_entry = 'This is a sentence. This is another one.'
+  text_entry = 'This is a sentence. This is a good sentence.'
 
   # Test the output of the functions
   init()

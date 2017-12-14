@@ -16,7 +16,7 @@ class SentenceNormalizer(BaseEstimator, TransformerMixin):
             (r"^'([\w-][\w-][\w-]+)$", r'\1')                                                 # Remove ' before a word longer than 3
         ]
         if dictionary is not None:
-            self.dictionary = {w:i for i, w in enumerate(dictionary)}
+            self.dictionary = {w.rstrip('\r\n'):i for i, w in enumerate(dictionary)}
         else:
             self.dictionary = None
         self.discarded_tokens = set(discarded_tokens)

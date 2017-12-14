@@ -38,5 +38,7 @@ if __name__=='__main__':
     print('Writing tokens to file...')
     with open(args.output, 'w', encoding='utf-8') as f:
         for token in sorted(all_tokens):
-            f.write("%s\n" % (token))
+            t = token.strip('\r\n')
+            if len(t) > 0:
+                f.write("%s\n" % (t))
     print('Done')
